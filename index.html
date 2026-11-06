@@ -1,0 +1,2446 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>watermark by nora - ระบบศูนย์รวมข้อมูลตัวแทน</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Selection for Cute & Cottagecore Style -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Chakra+Petch:wght@400;600&family=Charm:wght@400;700&family=Dancing+Script:wght@600;700&family=Itim&family=Kanit:wght@300;400;500;600&family=Kodchasan:wght@400;600&family=Mali:wght@400;600;700&family=Mitr:wght@400;500&family=Pattaya&family=Sriracha&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Dynamic Custom Uploaded Fonts & Theme Container -->
+    <style id="customDynamicFontsStyle"></style>
+    <style id="customThemeVars">
+        :root {
+            --theme-primary: #F07197;     /* Sweet Pastel Pink */
+            --theme-primary-rgb: 240, 113, 151;
+            --theme-secondary: #A984E8;   /* Soft Lavender */
+            --theme-secondary-rgb: 169, 132, 232;
+            --theme-brown: #D95380;       /* Sweet Berry Pink */
+            --theme-bg: #FFF7FA;          /* Cotton Candy Cream */
+        }
+    </style>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        nora: {
+                            bg: 'var(--theme-bg)',
+                            card: '#FFFFFF',
+                            pink: '#FCE4EC',          /* Soft pink tint */
+                            pinkDark: 'var(--theme-primary)', /* Main Sweet Pink / Custom */
+                            sky: 'var(--theme-secondary)',    /* Soft Lavender */
+                            brown: 'var(--theme-brown)',      /* Sweet Berry */
+                            purple: '#F3E8FF',
+                            purpleDark: '#8B5CF6',
+                            blue: '#E0F2FE',
+                            mint: '#DCFCE7',
+                            yellow: '#FEF3C7',
+                            text: '#593A47',          /* Deep Sweet Cocoa */
+                            muted: '#9C7A89'          /* Muted Rose Taupe */
+                        }
+                    },
+                    fontFamily: {
+                        main: ['Kanit', 'sans-serif'],
+                        mali: ['Mali', 'cursive', 'sans-serif'],
+                        script: ['Dancing Script', 'Caveat', 'Charm', 'cursive'],
+                        body: ['Kanit', 'sans-serif'],
+                        itim: ['Itim', 'cursive'],
+                        kodchasan: ['Kodchasan', 'sans-serif'],
+                        sriracha: ['Sriracha', 'cursive'],
+                        charm: ['Charm', 'cursive'],
+                        pattaya: ['Pattaya', 'sans-serif'],
+                        mitr: ['Mitr', 'sans-serif'],
+                        chakra: ['Chakra Petch', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'cute': '0 0 14px rgba(var(--theme-primary-rgb), 0.25)',
+                        'cute-soft': '0 0 18px rgba(var(--theme-primary-rgb), 0.20)',
+                        'cute-sm': '0 0 10px rgba(var(--theme-primary-rgb), 0.22)',
+                        'cute-active': '0 0 8px rgba(var(--theme-primary-rgb), 0.38)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: var(--theme-bg);
+            background-image: 
+                radial-gradient(rgba(var(--theme-primary-rgb), 0.22) 1.75px, transparent 1.75px), 
+                radial-gradient(rgba(var(--theme-secondary-rgb), 0.22) 1.75px, var(--theme-bg) 1.75px);
+            background-size: 34px 34px;
+            background-position: 0 0, 17px 17px;
+            color: #593A47;
+            overflow-x: hidden;
+        }
+
+        button, input, select, textarea, a {
+            font-family: 'Kanit', sans-serif;
+        }
+
+        /* Sweet Pastel Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(var(--theme-primary-rgb), 0.1);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--theme-primary);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--theme-brown);
+        }
+
+        /* Flat & Clean Pure White Frame with Dynamic Theme Soft Glowing Border */
+        .cute-box {
+            background: #FFFFFF;
+            border: 1.5px solid rgba(var(--theme-primary-rgb), 0.42);
+            border-radius: 1.35rem;
+            box-shadow: 0 0 14px rgba(var(--theme-primary-rgb), 0.22), inset 0 0 8px rgba(var(--theme-primary-rgb), 0.10);
+            position: relative;
+            transition: all 0.25s ease;
+        }
+        .cute-box:hover {
+            border-color: var(--theme-primary);
+            box-shadow: 0 0 20px rgba(var(--theme-primary-rgb), 0.40), inset 0 0 10px rgba(var(--theme-primary-rgb), 0.16);
+        }
+
+        /* Glowing Icon Frame matching the dynamic theme glowing border */
+        .icon-glow-frame {
+            background: #FFFFFF;
+            border: 1.5px solid rgba(var(--theme-primary-rgb), 0.48);
+            box-shadow: 0 0 10px rgba(var(--theme-primary-rgb), 0.30), inset 0 0 5px rgba(var(--theme-primary-rgb), 0.12);
+            transition: all 0.25s ease;
+        }
+        .cute-box:hover .icon-glow-frame {
+            border-color: var(--theme-primary);
+            box-shadow: 0 0 14px rgba(var(--theme-primary-rgb), 0.48), inset 0 0 6px rgba(var(--theme-primary-rgb), 0.18);
+        }
+
+        .cute-inner-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(var(--theme-primary-rgb), 0.35);
+            border-radius: 1.1rem;
+            box-shadow: 0 0 10px rgba(var(--theme-primary-rgb), 0.10);
+        }
+
+        /* Dynamic Theme Input & Badge Frame (Replaces static pink borders) */
+        .theme-border-soft {
+            border-color: rgba(var(--theme-primary-rgb), 0.45) !important;
+            box-shadow: 0 0 8px rgba(var(--theme-primary-rgb), 0.16);
+            transition: all 0.2s ease;
+        }
+        .theme-border-soft:focus {
+            border-color: var(--theme-primary) !important;
+            box-shadow: 0 0 12px rgba(var(--theme-primary-rgb), 0.35);
+        }
+        .theme-bg-tint {
+            background-color: rgba(var(--theme-primary-rgb), 0.08) !important;
+        }
+        .theme-divider-dashed {
+            border-color: rgba(var(--theme-primary-rgb), 0.30) !important;
+        }
+
+        .btn-bounce {
+            transition: all 0.2s ease;
+        }
+        .btn-bounce:hover {
+            box-shadow: 0 0 14px rgba(var(--theme-primary-rgb), 0.42);
+            transform: translateY(-1px);
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-4px); }
+        }
+        .mascot-float {
+            animation: floatSlow 3.5s ease-in-out infinite;
+        }
+
+        @keyframes popChatHead {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-4px) scale(1.02); }
+        }
+        .speech-bubble-kawaii {
+            animation: popChatHead 2.8s ease-in-out infinite;
+            background: #FFFFFF;
+            border: 1.5px solid var(--theme-primary);
+            box-shadow: 0 0 16px rgba(var(--theme-primary-rgb), 0.32);
+            border-radius: 1.35rem;
+            position: relative;
+            transition: opacity 0.28s cubic-bezier(0.22, 1, 0.36, 1), transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .speech-bubble-kawaii.bubble-msg-change {
+            transform: translateY(-3px) scale(1.02);
+        }
+        /* Speech pointer pointing DOWN towards the top of the Mascot's head */
+        .speech-bubble-kawaii::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 8px 8px 0 8px;
+            border-style: solid;
+            border-color: var(--theme-primary) transparent transparent transparent;
+            display: block;
+            width: 0;
+            z-index: 2;
+        }
+
+        /* ================= MASCOT TOP-LAYER OVER MODAL SYSTEM ================= */
+        /* Keeps mascot & speech bubble sharp above z-50 backdrop-blur overlays without blocking modal inputs */
+        #mascotOuterSlot {
+            position: relative;
+            z-index: 60;
+            pointer-events: none;
+        }
+        #mascotFloatingStage {
+            pointer-events: none;
+            transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        #mascotFloatingStage .mascot-interactive {
+            pointer-events: auto;
+        }
+        /* When any popup/modal is open, pin mascot cleanly to bottom-right above the modal backdrop */
+        #mascotFloatingStage.mascot-over-modal {
+            position: fixed;
+            right: 0.65rem;
+            bottom: 0.5rem;
+            z-index: 60;
+            transform: scale(0.9);
+            transform-origin: bottom right;
+        }
+        @media (min-width: 640px) {
+            #mascotFloatingStage.mascot-over-modal {
+                right: 1.25rem;
+                bottom: 0.75rem;
+                transform: scale(0.95);
+            }
+        }
+
+        /* Cute Receipt Ticket Card */
+        .receipt-card {
+            background: #FFFFFF;
+            border: 1.5px solid rgba(var(--theme-primary-rgb), 0.42);
+            box-shadow: 0 0 18px rgba(var(--theme-primary-rgb), 0.20);
+            border-radius: 1.25rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .receipt-perforation {
+            border-top: 2px dashed rgba(var(--theme-primary-rgb), 0.45);
+            position: relative;
+        }
+        .receipt-perforation::before,
+        .receipt-perforation::after {
+            content: '';
+            position: absolute;
+            top: -9px;
+            width: 16px;
+            height: 16px;
+            background-color: var(--theme-bg);
+            border: 1.5px solid rgba(var(--theme-primary-rgb), 0.42);
+            border-radius: 9999px;
+        }
+        .receipt-perforation::before { left: -20px; }
+        .receipt-perforation::after { right: -20px; }
+
+        .qr-morph-box {
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .qr-morph-active {
+            transform: scale(0.95);
+            box-shadow: 0 0 18px rgba(var(--theme-primary-rgb), 0.38);
+        }
+
+        .signature-title {
+            font-family: 'Dancing Script', 'Charm', cursive;
+            line-height: 1.15;
+            text-shadow: 0 0 12px rgba(var(--theme-primary-rgb), 0.24);
+        }
+
+        .accordion-content {
+            transition: max-height 0.35s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .accordion-content.open {
+            max-height: 2000px;
+            opacity: 1;
+        }
+
+        .font-card-preview {
+            word-break: break-word;
+            transition: all 0.2s ease;
+        }
+
+        /* ================= 3 NATURAL MICRO-ANIMATIONS (GPU Accelerated) ================= */
+        /* 1. ไอคอนน่ารักมุมโลโก้: ลอยช้าๆ และเอียงตัวเบาๆ อย่างเป็นธรรมชาติ */
+        @keyframes logoCornerFloat {
+            0%, 100% {
+                transform: translate3d(0, 0px, 0) rotate(0deg);
+            }
+            50% {
+                transform: translate3d(0, -3.5px, 0) rotate(3deg);
+            }
+        }
+        .logo-corner-float {
+            animation: logoCornerFloat 4.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+            will-change: transform;
+        }
+        .logo-sparkle-icon {
+            display: inline-block;
+            animation: logoCornerFloat 3.2s ease-in-out infinite reverse;
+        }
+
+        /* 2. ปุ่มกดเข้าอ่านรายละเอียดต่างๆ: ตอบสนองนุ่มนวลเมื่อชี้/กด พร้อมลูกศรหมุนตามสถานะ */
+        .menu-detail-btn {
+            transition: background-color 0.25s ease, transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .menu-detail-btn:hover {
+            background-color: rgba(var(--theme-primary-rgb), 0.05);
+        }
+        .menu-detail-btn:active {
+            transform: scale(0.988);
+        }
+        .menu-detail-btn .icon-glow-frame {
+            transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+        .menu-detail-btn:hover .icon-glow-frame {
+            transform: translate3d(2px, 0, 0) scale(1.04);
+        }
+        .menu-caret-icon {
+            display: inline-block;
+            transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .menu-detail-btn.is-open .menu-caret-icon {
+            transform: rotate(180deg);
+        }
+        .menu-plus-icon {
+            transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .menu-detail-btn.is-open .menu-plus-icon {
+            transform: rotate(45deg);
+        }
+
+        /* 3. ป๊อปอัพสำเร็จ (Toast): Fade + Slide ขึ้นเบาๆ อย่างนุ่มนวล ไม่บังการกด */
+        .toast-popup {
+            opacity: 0;
+            transform: translate3d(0, 12px, 0) scale(0.97);
+            transition: opacity 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+                        transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: opacity, transform;
+        }
+        .toast-popup.toast-visible {
+            opacity: 1;
+            transform: translate3d(0, 0, 0) scale(1);
+        }
+        .toast-check-icon {
+            transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) 0.06s;
+            transform: scale(0.75);
+        }
+        .toast-popup.toast-visible .toast-check-icon {
+            transform: scale(1);
+        }
+
+        /* รองรับผู้ที่ตั้งค่าลดการเคลื่อนไหวในเครื่อง (prefers-reduced-motion) */
+        @media (prefers-reduced-motion: reduce) {
+            .logo-corner-float,
+            .logo-sparkle-icon,
+            .mascot-float,
+            .speech-bubble-kawaii {
+                animation: none !important;
+            }
+            .menu-detail-btn,
+            .menu-detail-btn .icon-glow-frame,
+            .menu-caret-icon,
+            .menu-plus-icon,
+            .toast-popup,
+            .toast-check-icon,
+            .accordion-content {
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between pb-10 text-xs sm:text-sm font-body">
+
+    <!-- Top Admin Mode Toggle Bar -->
+    <div class="bg-white border-b border-pink-200 sticky top-0 z-40 px-3 py-1.5 shadow-sm">
+        <div class="max-w-4xl mx-auto flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-1.5 text-[11px] sm:text-xs font-medium text-nora-muted font-body">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pink-100 text-nora-pinkDark">
+                    <i class="ph-fill ph-sparkle text-xs"></i>
+                </span>
+                <span>ระบบตัวแทน <strong class="text-nora-text">watermark by nora</strong> 🎀✨</span>
+            </div>
+            <div class="flex items-center gap-1.5 font-body">
+                <button onclick="openFontStudioModal()" class="text-[11px] sm:text-xs bg-white hover:bg-pink-50 text-nora-text font-medium px-2.5 py-1 rounded-full flex items-center gap-1 transition border border-pink-200 shadow-cute-sm">
+                    <i class="ph-bold ph-text-aa"></i> เทสฟอนต์เต็มจอ
+                </button>
+                <button onclick="toggleAdminModal()" class="text-[11px] sm:text-xs bg-nora-pinkDark hover:opacity-90 text-white font-medium px-2.5 py-1 rounded-full flex items-center gap-1 shadow-sm transition">
+                    <i class="ph-bold ph-gear-six"></i> จัดการหลังบ้าน (Admin)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container Compact & 2-Page Landscape Friendly -->
+    <main class="max-w-4xl w-full mx-auto px-3 sm:px-5 pt-4 sm:pt-6">
+
+        <!-- ================= 1. TOP SECTION: LOGO (Left) + NAME & CONTACTS (Right) ================= -->
+        <header class="cute-box !bg-white !rounded-[1.85rem] p-4 sm:p-5 mb-5 overflow-hidden">
+            <div class="grid grid-cols-12 gap-3 sm:gap-5 items-center relative z-10">
+                
+                <!-- Left: Circular Logo -->
+                <div class="col-span-4 sm:col-span-3 flex justify-center">
+                    <div class="relative group">
+                        <div class="w-20 h-20 sm:w-28 sm:h-28 rounded-full p-1.5 bg-white icon-glow-frame flex items-center justify-center">
+                            <img id="siteLogoImg" 
+                                 src="https://i.postimg.cc/BvVGXRTy/IMG-2178.png" 
+                                 alt="watermark by nora logo" 
+                                 onerror="this.src='https://placehold.co/300x300/FCE4EC/593A47?text=nora+logo'"
+                                 class="w-full h-full object-cover rounded-full bg-white border border-pink-100">
+                        </div>
+                        <span class="logo-corner-float absolute -bottom-1 right-0 bg-white text-nora-brown text-[10px] font-medium px-2 py-0.5 rounded-full icon-glow-frame flex items-center gap-0.5 font-body pointer-events-none">
+                            <i class="ph-fill ph-sparkle text-nora-pinkDark logo-sparkle-icon"></i> Official
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Right: Signature Script Name + 2 Compact Contact Buttons -->
+                <div class="col-span-8 sm:col-span-9 flex flex-col items-start text-left">
+                    <div class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white icon-glow-frame text-nora-pinkDark text-[10px] sm:text-[11px] font-medium mb-1.5 font-body">
+                        <i class="ph-fill ph-sparkle shrink-0"></i>
+                        <span>ศูนย์รวมข้อมูลและเช็คคิวสำหรับตัวแทน</span>
+                    </div>
+                    
+                    <!-- Handwritten Signature Style Title (No overlapping) -->
+                    <h1 id="siteNameDisplay" class="signature-title text-2xl sm:text-4xl font-bold text-nora-brown tracking-normal mb-1.5 block">
+                        watermark by nora
+                    </h1>
+                    <p id="siteSubDisplay" class="text-[11px] sm:text-xs text-nora-muted mb-3 max-w-lg font-body leading-relaxed">
+                        รับทำลายน้ำ โลโก้ ป้ายบัญชี และงานดีไซน์สุดคิวท์ เช็คเรทราคา ทดลองพิมพ์ฟอนต์ให้ลูกค้า และตรวจสอบคิวงานได้ครบในหน้าเดียว ✨
+                    </p>
+
+                    <!-- Two Compact Contact Buttons side-by-side -->
+                    <div class="flex flex-wrap items-center gap-2 font-body">
+                        <a id="contactBtn1" href="#contact1" onclick="handleContactClick(event, 1)" 
+                           class="btn-bounce bg-nora-pinkDark hover:opacity-95 text-white font-medium px-3.5 py-1.5 rounded-xl border border-pink-300 shadow-cute-sm flex items-center justify-center gap-1.5 text-xs">
+                            <i class="ph-fill ph-chat-circle-dots text-sm"></i>
+                            <span id="contactLabel1">ติดต่อแอดมิน</span>
+                        </a>
+
+                        <a id="contactBtn2" href="#contact2" onclick="handleContactClick(event, 2)" 
+                           class="btn-bounce bg-white hover:bg-pink-50 text-nora-text font-medium px-3.5 py-1.5 rounded-xl icon-glow-frame flex items-center justify-center gap-1.5 text-xs">
+                            <i class="ph-fill ph-users-three text-sm text-nora-pinkDark"></i>
+                            <span id="contactLabel2">กลุ่มตัวแทน</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </header>
+
+        <!-- ================= 2. MAIN BODY GRID: 2-COLUMN SIDE-BY-SIDE LAYOUT ================= -->
+        <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 sm:gap-5 items-start">
+
+            <!-- >>>>>>>> LEFT COLUMN: STACK OF 8 BAR ITEMS (Sweet Glowing UI) <<<<<<<< -->
+            <div class="sm:col-span-6 flex flex-col gap-3 font-body" id="leftMenuColumn">
+
+                <!-- Item 1: Rule -->
+                <div class="cute-box overflow-hidden">
+                    <button id="btn-rule" onclick="toggleMenuSection('rule')" class="menu-detail-btn w-full px-3.5 py-2.5 flex items-center justify-between text-left bg-white relative z-10 font-body">
+                        <div class="flex items-center gap-2.5">
+                            <!-- White background container with glowing border -->
+                            <span class="w-7 h-7 rounded-xl icon-glow-frame flex items-center justify-center shrink-0">
+                                <span id="icon-rule" class="flex items-center justify-center"></span>
+                            </span>
+                            <span class="font-medium text-xs sm:text-sm text-nora-text">Rule (กฎและข้อตกลง)</span>
+                        </div>
+                        <span class="text-[10px] bg-white icon-glow-frame text-nora-pinkDark px-2.5 py-0.5 rounded-full font-medium flex items-center gap-1">
+                            อ่านก่อนสั่ง <i class="ph-bold ph-caret-down text-[10px] menu-caret-icon"></i>
+                        </span>
+                    </button>
+                    <div id="content-rule" class="accordion-content border-t border-pink-100 bg-white relative z-10">
+                        <div class="p-3 text-xs font-body space-y-1.5 text-nora-text" id="ruleBodyList"></div>
+                    </div>
+                </div>
+
+                <!-- Item 2: เรทส่ง -->
+                <div class="cute-box overflow-hidden">
+                    <button id="btn-rates" onclick="toggleMenuSection('rates')" class="menu-detail-btn w-full px-3.5 py-2.5 flex items-center justify-between text-left bg-white relative z-10 font-body">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-7 h-7 rounded-xl icon-glow-frame flex items-center justify-center shrink-0">
+                                <span id="icon-rates" class="flex items-center justify-center"></span>
+                            </span>
+                            <span class="font-medium text-xs sm:text-sm text-nora-text">เรทส่ง (ราคาตัวแทน)</span>
+                        </div>
+                        <span class="text-[10px] bg-white icon-glow-frame text-purple-600 px-2.5 py-0.5 rounded-full font-medium flex items-center gap-1">
+                            เรทพิเศษ <i class="ph-bold ph-caret-down text-[10px] menu-caret-icon"></i>
+                        </span>
+                    </button>
+                    <div id="content-rates" class="accordion-content border-t border-pink-100 bg-white relative z-10">
+                        <div class="p-3 font-body">
+                            <div class="overflow-x-auto rounded-xl border border-pink-200 bg-white">
+                                <table class="w-full text-left border-collapse text-[11px] sm:text-xs">
+                                    <thead>
+                                        <tr class="bg-pink-50 text-nora-text">
+                                            <th class="py-1.5 px-2.5 font-medium">รายการงาน</th>
+                                            <th class="py-1.5 px-2 font-medium text-center">เรทตัวแทน</th>
+                                            <th class="py-1.5 px-2 font-medium text-center">ราคาขาย</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ratesTableBody" class="divide-y divide-pink-100"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3: โปรโมชั่น -->
+                <div id="promoMenuWrapper" class="cute-box overflow-hidden">
+                    <button id="btn-promo" onclick="toggleMenuSection('promo')" class="menu-detail-btn w-full px-3.5 py-2.5 flex items-center justify-between text-left bg-white relative z-10 font-body">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-7 h-7 rounded-xl icon-glow-frame flex items-center justify-center shrink-0">
+                                <span id="icon-promo" class="flex items-center justify-center"></span>
+                            </span>
+                            <span class="font-medium text-xs sm:text-sm text-nora-text">โปรโมชั่นประจำเดือน</span>
+                        </div>
+                        <span class="text-[10px] bg-white icon-glow-frame text-nora-pinkDark px-2.5 py-0.5 rounded-full font-medium flex items-center gap-1">
+                            🎀 Promo <i class="ph-bold ph-caret-down text-[10px] menu-caret-icon"></i>
+                        </span>
+                    </button>
+                    <div id="content-promo" class="accordion-content border-t border-pink-100 bg-white relative z-10">
+                        <div class="p-3 font-body space-y-2" id="promoBodyContent"></div>
+                    </div>
+                </div>
+
+                <!-- Item 4: ตัวอย่างฟอนต์ (Interactive Font Tester) -->
+                <div class="cute-box overflow-hidden">
+                    <button id="btn-fonts" onclick="toggleMenuSection('fonts')" class="menu-detail-btn is-open w-full px-3.5 py-2.5 flex items-center justify-between text-left bg-white relative z-10 font-body">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-7 h-7 rounded-xl icon-glow-frame flex items-center justify-center shrink-0">
+                                <span id="icon-fonts" class="flex items-center justify-center"></span>
+                            </span>
+                            <div>
+                                <span class="font-medium text-xs sm:text-sm text-nora-text block">ตัวอย่างฟอนต์ (พิมพ์เช็คได้)</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] bg-nora-pinkDark text-white px-2.5 py-0.5 rounded-full font-medium shadow-sm flex items-center gap-1">
+                            เทสฟอนต์ ✨ <i class="ph-bold ph-caret-down text-[10px] menu-caret-icon"></i>
+                        </span>
+                    </button>
+                    <div id="content-fonts" class="accordion-content open border-t border-pink-100 bg-white relative z-10">
+                        <div class="p-3 space-y-2.5 font-body">
+                            <div class="cute-inner-card p-2.5 space-y-2">
+                                <label class="block text-[11px] font-medium text-nora-text">
+                                    <i class="ph-bold ph-pencil-simple-line text-nora-pinkDark"></i> พิมพ์ชื่อร้านเพื่อให้ลูกค้าเลือกฟอนต์:
+                                </label>
+                                <div class="flex gap-1.5">
+                                    <input type="text" id="fontPreviewInput" 
+                                           value="watermark by nora" 
+                                           onfocus="triggerFontGuideBubbleOnce()"
+                                           oninput="updateFontPreviews(this.value)"
+                                           placeholder="พิมพ์ข้อความตรงนี้..."
+                                           class="w-full px-2.5 py-1.5 rounded-xl border theme-border-soft focus:outline-none text-xs font-body bg-white">
+                                    <button onclick="updateFontPreviews('watermark by nora')" title="รีเซ็ตข้อความ" class="px-2.5 py-1 rounded-xl bg-white hover:opacity-90 text-nora-text text-[11px] font-medium shrink-0 icon-glow-frame">
+                                        รีเซ็ต
+                                    </button>
+                                </div>
+                                <div class="flex items-center justify-between gap-2">
+                                    <span class="text-[10px] text-nora-muted font-body">ขนาด:</span>
+                                    <input type="range" id="fontSizeSlider" min="14" max="32" value="20" oninput="updateFontSize(this.value)" class="w-28" style="accent-color: var(--theme-primary);">
+                                    <button onclick="openFontStudioModal()" class="text-[10px] text-nora-pinkDark underline font-medium hover:opacity-80">
+                                        ขยายเต็มจอ
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="fontCardsContainer" class="grid grid-cols-1 gap-2 max-h-60 overflow-y-auto pr-1"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 5: ตัวอย่างงานแต่ละเวอร์ชั่น -->
+                <div class="cute-box overflow-hidden">
+                    <button id="btn-versions" onclick="toggleMenuSection('versions')" class="menu-detail-btn w-full px-3.5 py-2.5 flex items-center justify-between text-left bg-white relative z-10 font-body">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-7 h-7 rounded-xl icon-glow-frame flex items-center justify-center shrink-0">
+                                <span id="icon-versions" class="flex items-center justify-center"></span>
+                            </span>
+                            <span class="font-medium text-xs sm:text-sm text-nora-text">ตัวอย่างงานแต่ละเวอร์ชั่น</span>
+                        </div>
+                        <span class="text-[10px] bg-white icon-glow-frame text-purple-600 px-2.5 py-0.5 rounded-full font-medium flex items-center gap-1">
+                            Demo <i class="ph-bold ph-caret-down text-[10px] menu-caret-icon"></i>
+                        </span>
+                    </button>
+                    <div id="content-versions" class="accordion-content border-t border-pink-100 bg-white relative z-10">
+                        <div class="p-3">
+                            <div id="versionsGalleryGrid" class="grid grid-cols-2 gap-2.5"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 6: ช่องทางการโอน (Interactive Receipt & Dynamic PromptPay QR) -->
+                <div class="cute-box overflow-hidden">
+                    <button id="btn-payment" onclick="toggleMenuSection('payment')" class="menu-detail-btn w-full px-3.5 py-2.5 flex items-center justify-between text-left bg-white relative z-10 font-body">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-7 h-7 rounded-xl icon-glow-frame flex items-center justify-center shrink-0">
+                                <span id="icon-payment" class="flex items-center justify-center"></span>
+                            </span>
+                            <span class="font-medium text-xs sm:text-sm text-nora-text">ช่องทางการโอน (ใบเสร็จ & QR)</span>
+                        </div>
+                        <span class="text-[10px] bg-white icon-glow-frame text-nora-pinkDark px-2.5 py-0.5 rounded-full font-medium flex items-center gap-1">
+                            🧾 ใบเสร็จ QR <i class="ph-bold ph-caret-down text-[10px] menu-caret-icon"></i>
+                        </span>
+                    </button>
+                    <div id="content-payment" class="accordion-content border-t border-pink-100 bg-white relative z-10">
+                        <div class="p-3 font-body" id="paymentMethodsContainer"></div>
+                    </div>
+                </div>
+
+                <!-- Item 7 & 8: Dynamic "+" Custom Menus -->
+                <div id="customPlusMenusContainer" class="space-y-3"></div>
+
+            </div>
+
+            <!-- >>>>>>>> RIGHT COLUMN: CHECK Q BOX (Top) & CHAT POPUP ABOVE MASCOT HEAD (Bottom Right) <<<<<<<< -->
+            <div class="sm:col-span-6 flex flex-col gap-4 font-body">
+
+                <!-- LARGE BOX: Check Q -->
+                <section class="cute-box !bg-white !rounded-[1.6rem] p-4 sm:p-5 flex flex-col justify-between min-h-[340px] relative overflow-hidden">
+                    <div class="relative z-10">
+                        <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b-2 border-dashed theme-divider-dashed">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 rounded-xl bg-white icon-glow-frame flex items-center justify-center text-nora-pinkDark">
+                                    <i class="ph-fill ph-calendar-check text-lg"></i>
+                                </div>
+                                <div>
+                                    <h2 class="text-lg sm:text-xl font-semibold text-nora-text leading-none font-body">Check Q</h2>
+                                    <p class="text-[10px] text-nora-muted font-body mt-0.5">ตารางเช็คคิวงานอัปเดตสำหรับตัวแทน</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-1.5 bg-white px-2.5 py-1 rounded-full icon-glow-frame text-[10px] font-medium text-nora-pinkDark">
+                                <span class="w-1.5 h-1.5 rounded-full bg-nora-pinkDark animate-ping"></span>
+                                <span>คิวทั้งหมด <strong id="totalQueueCount">0</strong></span>
+                            </div>
+                        </div>
+
+                        <!-- Search & Filter Bar -->
+                        <div class="my-3 flex gap-1.5">
+                            <div class="relative flex-1">
+                                <i class="ph-bold ph-magnifying-glass absolute left-2.5 top-1/2 -translate-y-1/2 text-nora-pinkDark text-xs"></i>
+                                <input type="text" id="queueSearchInput" oninput="renderQueueList()" 
+                                       placeholder="ค้นหาชื่อลูกค้า / ตัวแทน..." 
+                                       class="w-full pl-7 pr-2.5 py-1.5 rounded-xl icon-glow-frame focus:outline-none text-xs font-body bg-white">
+                            </div>
+                            <select id="queueFilterStatus" onchange="renderQueueList()" 
+                                    class="px-2.5 py-1.5 rounded-xl icon-glow-frame text-[11px] font-body bg-white text-nora-text focus:outline-none cursor-pointer">
+                                <option value="all">ทุกสถานะ</option>
+                            </select>
+                        </div>
+
+                        <!-- Queue Cards List -->
+                        <div id="queueListContainer" class="space-y-2 max-h-[250px] overflow-y-auto pr-1 font-body"></div>
+                    </div>
+
+                    <!-- Footer note -->
+                    <div class="mt-3 pt-2.5 border-t theme-divider-dashed flex items-center justify-between text-[11px] text-nora-muted font-body relative z-10">
+                        <span><i class="ph-fill ph-clock-countdown text-nora-pinkDark"></i> รอคิวปกติ 1-3 วัน</span>
+                        <button onclick="toggleAdminModal('queue')" class="text-nora-pinkDark hover:underline font-semibold flex items-center gap-1">
+                            <i class="ph-bold ph-plus-circle"></i> อัปเดตคิว
+                        </button>
+                    </div>
+                </section>
+
+                <!-- BOTTOM RIGHT CORNER: Chat Bubble Popping Up Directly ABOVE Mascot's Head -->
+                <section id="mascotOuterSlot" class="flex flex-col items-end justify-end pt-2 pb-2 pr-2 sm:pr-4 relative select-none min-h-[170px]">
+                    <div id="mascotFloatingStage" class="flex flex-col items-center relative">
+                        <!-- Re-open button when user hides the speech bubble -->
+                        <button type="button" id="mascotBubbleReopenBtn" onclick="toggleMascotBubbleVisibility(true)"
+                                class="mascot-interactive hidden mb-2 px-3 py-1 rounded-full bg-white icon-glow-frame text-[10px] font-medium text-nora-pinkDark hover:bg-pink-50 items-center gap-1 shadow-sm transition">
+                            <i class="ph-fill ph-chat-circle-dots"></i> เปิดคำแนะนำน้องมาสคอต
+                        </button>
+
+                        <!-- Chat Bubble directly above the mascot's head -->
+                        <div id="mascotStatusBubble" role="status" aria-live="polite" class="mascot-interactive speech-bubble-kawaii px-3.5 py-2.5 max-w-[235px] sm:max-w-[260px] text-left z-20 mb-2.5">
+                            <!-- Populated dynamically via renderStatusWidget() & setMascotSpeech() -->
+                        </div>
+
+                        <!-- Frameless Standing Mascot right below the chat bubble (Click mascot to toggle bubble) -->
+                        <div class="mascot-interactive relative mascot-float shrink-0 cursor-pointer group" onclick="toggleMascotBubbleVisibility()" title="คลิกที่น้องมาสคอตเพื่อซ่อน/เปิดกล่องคำพูด">
+                            <div class="w-24 h-28 sm:w-28 sm:h-32 flex flex-col items-center justify-end relative">
+                                <div id="defaultStandingMascotSvg" class="hidden w-full h-full flex flex-col items-center justify-center">
+                                    <!-- Cute Sweet Mascot SVG Fallback -->
+                                    <svg viewBox="0 0 120 140" class="w-20 h-24 sm:w-24 sm:h-28 drop-shadow-sm">
+                                        <!-- Ground shadow -->
+                                        <ellipse cx="60" cy="131" rx="28" ry="5.5" fill="#FAD2E1" opacity="0.85"/>
+                                        <!-- Little antlers / twigs -->
+                                        <path d="M 45 28 L 40 16 M 42 21 L 47 17" stroke="#A67B5B" stroke-width="3" stroke-linecap="round"/>
+                                        <path d="M 75 28 L 80 16 M 78 21 L 73 17" stroke="#A67B5B" stroke-width="3" stroke-linecap="round"/>
+                                        <!-- Ears -->
+                                        <ellipse cx="36" cy="36" rx="10" ry="6" transform="rotate(-25 36 36)" fill="#F7B2C4" stroke="#593A47" stroke-width="2.2"/>
+                                        <ellipse cx="84" cy="36" rx="10" ry="6" transform="rotate(25 84 36)" fill="#F7B2C4" stroke="#593A47" stroke-width="2.2"/>
+                                        <!-- Head -->
+                                        <circle cx="60" cy="54" r="23" fill="#FFFDFD" stroke="#593A47" stroke-width="2.2"/>
+                                        <!-- Forehead patch & spots -->
+                                        <path d="M 45 36 Q 60 46 75 36 Q 68 31 60 31 Q 52 31 45 36 Z" fill="#F7B2C4"/>
+                                        <circle cx="53" cy="36" r="1.5" fill="#FFFFFF"/>
+                                        <circle cx="60" cy="34" r="1.5" fill="#FFFFFF"/>
+                                        <circle cx="67" cy="36" r="1.5" fill="#FFFFFF"/>
+                                        <!-- Rosy Cheeks -->
+                                        <ellipse cx="45" cy="58" rx="4.5" ry="2.5" fill="#FF9EBB"/>
+                                        <ellipse cx="75" cy="58" rx="4.5" ry="2.5" fill="#FF9EBB"/>
+                                        <!-- Eyes & Nose -->
+                                        <circle cx="50" cy="52" r="2.6" fill="#593A47"/>
+                                        <circle cx="70" cy="52" r="2.6" fill="#593A47"/>
+                                        <ellipse cx="60" cy="56" rx="2.5" ry="1.8" fill="#F07197"/>
+                                        <path d="M 57 60 Q 60 63 63 60" fill="none" stroke="#593A47" stroke-width="1.8" stroke-linecap="round"/>
+                                        <!-- Sweet Pastel Dress -->
+                                        <path d="M 45 76 L 37 112 Q 60 116 83 112 L 75 76 Z" fill="#F9C6D7" stroke="#593A47" stroke-width="2.2" stroke-linejoin="round"/>
+                                        <!-- Little Ribbon Collar -->
+                                        <circle cx="60" cy="78" r="3.5" fill="#F07197"/>
+                                        <!-- Arms & Legs -->
+                                        <path d="M 43 80 Q 28 73 32 63" fill="none" stroke="#FFFDFD" stroke-width="6.5" stroke-linecap="round"/>
+                                        <path d="M 43 80 Q 28 73 32 63" fill="none" stroke="#593A47" stroke-width="2.2" stroke-linecap="round"/>
+                                        <path d="M 77 80 Q 90 88 86 96" fill="none" stroke="#FFFDFD" stroke-width="6.5" stroke-linecap="round"/>
+                                        <path d="M 77 80 Q 90 88 86 96" fill="none" stroke="#593A47" stroke-width="2.2" stroke-linecap="round"/>
+                                        <line x1="52" y1="113" x2="52" y2="127" stroke="#593A47" stroke-width="2.8" stroke-linecap="round"/>
+                                        <line x1="68" y1="113" x2="68" y2="127" stroke="#593A47" stroke-width="2.8" stroke-linecap="round"/>
+                                    </svg>
+                                </div>
+                                <img id="mascotImg" 
+                                     src="https://i.postimg.cc/DwQcPyhp/IMG-2179.png" 
+                                     alt="Mascot Standing" 
+                                     onerror="this.classList.add('hidden'); document.getElementById('defaultStandingMascotSvg').classList.remove('hidden');"
+                                     class="w-full h-full object-contain drop-shadow-md transition-transform duration-200 group-hover:scale-105">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+        </div>
+    </main>
+    <!-- ================= ADMIN BACKEND MANAGEMENT MODAL (EASY TOP FILTER PILLS) ================= -->
+    <div id="adminModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-2.5 sm:p-5">
+        <div class="bg-white w-full max-w-4xl rounded-[1.8rem] border-2 border-pink-200 shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
+            
+            <!-- Modal Header -->
+            <div class="bg-gradient-to-r from-pink-50 via-purple-50 to-pink-50 px-5 py-3.5 border-b border-pink-200 flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <span class="w-9 h-9 rounded-2xl bg-nora-pinkDark text-white flex items-center justify-center shadow-sm">
+                        <i class="ph-bold ph-sliders-horizontal text-lg"></i>
+                    </span>
+                    <div>
+                        <h3 class="font-bold text-base sm:text-lg text-nora-text">ตั้งค่าหลังบ้าน (กดเลือกหมวดด้านบนได้ง่ายๆ)</h3>
+                        <p class="text-[11px] text-nora-muted font-body">คลิกปุ่มฟิลเตอร์ด้านล่างเพื่อสลับหมวดที่ต้องการแก้ไขได้ทันที</p>
+                    </div>
+                </div>
+                <button onclick="toggleAdminModal()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-nora-text border border-pink-200 flex items-center justify-center shadow-sm">
+                    <i class="ph-bold ph-x text-base"></i>
+                </button>
+            </div>
+
+            <!-- Easy Top Filter Pills Bar -->
+            <div class="bg-pink-50/50 border-b border-pink-100 px-4 py-2.5 flex flex-wrap gap-1.5 text-xs font-bold">
+                <button onclick="switchAdminTab('general')" id="tabBtn-general" class="admin-tab-btn px-3 py-1.5 rounded-full bg-nora-pinkDark text-white shadow-sm flex items-center gap-1 transition">
+                    <i class="ph-bold ph-palette"></i> 1. ร้าน & สี & มาสคอต
+                </button>
+                <button onclick="switchAdminTab('queue')" id="tabBtn-queue" class="admin-tab-btn px-3 py-1.5 rounded-full bg-white text-nora-text border border-pink-200 hover:bg-pink-50 flex items-center gap-1 transition">
+                    <i class="ph-bold ph-list-checks"></i> 2. คิวงาน & สถานะ
+                </button>
+                <button onclick="switchAdminTab('fonts')" id="tabBtn-fonts" class="admin-tab-btn px-3 py-1.5 rounded-full bg-white text-nora-text border border-pink-200 hover:bg-pink-50 flex items-center gap-1 transition">
+                    <i class="ph-bold ph-text-aa"></i> 3. อัปโหลดไฟล์ฟอนต์
+                </button>
+                <button onclick="switchAdminTab('content')" id="tabBtn-content" class="admin-tab-btn px-3 py-1.5 rounded-full bg-white text-nora-text border border-pink-200 hover:bg-pink-50 flex items-center gap-1 transition">
+                    <i class="ph-bold ph-notebook"></i> 4. กฎ & เรทส่ง & โปร
+                </button>
+                <button onclick="switchAdminTab('gallery')" id="tabBtn-gallery" class="admin-tab-btn px-3 py-1.5 rounded-full bg-white text-nora-text border border-pink-200 hover:bg-pink-50 flex items-center gap-1 transition">
+                    <i class="ph-bold ph-qr-code"></i> 5. รูปงาน & ใบเสร็จโอนเงิน
+                </button>
+                <button onclick="switchAdminTab('plusmenu')" id="tabBtn-plusmenu" class="admin-tab-btn px-3 py-1.5 rounded-full bg-white text-nora-text border border-pink-200 hover:bg-pink-50 flex items-center gap-1 transition">
+                    <i class="ph-bold ph-plus-circle"></i> 6. แถบเมนูเสริม [+]
+                </button>
+            </div>
+
+            <!-- Scrollable Admin Content Container -->
+            <div class="p-4 sm:p-5 overflow-y-auto flex-1 font-body text-xs space-y-4">
+
+                <!-- TAB 1: General, Logo, Icon Styles, Custom Theme Colors, Custom Mascot Status -->
+                <div id="adminTab-general" class="space-y-4">
+                    <div class="bg-pink-50/70 border border-pink-200 rounded-2xl p-3 text-xs text-nora-text flex items-start gap-2">
+                        <i class="ph-fill ph-sparkle text-lg text-nora-pinkDark shrink-0 mt-0.5"></i>
+                        <span><strong>ปรับแต่งร้าน & แชทบนหัวมาสคอต:</strong> เลือกโทนสีหวานน่ารัก เปลี่ยนไอคอน และตั้งข้อความที่เด้งบนหัวมาสคอตได้เองค่ะ</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                        <div>
+                            <label class="block text-xs font-bold mb-1">ชื่อเว็บไซต์ (แสดงเป็นฟอนต์ตัวเขียนลายเซ็น):</label>
+                            <input type="text" id="admSiteName" class="w-full px-3 py-1.5 rounded-xl border border-pink-200">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">คำอธิบายสั้นใต้ชื่อ:</label>
+                            <input type="text" id="admSiteSub" class="w-full px-3 py-1.5 rounded-xl border border-pink-200">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">ลิงก์รูป Logo ด้านบน (URL):</label>
+                            <input type="text" id="admLogoUrl" class="w-full px-3 py-1.5 rounded-xl border border-pink-200">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">เลือกไอคอนหน้าแถบเมนูหลัก (แบบทึบ ไม่โปร่ง):</label>
+                            <select id="admMenuIconStyle" class="w-full px-3 py-1.5 rounded-xl border border-pink-200 bg-white">
+                                <option value="heart">💗 1. หัวใจ (Solid Heart)</option>
+                                <option value="star">⭐ 2. ดาว (Solid Star)</option>
+                                <option value="sparkle">✨ 3. ประกายวิ้งค์ (Solid Sparkle)</option>
+                                <option value="flower">🌸 4. ดอกไม้ (Solid Flower)</option>
+                                <option value="bow">🎀 5. โบว์ริบบิ้น (Solid Ribbon)</option>
+                            </select>
+                        </div>
+
+                        <!-- Custom Theme Palette Pickers -->
+                        <div class="sm:col-span-2 bg-pink-50/40 p-3 rounded-2xl border border-pink-200">
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                                <label class="text-xs font-bold text-nora-text">🎨 กำหนดโทนสีเว็บไซต์เอง (หรือเลือกพรีเซ็ตโทนหวาน):</label>
+                                <div class="flex flex-wrap gap-1.5">
+                                    <button type="button" onclick="applyThemePreset('#F07197', '#A984E8', '#D95380', '#FFF7FA')" class="text-[10px] px-2.5 py-1 rounded-full bg-pink-100 border border-pink-300 text-pink-800 font-semibold">🍬 ชมพูพาสเทลหวานๆ (ค่าเริ่มต้น)</button>
+                                    <button type="button" onclick="applyThemePreset('#B07BAC', '#F497B6', '#8E5B8A', '#FCF7FF')" class="text-[10px] px-2.5 py-1 rounded-full bg-purple-100 border border-purple-300 text-purple-800 font-semibold">🦄 ม่วงลาเวนเดอร์พาสเทล</button>
+                                    <button type="button" onclick="applyThemePreset('#6B8E78', '#89B0AE', '#8C6D53', '#F6F8F4')" class="text-[10px] px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-300 text-emerald-800 font-semibold">🦌 กวางน้อยในสวน</button>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                                <div>
+                                    <span class="block text-[10px] text-nora-muted mb-1">สีหลัก (ปุ่ม/ขอบเรืองแสง):</span>
+                                    <input type="color" id="admThemePrimary" oninput="previewThemeFromPickers()" class="w-full h-8 rounded-lg cursor-pointer border border-pink-200">
+                                </div>
+                                <div>
+                                    <span class="block text-[10px] text-nora-muted mb-1">สีรอง (พาสเทล):</span>
+                                    <input type="color" id="admThemeSecondary" oninput="previewThemeFromPickers()" class="w-full h-8 rounded-lg cursor-pointer border border-pink-200">
+                                </div>
+                                <div>
+                                    <span class="block text-[10px] text-nora-muted mb-1">สีชื่อแบรนด์ด้านบน:</span>
+                                    <input type="color" id="admThemeBrown" oninput="previewThemeFromPickers()" class="w-full h-8 rounded-lg cursor-pointer border border-pink-200">
+                                </div>
+                                <div>
+                                    <span class="block text-[10px] text-nora-muted mb-1">สีพื้นหลังเว็บ:</span>
+                                    <input type="color" id="admThemeBg" oninput="previewThemeFromPickers()" class="w-full h-8 rounded-lg cursor-pointer border border-pink-200">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold mb-1">ปุ่ม Contact 1 (ชื่อปุ่ม | ลิงก์):</label>
+                            <div class="flex gap-2">
+                                <input type="text" id="admContact1Name" placeholder="ชื่อปุ่ม 1" class="w-1/2 px-3 py-1.5 rounded-xl border border-pink-200">
+                                <input type="text" id="admContact1Url" placeholder="https://..." class="w-1/2 px-3 py-1.5 rounded-xl border border-pink-200">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">ปุ่ม Contact 2 (ชื่อปุ่ม | ลิงก์):</label>
+                            <div class="flex gap-2">
+                                <input type="text" id="admContact2Name" placeholder="ชื่อปุ่ม 2" class="w-1/2 px-3 py-1.5 rounded-xl border border-pink-200">
+                                <input type="text" id="admContact2Url" placeholder="https://..." class="w-1/2 px-3 py-1.5 rounded-xl border border-pink-200">
+                            </div>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-bold mb-1">ลิงก์รูป Mascot ยืนมุมขวา (เว้นว่างไว้เพื่อใช้มาสคอตจำลอง):</label>
+                            <input type="text" id="admMascotUrl" placeholder="วางลิงก์รูปมาสคอตพื้นหลังใส (PNG)..." class="w-full px-3 py-1.5 rounded-xl border border-pink-200">
+                        </div>
+                    </div>
+
+                    <hr class="border-pink-100">
+
+                    <h4 class="font-bold text-sm text-nora-pinkDark">💬 ตั้งค่าข้อความแชทเด้งบนหัวมาสคอต</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-xs font-bold mb-1">ข้อความสถานะร้าน:</label>
+                            <input type="text" id="admStatusCustomTitle" placeholder="เช่น พร้อมเริ่มงาน / รับคิวด่วน" class="w-full px-3 py-1.5 rounded-xl border border-pink-200">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">สีไฟสถานะ:</label>
+                            <input type="color" id="admStatusCustomColor" class="w-full h-9 rounded-xl cursor-pointer border border-pink-200">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">ป้ายคิวว่างถัดไป:</label>
+                            <input type="text" id="admStatusWait" class="w-full px-3 py-1.5 rounded-xl border border-pink-200">
+                        </div>
+                        <div class="sm:col-span-3">
+                            <label class="block text-xs font-bold mb-1">ช่วงเวลาเริ่มทำ (เช่น 12:00-12:30 , 18:30เป็นต้นไป):</label>
+                            <input type="text" id="admStatusTimes" class="w-full px-3 py-1.5 rounded-xl border border-pink-200">
+                        </div>
+                    </div>
+
+                    <button onclick="saveGeneralAdmin()" class="bg-nora-pinkDark hover:opacity-90 text-white font-bold px-5 py-2 rounded-xl shadow-sm text-xs">
+                        💾 บันทึกข้อมูลร้าน & โทนสี
+                    </button>
+                </div>
+
+                <!-- TAB 2: Manage Check Q & Custom Queue Statuses -->
+                <div id="adminTab-queue" class="hidden space-y-4">
+                    <div class="bg-pink-50/60 p-3.5 rounded-2xl border border-pink-200 space-y-2.5">
+                        <h4 class="font-bold text-nora-text text-xs">🏷️ เพิ่ม/จัดการ "สถานะคิวงานและสีป้าย" ของร้านเอง</h4>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <input type="text" id="newCustomStatusLabel" placeholder="ชื่อสถานะใหม่ (เช่น รอบรีฟ / ส่งดราฟต์แรก)" class="px-3 py-1.5 rounded-xl border border-pink-200 text-xs bg-white flex-1 min-w-[180px]">
+                            <div class="flex items-center gap-1.5 bg-white px-2.5 py-1 rounded-xl border border-pink-200">
+                                <span class="text-[11px] text-nora-muted">สีป้าย:</span>
+                                <input type="color" id="newCustomStatusColor" value="#F07197" class="w-6 h-6 rounded cursor-pointer border-0">
+                            </div>
+                            <button onclick="addCustomQueueStatus()" class="bg-nora-brown text-white font-bold px-3.5 py-1.5 rounded-xl text-xs">
+                                + เพิ่มสถานะใหม่
+                            </button>
+                        </div>
+                        <div id="adminCustomStatusesList" class="flex flex-wrap gap-1.5 pt-1"></div>
+                    </div>
+
+                    <div class="bg-stone-50 p-3.5 rounded-2xl border border-pink-200 space-y-2.5">
+                        <h4 class="font-bold text-nora-pinkDark text-xs">➕ เพิ่มคิวงานใหม่ลงในช่อง Check Q</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+                            <input type="text" id="newQClient" placeholder="ชื่อลูกค้า / แบรนด์" class="px-3 py-1.5 rounded-xl border border-pink-200 text-xs bg-white">
+                            <input type="text" id="newQAgent" placeholder="รหัส/ชื่อตัวแทน" class="px-3 py-1.5 rounded-xl border border-pink-200 text-xs bg-white">
+                            <input type="text" id="newQType" placeholder="ประเภทงาน (เช่น ลายน้ำ V.2)" class="px-3 py-1.5 rounded-xl border border-pink-200 text-xs bg-white">
+                            <select id="newQStatus" class="px-3 py-1.5 rounded-xl border border-pink-200 bg-white text-xs"></select>
+                        </div>
+                        <button onclick="addQueueItem()" class="bg-nora-pinkDark text-white font-bold px-4 py-1.5 rounded-xl text-xs">
+                            + เพิ่มรายการคิว
+                        </button>
+                    </div>
+
+                    <div id="adminQueueManageList" class="space-y-2"></div>
+                </div>
+
+                <!-- TAB 3: Manage Fonts & Direct Local Font File Upload (.ttf / .otf / .woff2) -->
+                <div id="adminTab-fonts" class="hidden space-y-4">
+                    <div class="bg-pink-50/70 p-4 rounded-2xl border border-pink-200 space-y-3">
+                        <h4 class="font-bold text-nora-pinkDark text-xs sm:text-sm flex items-center gap-1.5">
+                            <i class="ph-bold ph-upload-simple"></i> อัปโหลดไฟล์ฟอนต์จากในเครื่อง (.ttf, .otf, .woff, .woff2) หรือวางลิงก์
+                        </h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                            <div>
+                                <label class="block text-[11px] font-bold mb-1">รหัสฟอนต์:</label>
+                                <input type="text" id="newFontId" placeholder="เช่น F09" class="w-full px-3 py-1.5 rounded-xl border border-pink-200 text-xs bg-white">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold mb-1">ชื่อเรียกฟอนต์:</label>
+                                <input type="text" id="newFontName" placeholder="เช่น Nora Cute Font" class="w-full px-3 py-1.5 rounded-xl border border-pink-200 text-xs bg-white">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold mb-1">ป้ายกำกับ (Tag):</label>
+                                <input type="text" id="newFontTag" placeholder="เช่น ฟอนต์ใหม่ร้าน" class="w-full px-3 py-1.5 rounded-xl border border-pink-200 text-xs bg-white">
+                            </div>
+                            <div class="sm:col-span-2">
+                                <label class="block text-[11px] font-bold mb-1 text-nora-pinkDark">📂 เลือกไฟล์ฟอนต์ที่ดาวน์โหลดไว้ในเครื่อง (.ttf / .otf / .woff2):</label>
+                                <input type="file" id="newFontLocalFile" accept=".ttf,.otf,.woff,.woff2" class="w-full px-2.5 py-1 rounded-xl border border-pink-200 text-xs bg-white file:mr-2 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-pink-100 file:text-nora-pinkDark hover:file:bg-pink-200">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold mb-1">หรือวางลิงก์ฟอนต์ (ถ้ามี):</label>
+                                <input type="text" id="newFontFileUrl" placeholder="https://..." class="w-full px-3 py-1.5 rounded-xl border border-pink-200 text-xs bg-white">
+                            </div>
+                        </div>
+                        <button onclick="addCustomFontFileAdmin()" class="bg-nora-pinkDark hover:opacity-90 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-sm">
+                            + อัปโหลดและบันทึกฟอนต์เข้าสู่ระบบ
+                        </button>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block font-bold text-nora-text text-xs">รายการฟอนต์ทั้งหมดในร้าน:</label>
+                        <div id="adminFontsManageList" class="space-y-2"></div>
+                    </div>
+                </div>
+
+                <!-- TAB 4: Rules, Rates & Promo Toggle -->
+                <div id="adminTab-content" class="hidden space-y-4">
+                    <div class="bg-pink-50 p-3.5 rounded-2xl border border-pink-200 flex items-center justify-between">
+                        <div>
+                            <h4 class="font-bold text-nora-text text-xs">เปิด/ปิด แถบเมนู "โปรโมชั่น"</h4>
+                            <p class="text-[11px] text-nora-muted">หากเดือนไหนไม่มีโปรโมชั่น สามารถกดปิดสวิตช์เพื่อซ่อนแถบนี้</p>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="admPromoEnabled" onchange="togglePromoVisibilityAdmin()" class="sr-only peer">
+                            <div class="w-11 h-6 bg-stone-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-nora-pinkDark"></div>
+                        </label>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label class="block font-bold text-nora-text text-xs">รายละเอียดโปรโมชั่น (บรรทัดละ 1 ข้อ):</label>
+                        <textarea id="admPromoText" rows="2" class="w-full p-2.5 rounded-xl border border-pink-200 text-xs"></textarea>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label class="block font-bold text-nora-text text-xs">กฎและข้อตกลง Rule (บรรทัดละ 1 ข้อ):</label>
+                        <textarea id="admRulesText" rows="3" class="w-full p-2.5 rounded-xl border border-pink-200 text-xs"></textarea>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label class="block font-bold text-nora-text text-xs">ตารางเรทส่ง (รูปแบบ: รายการงาน | เรทตัวแทน | ราคาขาย):</label>
+                        <textarea id="admRatesText" rows="3" class="w-full p-2.5 rounded-xl border border-pink-200 text-xs"></textarea>
+                    </div>
+
+                    <button onclick="saveContentAdmin()" class="bg-nora-pinkDark hover:opacity-90 text-white font-bold px-5 py-2 rounded-xl text-xs shadow-sm">
+                        💾 บันทึก กฎ / เรทส่ง / โปรโมชั่น
+                    </button>
+                </div>
+
+                <!-- TAB 5: Gallery & Receipt Payment Settings (KBank, PromptPay, TrueMoney Wallet) -->
+                <div id="adminTab-gallery" class="hidden space-y-4">
+                    <div class="bg-pink-50/70 p-3.5 rounded-2xl border border-pink-200 space-y-3">
+                        <h4 class="font-bold text-nora-pinkDark text-xs">🧾 ตั้งค่าใบเสร็จโอนเงิน & QR พร้อมเพย์อัตโนมัติ (กสิกร / พร้อมเพย์ / วอเล็ต)</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                            <div>
+                                <label class="block text-[11px] font-bold mb-1">ชื่อบัญชีหลัก (แสดงบนใบเสร็จ):</label>
+                                <input type="text" id="admPayAccName" placeholder="เช่น น.ส. โนร่า ดีไซน์" class="w-full px-3 py-1.5 rounded-xl border border-pink-200 text-xs bg-white">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold mb-1">เบอร์พร้อมเพย์ / เลขบัตร (ใช้สร้าง QR กำหนดยอดเงินอัตโนมัติ):</label>
+                                <input type="text" id="admPromptPayId" placeholder="เช่น 0891234567" class="w-full px-3 py-1.5 rounded-xl border border-pink-200 text-xs bg-white">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold mb-1">เลขบัญชี กสิกรไทย (KBank):</label>
+                                <input type="text" id="admKbankNo" placeholder="เช่น 123-4-56789-0" class="w-full px-3 py-1.5 rounded-xl border border-pink-200 text-xs bg-white">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold mb-1">เบอร์ ทรูมันนี่ วอเล็ต (TrueMoney Wallet):</label>
+                                <input type="text" id="admWalletNo" placeholder="เช่น 089-123-4567" class="w-full px-3 py-1.5 rounded-xl border border-pink-200 text-xs bg-white">
+                            </div>
+                            <div class="sm:col-span-2">
+                                <label class="block text-[11px] font-bold mb-1">ลิงก์รูป QR พร้อมเพย์ปกติของร้าน (กรณีลูกค้ายังไม่กรอกยอดเงิน - เว้นว่างเพื่อให้ระบบเจนให้ได้):</label>
+                                <input type="text" id="admDefaultQrImg" placeholder="https://... (ถ้าเว้นว่างระบบจะสร้าง QR พร้อมเพย์มาตรฐานจากเบอร์ข้างต้นให้ค่ะ)" class="w-full px-3 py-1.5 rounded-xl border border-pink-200 text-xs bg-white">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label class="block font-bold text-nora-text text-xs">จัดการตัวอย่างงานแต่ละเวอร์ชั่น (รูปแบบ: ชื่อเวอร์ชั่น | คำอธิบาย | ลิงก์รูปภาพ):</label>
+                        <textarea id="admVersionsText" rows="4" class="w-full p-2.5 rounded-xl border border-pink-200 text-xs"></textarea>
+                    </div>
+
+                    <button onclick="saveGalleryPaymentAdmin()" class="bg-nora-pinkDark hover:opacity-90 text-white font-bold px-5 py-2 rounded-xl text-xs shadow-sm">
+                        💾 บันทึกรูปตัวอย่างงาน & ข้อมูลใบเสร็จโอนเงิน
+                    </button>
+                </div>
+
+                <!-- TAB 6: Custom "+" Menus -->
+                <div id="adminTab-plusmenu" class="hidden space-y-4">
+                    <p class="text-xs text-nora-muted">เพิ่มแถบเมนูอิสระด้านล่างสุด [+] (เช่น แบบฟอร์มส่งบรีฟงาน หรือคลังรูปแจกตัวแทน)</p>
+                    <div id="admPlusMenuList" class="space-y-3"></div>
+                    <button onclick="addNewPlusMenuSlot()" class="bg-pink-50 hover:bg-pink-100 text-nora-pinkDark font-bold px-4 py-2 rounded-xl text-xs border border-pink-200">
+                        + เพิ่มแถบเมนูใหม่
+                    </button>
+                    <div class="pt-2">
+                        <button onclick="savePlusMenusAdmin()" class="bg-nora-pinkDark text-white font-bold px-5 py-2 rounded-xl text-xs">
+                            💾 บันทึกแถบเมนูเพิ่มเติม [+]
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="bg-pink-50/40 px-5 py-3 border-t border-pink-200 flex items-center justify-between text-xs">
+                <button onclick="resetDemoData()" class="text-rose-600 hover:underline font-semibold">
+                    รีเซ็ตข้อมูลกลับเป็นค่าเริ่มต้น (Reset Demo)
+                </button>
+                <button onclick="toggleAdminModal()" class="bg-stone-200 hover:bg-stone-300 text-stone-700 font-bold px-4 py-1.5 rounded-xl">
+                    ปิดหน้าต่าง
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fullscreen Font Studio Modal -->
+    <div id="fontStudioModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-2.5 sm:p-5">
+        <div class="bg-white w-full max-w-4xl rounded-[1.8rem] border-2 border-pink-200 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="bg-gradient-to-r from-pink-50 to-purple-50 px-5 py-3.5 border-b border-pink-200 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-nora-pinkDark text-white flex items-center justify-center shadow-sm">
+                        <i class="ph-bold ph-text-aa text-base"></i>
+                    </span>
+                    <div>
+                        <h3 class="font-bold text-sm sm:text-base text-nora-text">สตูดิโอทดลองพิมพ์ฟอนต์ (โหมดเต็มจอสำหรับแคปให้ลูกค้า)</h3>
+                        <p class="text-[11px] text-nora-muted font-body">พิมพ์ชื่อร้านหรือข้อความเพื่อให้ลูกค้าเทียบฟอนต์ชัดๆ ได้เลยค่ะ</p>
+                    </div>
+                </div>
+                <button onclick="closeFontStudioModal()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-nora-text border border-pink-200 flex items-center justify-center">
+                    <i class="ph-bold ph-x"></i>
+                </button>
+            </div>
+            <div class="p-4 bg-pink-50/40 border-b border-pink-100 flex flex-wrap items-center gap-3">
+                <input type="text" id="modalFontInput" value="watermark by nora" oninput="updateFontPreviews(this.value)" placeholder="พิมพ์ชื่อแบรนด์ลูกค้า..." class="flex-1 min-w-[200px] px-3.5 py-2 rounded-xl border border-pink-200 text-sm font-body bg-white focus:outline-none focus:border-nora-pinkDark">
+                <div class="flex items-center gap-2 text-xs font-body">
+                    <span>ขนาดตัวอักษร:</span>
+                    <input type="range" min="16" max="42" value="24" oninput="updateFontSize(this.value)" class="w-28 accent-[#F07197]">
+                </div>
+            </div>
+            <div id="modalFontGridArea" class="p-4 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-3 flex-1"></div>
+        </div>
+    </div>
+
+    <!-- Custom Toast Notification (Subtle Fade + Slide Popup) -->
+    <div id="toastBox" role="status" aria-live="polite" class="toast-popup fixed bottom-5 right-5 z-[70] pointer-events-none">
+        <div class="bg-nora-text/95 backdrop-blur-sm text-white px-4 py-2.5 rounded-2xl shadow-cute flex items-center gap-2.5 text-xs sm:text-sm font-body border border-pink-200/60">
+            <i class="ph-fill ph-check-circle text-nora-pink text-lg toast-check-icon"></i>
+            <span id="toastMessage">ดำเนินการสำเร็จ</span>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // ================= DEFAULT DEMO STATE =================
+        const defaultSiteData = {
+            siteName: "watermark by nora",
+            siteSub: "รับทำลายน้ำ โลโก้ ป้ายบัญชี และงานดีไซน์สุดคิวท์ เช็คเรทราคา ทดลองพิมพ์ฟอนต์ให้ลูกค้า และตรวจสอบคิวงานได้ครบในหน้าเดียว ✨",
+            logoUrl: "https://i.postimg.cc/BvVGXRTy/IMG-2178.png",
+            mascotUrl: "https://i.postimg.cc/DwQcPyhp/IMG-2179.png",
+            menuIconStyle: "heart", // 'heart', 'star', 'sparkle', 'flower', 'bow'
+            themeColors: {
+                primary: "#F07197",   // Sweet Pink
+                secondary: "#A984E8", // Soft Lavender
+                brown: "#D95380",     // Berry Pink
+                bg: "#FFF7FA"         // Cotton Candy Cream
+            },
+            contact1: { label: "ติดต่อแอดมิน", url: "https://line.me" },
+            contact2: { label: "กลุ่มตัวแทน", url: "https://facebook.com" },
+            status: {
+                customTitle: "พร้อมเริ่มงาน",
+                customColor: "#F07197",
+                timesText: "12:00-12:30 , 18:30 เป็นต้นไป",
+                waitBadge: "คิวว่างถัดไป: พรุ่งนี้"
+            },
+            queueStatusOptions: [
+                { label: "รอคิว", color: "#F59E0B" },
+                { label: "กำลังทำ", color: "#F07197" },
+                { label: "รอคอนเฟิร์ม", color: "#8B5CF6" },
+                { label: "เสร็จแล้ว", color: "#10B981" }
+            ],
+            promoEnabled: true,
+            promos: [
+                "🎀 โปรตัวแทนเปิดบิลสะสมครบ 5 ชิ้นในเดือนนี้ รับส่วนลดท้ายบิลทันที 50.-",
+                "✨ สั่งทำลายน้ำคู่ป้ายบัญชี ลดเพิ่มชิ้นละ 15.- (แจ้งโค้ด NORA-CUTE กับแอดมิน)"
+            ],
+            rules: [
+                "1. ตัวแทนต้องแจ้งรายละเอียดบรีฟงานและรหัสตัวแทนให้ครบถ้วนทุกครั้งก่อนส่งคิว",
+                "2. ชำระยอดมัดจำหรือยอดเต็มตามเรทตัวแทนก่อนเริ่มขึ้นงาน",
+                "3. งานแต่ละชิ้นสามารถแก้ไขจุดเล็กน้อยได้ฟรี 2 ครั้ง (หากเปลี่ยนคอนเซปต์ใหม่ทั้งหมดมีค่าบริการเพิ่มเติม)",
+                "4. ห้ามนำเรทราคาส่งของตัวแทนไปเผยแพร่สาธารณะ หรือตั้งราคาขายต่ำกว่าราคาขั้นต่ำที่ร้านกำหนด"
+            ],
+            rates: [
+                { item: "ลายน้ำชื่อร้าน (V.1 มินิมอล)", agentPrice: "69.-", retailPrice: "99 - 120.-" },
+                { item: "ลายน้ำพร้อมคาแรคเตอร์/ของตกแต่ง (V.2)", agentPrice: "119.-", retailPrice: "159 - 190.-" },
+                { item: "ลายน้ำจัดเต็ม + กรอบรีวิว (V.3 Full Set)", agentPrice: "179.-", retailPrice: "239 - 290.-" },
+                { item: "ป้ายบัญชี / ป้ายกติกาสุดคิวท์", agentPrice: "89.-", retailPrice: "129 - 150.-" }
+            ],
+            fonts: [
+                { id: "F01", name: "Nora Mali Cute (มะลิ)", cssClass: "font-mali", tag: "ยอดฮิตอันดับ 1", type: "preset" },
+                { id: "F02", name: "Nora Itim Sweet (ไอติม)", cssClass: "font-itim", tag: "อ่านง่าย น่ารัก", type: "preset" },
+                { id: "F03", name: "Nora Kodchasan (คชสาร)", cssClass: "font-kodchasan", tag: "มินิมอล ทันสมัย", type: "preset" },
+                { id: "F04", name: "Nora Sriracha (ศรีราชา)", cssClass: "font-sriracha", tag: "พู่กันมีมิติ", type: "preset" },
+                { id: "F05", name: "Nora Pattaya (พัทยา)", cssClass: "font-pattaya", tag: "หัวมน ป๊อปอาร์ต", type: "preset" },
+                { id: "F06", name: "Nora Charm (ชาร์ม)", cssClass: "font-charm", tag: "หรูหรา อ่อนช้อย", type: "preset" },
+                { id: "F07", name: "Nora Mitr (มิตร)", cssClass: "font-mitr", tag: "ตัวอ้วนกลม", type: "preset" },
+                { id: "F08", name: "Nora Chakra (จักรเพชร)", cssClass: "font-chakra", tag: "เท่ ทันสมัย", type: "preset" }
+            ],
+            versions: [
+                { title: "Version 1 : Soft Minimal", desc: "เน้นตัวอักษรน่ารักคุมโทนหวาน ใส่ของตกแต่งเล็กน้อย", img: "https://placehold.co/500x340/FCE4EC/593A47?text=Demo+Version+1" },
+                { title: "Version 2 : Sweet Mascot", desc: "ลายน้ำพร้อมวาดของตกแต่ง/มาสคอตประจำร้านสุดคิวท์", img: "https://placehold.co/500x340/F3E8FF/593A47?text=Demo+Version+2" },
+                { title: "Version 3 : Luxury Glossy", desc: "ลายน้ำมิติเงาวิ้งค์ โดดเด่น ติดลงรูปสินค้าแล้วดูแพงมาก", img: "https://placehold.co/500x340/FFE4E6/593A47?text=Demo+Version+3" },
+                { title: "Version 4 : Banner & Template", desc: "เซ็ตป้ายบัญชี กรอบรีวิว และป้ายแจ้งเลขพัสดุเข้าเซ็ต", img: "https://placehold.co/500x340/E0F2FE/593A47?text=Demo+Version+4" }
+            ],
+            paymentConfig: {
+                accName: "น.ส. โนร่า ดีไซน์ (watermark by nora)",
+                kbankNo: "123-4-56789-0",
+                promptPayId: "0891234567",
+                walletNo: "089-123-4567",
+                defaultQrImg: ""
+            },
+            queues: [
+                { id: "Q-101", client: "ร้าน Beary Bake", agent: "ตัวแทน A04 (คุณมิว)", type: "ลายน้ำ V.2 + ป้ายบัญชี", status: "กำลังทำ", date: "ส่งงานวันนี้" },
+                { id: "Q-102", client: "แบรนด์ Glow Skin", agent: "ตัวแทน A12 (คุณฟ้า)", type: "ลายน้ำ V.3 Glossy", status: "รอคอนเฟิร์ม", date: "เช็คดราฟต์" },
+                { id: "Q-103", client: "ร้าน Kitty Nails", agent: "ตัวแทน A02 (คุณเนย)", type: "ลายน้ำ V.1 มินิมอล", status: "รอคิว", date: "คิวพรุ่งนี้" },
+                { id: "Q-104", client: "ร้าน Sweetie Cafe", agent: "ตัวแทน A09 (คุณพิม)", type: "กรอบรีวิว + โลโก้", status: "รอคิว", date: "คิวถัดไป" },
+                { id: "Q-100", client: "ร้าน Bunny Shop", agent: "ตัวแทน A04 (คุณมิว)", type: "ลายน้ำ V.2", status: "เสร็จแล้ว", date: "ส่งมอบแล้ว" }
+            ],
+            plusMenus: [
+                { title: "แบบฟอร์มส่งบรีฟงานสำหรับตัวแทน", content: "📌 ตัวแทนสามารถก๊อปปี้ฟอร์มนี้ส่งให้แอดมินได้เลยค่ะ:\n- รหัสตัวแทน:\n- ชื่อแบรนด์ลูกค้า:\n- โทนสีที่ต้องการ:\n- รหัสฟอนต์ที่ลูกค้าเลือก:\n- เวอร์ชั่นงาน:" },
+                { title: "คลังภาพรีวิว & กรอบโปรโมท (แจกฟรีตัวแทน)", content: "✨ ตัวแทนสามารถดาวน์โหลดภาพตัวอย่างไร้ลายน้ำร้าน เพื่อนำไปโพสต์หาลูกค้าในเพจหรือไอจีของตัวเองได้เลย" }
+            ]
+        };
+
+        let siteData = {};
+        let currentFontSize = 20;
+        let selectedPaymentChannel = 'promptpay'; // 'kbank', 'promptpay', 'wallet'
+        let mascotBubbleHidden = false;
+        let mascotSpeechRevertTimer = null;
+        let currentMascotContext = 'home'; // 'home', 'font', 'copied', 'error'
+        let lastFontFocusNotified = false;
+
+        function loadSiteData() {
+            try {
+                const saved = localStorage.getItem('nora_watermark_demo_v6');
+                if (saved) {
+                    siteData = Object.assign({}, JSON.parse(JSON.stringify(defaultSiteData)), JSON.parse(saved));
+                    if (!siteData.themeColors) siteData.themeColors = JSON.parse(JSON.stringify(defaultSiteData.themeColors));
+                    if (!siteData.queueStatusOptions) siteData.queueStatusOptions = JSON.parse(JSON.stringify(defaultSiteData.queueStatusOptions));
+                    if (!siteData.paymentConfig) siteData.paymentConfig = JSON.parse(JSON.stringify(defaultSiteData.paymentConfig));
+                    if (!siteData.mascotUrl || siteData.mascotUrl.trim() === '') {
+                        siteData.mascotUrl = defaultSiteData.mascotUrl;
+                    }
+                } else {
+                    siteData = JSON.parse(JSON.stringify(defaultSiteData));
+                }
+            } catch (e) {
+                siteData = JSON.parse(JSON.stringify(defaultSiteData));
+            }
+        }
+
+        function saveSiteData() {
+            try {
+                localStorage.setItem('nora_watermark_demo_v6', JSON.stringify(siteData));
+            } catch (e) {
+                console.error("Storage error", e);
+            }
+        }
+
+        function hexToRgbString(hex, fallback = "240, 113, 151") {
+            if (!hex || typeof hex !== 'string') return fallback;
+            const clean = hex.replace('#', '').trim();
+            if (clean.length === 3) {
+                const r = parseInt(clean[0] + clean[0], 16);
+                const g = parseInt(clean[1] + clean[1], 16);
+                const b = parseInt(clean[2] + clean[2], 16);
+                if (!isNaN(r) && !isNaN(g) && !isNaN(b)) return `${r}, ${g}, ${b}`;
+            } else if (clean.length === 6) {
+                const r = parseInt(clean.substring(0, 2), 16);
+                const g = parseInt(clean.substring(2, 4), 16);
+                const b = parseInt(clean.substring(4, 6), 16);
+                if (!isNaN(r) && !isNaN(g) && !isNaN(b)) return `${r}, ${g}, ${b}`;
+            }
+            return fallback;
+        }
+
+        // Apply custom theme variables to root (including dynamic RGB for glowing borders)
+        function applyThemeColorsCSS() {
+            const tc = siteData.themeColors || defaultSiteData.themeColors;
+            const primaryRgb = hexToRgbString(tc.primary, "240, 113, 151");
+            const secondaryRgb = hexToRgbString(tc.secondary, "169, 132, 232");
+            document.getElementById('customThemeVars').innerHTML = `
+                :root {
+                    --theme-primary: ${tc.primary};
+                    --theme-primary-rgb: ${primaryRgb};
+                    --theme-secondary: ${tc.secondary};
+                    --theme-secondary-rgb: ${secondaryRgb};
+                    --theme-brown: ${tc.brown};
+                    --theme-bg: ${tc.bg};
+                }
+            `;
+        }
+
+        // Solid (filled, non-hollow) SVG icons in a bright, lively pastel-matching tone (var(--theme-primary))
+        function getMenuIconHtml(style) {
+            const fillColor = "var(--theme-primary)";
+            const filterGlow = "drop-shadow(0 1px 3px rgba(var(--theme-primary-rgb), 0.35))";
+            switch(style) {
+                case 'star':
+                    return `<svg viewBox="0 0 24 24" class="w-4 h-4" fill="${fillColor}" style="filter: ${filterGlow};">
+                        <path d="M12 2.25c.41 0 .79.23.97.6l2.36 4.78 5.28.77c.41.06.75.35.88.74.13.39.02.82-.28 1.11l-3.82 3.72.9 5.26c.07.41-.1.82-.43 1.06-.33.24-.77.27-1.14.08L12 17.88l-4.72 2.49c-.37.19-.81.16-1.14-.08-.33-.24-.5-.65-.43-1.06l.9-5.26-3.82-3.72c-.3-.29-.41-.72-.28-1.11.13-.39.47-.68.88-.74l5.28-.77 2.36-4.78c.18-.37.56-.6.97-.6Z"/>
+                    </svg>`;
+                case 'sparkle':
+                    return `<svg viewBox="0 0 24 24" class="w-4 h-4" fill="${fillColor}" style="filter: ${filterGlow};">
+                        <path d="M11.5 2C11.9 2 12.2 2.3 12.3 2.7L14.2 8.8L20.3 10.7C20.7 10.8 21 11.1 21 11.5C21 11.9 20.7 12.2 20.3 12.3L14.2 14.2L12.3 20.3C12.2 20.7 11.9 21 11.5 21C11.1 21 10.8 20.7 10.7 20.3L8.8 14.2L2.7 12.3C2.3 12.2 2 11.9 2 11.5C2 11.1 2.3 10.8 2.7 10.7L8.8 8.8L10.7 2.7C10.8 2.3 11.1 2 11.5 2ZM19 2.5C19.2 2.5 19.4 2.7 19.5 2.9L20.1 4.9L22.1 5.5C22.3 5.6 22.5 5.8 22.5 6C22.5 6.2 22.3 6.4 22.1 6.5L20.1 7.1L19.5 9.1C19.4 9.3 19.2 9.5 19 9.5C18.8 9.5 18.6 9.3 18.5 9.1L17.9 7.1L15.9 6.5C15.7 6.4 15.5 6.2 15.5 6C15.5 5.8 15.7 5.6 15.9 5.5L17.9 4.9L18.5 2.9C18.6 2.7 18.8 2.5 19 2.5Z"/>
+                    </svg>`;
+                case 'flower':
+                    return `<svg viewBox="0 0 24 24" class="w-4 h-4" fill="${fillColor}" style="filter: ${filterGlow};">
+                        <path d="M12 2.5a3.5 3.5 0 0 1 3.32 4.6 3.5 3.5 0 0 1 4.18 5.4 3.5 3.5 0 0 1-2.5 5.95 3.5 3.5 0 0 1-5 1.8 3.5 3.5 0 0 1-5-1.8A3.5 3.5 0 0 1 4.5 12.5a3.5 3.5 0 0 1 4.18-5.4A3.5 3.5 0 0 1 12 2.5Zm0 7a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z"/>
+                    </svg>`;
+                case 'bow':
+                    return `<svg viewBox="0 0 24 24" class="w-4 h-4" fill="${fillColor}" style="filter: ${filterGlow};">
+                        <path d="M4.2 5.3C2.7 6.3 2 8.2 2 10.5c0 2.3.7 4.2 2.2 5.2 1.6 1 3.9.4 6.2-1.5l.6 4.8 1.5-1 .9 1 1.5-1 .6-4.8c2.3 1.9 4.6 2.5 6.2 1.5 1.5-1 2.2-2.9 2.2-5.2 0-2.3-.7-4.2-2.2-5.2-1.7-1.1-4.2-.3-6.6 1.8a2.6 2.6 0 0 0-4.2 0C8.4 5 5.9 4.2 4.2 5.3Z"/>
+                    </svg>`;
+                case 'heart':
+                default:
+                    return `<svg viewBox="0 0 24 24" class="w-4 h-4" fill="${fillColor}" style="filter: ${filterGlow};">
+                        <path d="M12 20.5c-.3 0-.6-.1-.8-.3C6.1 15.9 2.5 12.4 2.5 8.4 2.5 5.2 5 2.8 8.1 2.8c1.7 0 3.1.8 3.9 2 .8-1.2 2.2-2 3.9-2 3.1 0 5.6 2.4 5.6 5.6 0 4-3.6 7.5-8.7 11.8-.2.2-.5.3-.8.3Z"/>
+                    </svg>`;
+            }
+        }
+
+        // Apply custom uploaded font files dynamically via @font-face
+        function applyCustomFontsCSS() {
+            let cssString = '';
+            siteData.fonts.forEach(f => {
+                if (f.type === 'custom' && f.fileUrl) {
+                    const fontClassName = `custom-font-${f.id.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
+                    cssString += `
+                        @font-face {
+                            font-family: '${fontClassName}';
+                            src: url('${f.fileUrl}');
+                        }
+                        .${fontClassName} {
+                            font-family: '${fontClassName}', 'Kanit', sans-serif !important;
+                        }
+                    `;
+                }
+            });
+            document.getElementById('customDynamicFontsStyle').innerHTML = cssString;
+        }
+
+        function renderAll() {
+            applyThemeColorsCSS();
+            applyCustomFontsCSS();
+
+            // 1. Header & Contacts
+            document.getElementById('siteNameDisplay').textContent = siteData.siteName;
+            document.getElementById('siteSubDisplay').textContent = siteData.siteSub;
+            document.getElementById('siteLogoImg').src = siteData.logoUrl;
+
+            // Mascot standing
+            const mascotImgEl = document.getElementById('mascotImg');
+            const defaultSvgEl = document.getElementById('defaultStandingMascotSvg');
+            if (siteData.mascotUrl && siteData.mascotUrl.trim() !== '') {
+                mascotImgEl.src = siteData.mascotUrl;
+                mascotImgEl.classList.remove('hidden');
+                defaultSvgEl.classList.add('hidden');
+            } else {
+                mascotImgEl.classList.add('hidden');
+                defaultSvgEl.classList.remove('hidden');
+            }
+
+            document.getElementById('contactLabel1').textContent = siteData.contact1.label;
+            document.getElementById('contactBtn1').href = siteData.contact1.url;
+            document.getElementById('contactLabel2').textContent = siteData.contact2.label;
+            document.getElementById('contactBtn2').href = siteData.contact2.url;
+            // Set solid filled SVG icon across menu bars
+            const validSolidIcons = ['heart', 'star', 'sparkle', 'flower', 'bow'];
+            const activeIconStyle = validSolidIcons.includes(siteData.menuIconStyle) ? siteData.menuIconStyle : 'heart';
+            ['rule', 'rates', 'promo', 'fonts', 'versions', 'payment'].forEach(id => {
+                const el = document.getElementById(`icon-${id}`);
+                if (el) el.innerHTML = getMenuIconHtml(activeIconStyle);
+            });
+
+            // 2. Rules
+            const ruleContainer = document.getElementById('ruleBodyList');
+            ruleContainer.innerHTML = siteData.rules.map(r => `
+                <div class="flex items-start gap-2 cute-inner-card p-2.5 text-xs">
+                    <i class="ph-fill ph-leaf text-nora-pinkDark text-sm shrink-0 mt-0.5"></i>
+                    <span>${escapeHtml(r)}</span>
+                </div>
+            `).join('');
+
+            // 3. Rates
+            const ratesBody = document.getElementById('ratesTableBody');
+            ratesBody.innerHTML = siteData.rates.map(r => `
+                <tr class="hover:bg-stone-50/60">
+                    <td class="py-1.5 px-2.5 font-medium text-nora-text">${escapeHtml(r.item)}</td>
+                    <td class="py-1.5 px-2 text-center font-bold text-nora-pinkDark">${escapeHtml(r.agentPrice)}</td>
+                    <td class="py-1.5 px-2 text-center text-nora-muted">${escapeHtml(r.retailPrice)}</td>
+                </tr>
+            `).join('');
+
+            // 4. Promotion
+            const promoWrapper = document.getElementById('promoMenuWrapper');
+            if (siteData.promoEnabled && siteData.promos.length > 0) {
+                promoWrapper.classList.remove('hidden');
+                document.getElementById('promoBodyContent').innerHTML = siteData.promos.map(p => `
+                    <div class="bg-white p-2.5 rounded-xl border border-dashed border-amber-300 text-xs text-nora-text shadow-sm">
+                        ${escapeHtml(p)}
+                    </div>
+                `).join('');
+            } else {
+                promoWrapper.classList.add('hidden');
+            }
+
+            // 5. Fonts Preview
+            const currentSampleText = document.getElementById('fontPreviewInput')?.value || 'watermark by nora';
+            renderFontCards(currentSampleText);
+
+            // 6. Versions Gallery
+            const versionsGrid = document.getElementById('versionsGalleryGrid');
+            versionsGrid.innerHTML = siteData.versions.map(v => `
+                <div class="bg-white rounded-xl border border-pink-100 overflow-hidden shadow-sm hover:shadow transition group">
+                    <div class="aspect-[16/11] bg-pink-50 overflow-hidden relative">
+                        <img src="${escapeHtml(v.img)}" alt="${escapeHtml(v.title)}" 
+                             onerror="this.src='https://placehold.co/500x340/FCE4EC/593A47?text=Demo+Image'"
+                             class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                    </div>
+                    <div class="p-2 font-body">
+                        <h4 class="font-bold text-xs text-nora-text truncate">${escapeHtml(v.title)}</h4>
+                        <p class="text-[10px] text-nora-muted mt-0.5 line-clamp-2">${escapeHtml(v.desc)}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            // 7. Interactive Receipt & Dynamic PromptPay QR Payment Section
+            renderReceiptPaymentSection();
+
+            // 8. Custom "+" Menus
+            const plusContainer = document.getElementById('customPlusMenusContainer');
+            plusContainer.innerHTML = siteData.plusMenus.map((pm, idx) => `
+                <div class="cute-box overflow-hidden font-body">
+                    <button id="btn-plus-${idx}" onclick="toggleMenuSection('plus-${idx}')" class="menu-detail-btn w-full px-3.5 py-2.5 flex items-center justify-between text-left bg-white relative z-10 font-body">
+                        <div class="flex items-center gap-2.5">
+                            <span id="arrow-plus-${idx}" class="w-7 h-7 rounded-xl icon-glow-frame text-nora-pinkDark flex items-center justify-center shrink-0">
+                                <i class="ph-bold ph-plus text-[11px] menu-plus-icon"></i>
+                            </span>
+                            <span class="font-medium text-xs sm:text-sm text-nora-text">${escapeHtml(pm.title)}</span>
+                        </div>
+                        <span class="text-[10px] text-nora-muted font-body flex items-center gap-1">
+                            เพิ่มเติม <i class="ph-bold ph-caret-down text-[10px] menu-caret-icon"></i>
+                        </span>
+                    </button>
+                    <div id="content-plus-${idx}" class="accordion-content border-t border-pink-100 bg-white relative z-10">
+                        <div class="p-3 text-xs font-body whitespace-pre-line text-nora-text flex flex-col gap-2">
+                            <div class="cute-inner-card p-2.5">${escapeHtml(pm.content)}</div>
+                            <div>
+                                <button onclick="copyTextToClipboard(\`${escapeHtml(pm.content)}\`)" class="text-[11px] bg-white icon-glow-frame text-nora-pinkDark px-2.5 py-1 rounded-lg font-medium hover:bg-pink-50">
+                                    <i class="ph-bold ph-copy"></i> คัดลอกข้อความ
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // 9. Right Column: Populate Custom Filter Statuses, Check Q & Compact Status Popup Widget
+            populateQueueFilterOptions();
+            renderQueueList();
+            renderStatusWidget();
+        }
+
+        // ================= INTERACTIVE RECEIPT & DYNAMIC QR PAYMENT =================
+        function renderReceiptPaymentSection() {
+            const payContainer = document.getElementById('paymentMethodsContainer');
+            if (!payContainer) return;
+            const pc = siteData.paymentConfig || defaultSiteData.paymentConfig;
+            const currentAmount = document.getElementById('receiptAmountInput')?.value || '';
+
+            payContainer.innerHTML = `
+                <div class="receipt-card p-3.5 space-y-3">
+                    <!-- Receipt Top Header -->
+                    <div class="text-center border-b border-dashed border-pink-200 pb-2.5">
+                        <div class="inline-flex items-center gap-1 text-[10px] font-bold text-nora-pinkDark bg-pink-50 px-2.5 py-0.5 rounded-full border border-pink-200 mb-1">
+                            <i class="ph-fill ph-receipt"></i> PAYMENT RECEIPT • ใบแจ้งยอดโอน
+                        </div>
+                        <h4 class="font-bold text-xs sm:text-sm text-nora-text">${escapeHtml(pc.accName)}</h4>
+                        <p class="text-[10px] text-nora-muted">เลือกช่องทางโอน หรือกรอกยอดเงินเพื่อให้ QR ปรับตามยอดอัตโนมัติ</p>
+                    </div>
+
+                    <!-- 3 Channel Selector Tabs: KBank, PromptPay, Wallet -->
+                    <div class="grid grid-cols-3 gap-1.5 text-[11px] font-bold">
+                        <button type="button" onclick="selectPaymentTab('kbank')" id="payTab-kbank"
+                                class="py-1.5 px-2 rounded-xl border transition flex flex-col items-center gap-0.5 ${selectedPaymentChannel === 'kbank' ? 'bg-emerald-500 text-white border-emerald-600 shadow-sm' : 'bg-emerald-50/60 text-emerald-800 border-emerald-200 hover:bg-emerald-100/70'}">
+                            <span>🏦 กสิกรไทย</span>
+                            <span class="text-[9px] opacity-85">KBank</span>
+                        </button>
+                        <button type="button" onclick="selectPaymentTab('promptpay')" id="payTab-promptpay"
+                                class="py-1.5 px-2 rounded-xl border transition flex flex-col items-center gap-0.5 ${selectedPaymentChannel === 'promptpay' ? 'bg-sky-600 text-white border-sky-700 shadow-sm' : 'bg-sky-50/70 text-sky-800 border-sky-200 hover:bg-sky-100/70'}">
+                            <span>📲 พร้อมเพย์</span>
+                            <span class="text-[9px] opacity-85">PromptPay QR</span>
+                        </button>
+                        <button type="button" onclick="selectPaymentTab('wallet')" id="payTab-wallet"
+                                class="py-1.5 px-2 rounded-xl border transition flex flex-col items-center gap-0.5 ${selectedPaymentChannel === 'wallet' ? 'bg-orange-500 text-white border-orange-600 shadow-sm' : 'bg-orange-50/70 text-orange-800 border-orange-200 hover:bg-orange-100/70'}">
+                            <span>🧡 วอเล็ต</span>
+                            <span class="text-[9px] opacity-85">TrueMoney</span>
+                        </button>
+                    </div>
+
+                    <!-- Selected Channel Account Number Box -->
+                    <div id="selectedPayChannelDetail" class="cute-inner-card p-2.5 flex items-center justify-between gap-2">
+                        <!-- Populated by updateReceiptChannelView() -->
+                    </div>
+
+                    <!-- Perforated Receipt Divider -->
+                    <div class="receipt-perforation pt-3 space-y-2.5">
+                        <div>
+                            <label class="block text-[11px] font-bold text-nora-text mb-1">
+                                🪙 กรอกยอดเงินที่ต้องการชำระ (บาท) <span class="text-nora-muted font-normal">(ไม่บังคับ)</span>:
+                            </label>
+                            <div class="flex gap-1.5">
+                                <input type="number" id="receiptAmountInput" value="${escapeHtml(currentAmount)}"
+                                       oninput="updateDynamicReceiptQR(this.value)"
+                                       placeholder="เว้นว่าง = QR ปกติ | พิมพ์ยอด = QR ล็อกยอดทันที"
+                                       class="w-full px-3 py-1.5 rounded-xl border border-pink-200 focus:border-nora-pinkDark focus:outline-none text-xs bg-white">
+                                <button type="button" onclick="updateDynamicReceiptQR('')" class="px-2.5 py-1 rounded-xl bg-pink-50 hover:bg-pink-100 text-nora-pinkDark text-[11px] font-bold border border-pink-200 shrink-0">
+                                    ล้างยอด
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Morphing PromptPay QR Container -->
+                        <div id="qrMorphWrapper" class="qr-morph-box bg-gradient-to-b from-white to-pink-50/50 p-3 rounded-2xl border border-pink-200 flex flex-col items-center text-center">
+                            <div id="qrModeBadge" class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-800 border border-sky-200 mb-2">
+                                📲 คิวอาร์พร้อมเพย์ปกติ (สแกนแล้วกรอกยอดเอง)
+                            </div>
+                            <div class="w-36 h-36 bg-white p-2 rounded-xl border border-pink-200 shadow-sm flex items-center justify-center overflow-hidden">
+                                <img id="receiptQrImg" src="" alt="PromptPay QR" class="w-full h-full object-contain">
+                            </div>
+                            <div id="qrAmountSummary" class="mt-2 text-xs font-bold text-nora-text">
+                                ยอดชำระ: <span class="text-nora-pinkDark">ตามตกลง (ยังไม่ระบุยอด)</span>
+                            </div>
+                            <div class="text-[10px] text-nora-muted mt-0.5">พร้อมเพย์: ${escapeHtml(pc.promptPayId)} (${escapeHtml(pc.accName)})</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            updateReceiptChannelView();
+            updateDynamicReceiptQR(currentAmount);
+        }
+
+        function selectPaymentTab(channel) {
+            selectedPaymentChannel = channel;
+            ['kbank', 'promptpay', 'wallet'].forEach(ch => {
+                const btn = document.getElementById(`payTab-${ch}`);
+                if (!btn) return;
+                if (ch === channel) {
+                    if (ch === 'kbank') btn.className = "py-1.5 px-2 rounded-xl border transition flex flex-col items-center gap-0.5 bg-emerald-500 text-white border-emerald-600 shadow-sm";
+                    if (ch === 'promptpay') btn.className = "py-1.5 px-2 rounded-xl border transition flex flex-col items-center gap-0.5 bg-sky-600 text-white border-sky-700 shadow-sm";
+                    if (ch === 'wallet') btn.className = "py-1.5 px-2 rounded-xl border transition flex flex-col items-center gap-0.5 bg-orange-500 text-white border-orange-600 shadow-sm";
+                } else {
+                    if (ch === 'kbank') btn.className = "py-1.5 px-2 rounded-xl border transition flex flex-col items-center gap-0.5 bg-emerald-50/60 text-emerald-800 border-emerald-200 hover:bg-emerald-100/70";
+                    if (ch === 'promptpay') btn.className = "py-1.5 px-2 rounded-xl border transition flex flex-col items-center gap-0.5 bg-sky-50/70 text-sky-800 border-sky-200 hover:bg-sky-100/70";
+                    if (ch === 'wallet') btn.className = "py-1.5 px-2 rounded-xl border transition flex flex-col items-center gap-0.5 bg-orange-50/70 text-orange-800 border-orange-200 hover:bg-orange-100/70";
+                }
+            });
+            updateReceiptChannelView();
+        }
+
+        function updateReceiptChannelView() {
+            const box = document.getElementById('selectedPayChannelDetail');
+            if (!box) return;
+            const pc = siteData.paymentConfig || defaultSiteData.paymentConfig;
+            let title = "พร้อมเพย์ (PromptPay)";
+            let number = pc.promptPayId;
+            let badgeColor = "text-sky-700";
+
+            if (selectedPaymentChannel === 'kbank') {
+                title = "ธนาคารกสิกรไทย (KBank)";
+                number = pc.kbankNo;
+                badgeColor = "text-emerald-700";
+            } else if (selectedPaymentChannel === 'wallet') {
+                title = "ทรูมันนี่ วอเล็ต (TrueMoney Wallet)";
+                number = pc.walletNo;
+                badgeColor = "text-orange-600";
+            }
+
+            box.innerHTML = `
+                <div>
+                    <div class="text-[10px] font-bold ${badgeColor}">${escapeHtml(title)}</div>
+                    <div class="text-sm font-bold text-nora-text tracking-wide">${escapeHtml(number)}</div>
+                    <div class="text-[10px] text-nora-muted">${escapeHtml(pc.accName)}</div>
+                </div>
+                <button type="button" onclick="copyTextToClipboard('${escapeHtml(number)}')"
+                        class="bg-white hover:bg-pink-50 text-nora-pinkDark font-bold text-[11px] px-2.5 py-1.5 rounded-xl border border-pink-200 flex items-center gap-1 shadow-sm transition">
+                    <i class="ph-bold ph-copy"></i> คัดลอกเลข
+                </button>
+            `;
+        }
+
+        function updateDynamicReceiptQR(amountVal) {
+            const inputEl = document.getElementById('receiptAmountInput');
+            if (inputEl && inputEl.value !== String(amountVal)) {
+                inputEl.value = amountVal;
+            }
+            const pc = siteData.paymentConfig || defaultSiteData.paymentConfig;
+            const cleanId = (pc.promptPayId || "0891234567").replace(/[^0-9]/g, '');
+            const qrImg = document.getElementById('receiptQrImg');
+            const badge = document.getElementById('qrModeBadge');
+            const summary = document.getElementById('qrAmountSummary');
+            const morphBox = document.getElementById('qrMorphWrapper');
+            if (!qrImg || !badge || !summary || !morphBox) return;
+
+            const numAmount = parseFloat(amountVal);
+            if (!isNaN(numAmount) && numAmount > 0) {
+                // Morph/shrink animation into fixed-amount PromptPay QR
+                morphBox.classList.add('qr-morph-active');
+                badge.className = "text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-nora-pinkDark text-white shadow-sm mb-2";
+                badge.innerHTML = `✨ QR ล็อกยอดโอนอัตโนมัติ (${numAmount.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} บาท)`;
+                summary.innerHTML = `ยอดชำระสุทธิ: <span class="text-nora-pinkDark text-sm">${numAmount.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ฿</span>`;
+                qrImg.src = `https://promptpay.io/${cleanId}/${numAmount.toFixed(2)}.png`;
+                qrImg.onerror = function() {
+                    this.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PromptPay:${cleanId}-Amount:${numAmount.toFixed(2)}`;
+                };
+            } else {
+                // Standard PromptPay QR (no amount locked)
+                morphBox.classList.remove('qr-morph-active');
+                badge.className = "text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-800 border border-sky-200 mb-2";
+                badge.innerHTML = `📲 คิวอาร์พร้อมเพย์ปกติ (สแกนแล้วกรอกยอดเอง)`;
+                summary.innerHTML = `ยอดชำระ: <span class="text-nora-pinkDark">พร้อมเพย์ปกติ (ไม่ระบุยอด)</span>`;
+                if (pc.defaultQrImg && pc.defaultQrImg.trim() !== '') {
+                    qrImg.src = pc.defaultQrImg;
+                } else {
+                    qrImg.src = `https://promptpay.io/${cleanId}.png`;
+                }
+                qrImg.onerror = function() {
+                    this.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PromptPay:${cleanId}`;
+                };
+            }
+        }
+        function renderFontCards(sampleText) {
+            const textToDisplay = sampleText.trim() !== '' ? sampleText : 'watermark by nora';
+            const container = document.getElementById('fontCardsContainer');
+            const modalGrid = document.getElementById('modalFontGridArea');
+
+            const htmlCards = siteData.fonts.map(f => {
+                let fontClassToUse = f.cssClass === 'font-main' ? 'font-mali' : f.cssClass;
+                if (f.type === 'custom') {
+                    fontClassToUse = `custom-font-${f.id.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
+                }
+                return `
+                    <div class="cute-inner-card hover:bg-pink-50/40 p-2.5 flex flex-col gap-1 transition">
+                        <div class="flex items-center justify-between text-[11px] font-body">
+                            <span class="font-medium text-nora-pinkDark bg-white px-2 py-0.5 rounded-full icon-glow-frame">
+                                ${escapeHtml(f.id)} : ${escapeHtml(f.name)}
+                            </span>
+                            <div class="flex items-center gap-1">
+                                <span class="text-[10px] text-nora-muted font-body">${escapeHtml(f.tag)}</span>
+                                <button onclick="copyTextToClipboard('เลือกฟอนต์รหัส ${escapeHtml(f.id)} (${escapeHtml(f.name)}) ข้อความ: ${escapeHtml(textToDisplay)}')" 
+                                        class="text-[10px] bg-white hover:bg-nora-pinkDark hover:text-white text-nora-text icon-glow-frame px-2 py-0.5 rounded-lg font-body transition">
+                                    คัดลอก
+                                </button>
+                            </div>
+                        </div>
+                        <div class="${fontClassToUse} font-card-preview text-nora-text py-1 px-1" style="font-size: ${currentFontSize}px;">
+                            ${escapeHtml(textToDisplay)}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            if (container) container.innerHTML = htmlCards;
+            if (modalGrid) modalGrid.innerHTML = htmlCards;
+        }
+
+        function updateFontPreviews(val) {
+            const mainInput = document.getElementById('fontPreviewInput');
+            const modalInput = document.getElementById('modalFontInput');
+            if (mainInput && mainInput.value !== val) mainInput.value = val;
+            if (modalInput && modalInput.value !== val) modalInput.value = val;
+            renderFontCards(val);
+        }
+
+        function updateFontSize(sizeVal) {
+            currentFontSize = parseInt(sizeVal, 10) || 20;
+            const currentSampleText = document.getElementById('fontPreviewInput')?.value || 'watermark by nora';
+            renderFontCards(currentSampleText);
+        }
+
+        // Determine the active base context according to open popups/sections
+        function getActiveBaseMascotContext() {
+            const fontModal = document.getElementById('fontStudioModal');
+            const adminModal = document.getElementById('adminModal');
+            if (fontModal && !fontModal.classList.contains('hidden')) {
+                return 'font';
+            }
+            if (adminModal && !adminModal.classList.contains('hidden')) {
+                const fontTab = document.getElementById('adminTab-fonts');
+                if (fontTab && !fontTab.classList.contains('hidden')) {
+                    return 'font';
+                }
+                return 'home';
+            }
+            return 'home';
+        }
+
+        // Sync mascot floating layer so it stays sharp above modal backdrop-blur without blocking inputs
+        function syncMascotModalLayer() {
+            const stage = document.getElementById('mascotFloatingStage');
+            if (!stage) return;
+            const fontModalOpen = !document.getElementById('fontStudioModal')?.classList.contains('hidden');
+            const adminModalOpen = !document.getElementById('adminModal')?.classList.contains('hidden');
+            if (fontModalOpen || adminModalOpen) {
+                stage.classList.add('mascot-over-modal');
+            } else {
+                stage.classList.remove('mascot-over-modal');
+            }
+        }
+
+        function openFontStudioModal() {
+            const modal = document.getElementById('fontStudioModal');
+            if (!modal) return;
+            const currentText = document.getElementById('fontPreviewInput')?.value || 'watermark by nora';
+            const modalInput = document.getElementById('modalFontInput');
+            if (modalInput) modalInput.value = currentText;
+            renderFontCards(currentText);
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            syncMascotModalLayer();
+            setMascotSpeech('font');
+        }
+
+        function closeFontStudioModal() {
+            const modal = document.getElementById('fontStudioModal');
+            if (!modal) return;
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            syncMascotModalLayer();
+            setMascotSpeech(getActiveBaseMascotContext());
+        }
+
+        function toggleMenuSection(sectionId) {
+            const content = document.getElementById(`content-${sectionId}`);
+            const btn = document.getElementById(`btn-${sectionId}`);
+            if (!content) return;
+            const isOpen = content.classList.toggle('open');
+            if (btn) {
+                btn.classList.toggle('is-open', isOpen);
+            }
+            if (sectionId === 'fonts') {
+                setMascotSpeech(isOpen ? 'font' : getActiveBaseMascotContext());
+            }
+        }
+
+        function triggerFontGuideBubbleOnce() {
+            if (!lastFontFocusNotified && currentMascotContext !== 'font') {
+                lastFontFocusNotified = true;
+                setMascotSpeech('font', 6500);
+                setTimeout(() => { lastFontFocusNotified = false; }, 8000);
+            }
+        }
+
+        function handleContactClick(e, num) {
+            const contact = num === 1 ? siteData.contact1 : siteData.contact2;
+            if (!contact.url || contact.url === '#contact1' || contact.url === '#contact2') {
+                e.preventDefault();
+                showToast(`กำลังเชื่อมต่อไปยัง: ${contact.label}`);
+            }
+        }
+
+        function populateQueueFilterOptions() {
+            const selectEl = document.getElementById('queueFilterStatus');
+            if (!selectEl) return;
+            const prevVal = selectEl.value || 'all';
+            const optionsHtml = `<option value="all">ทุกสถานะ</option>` + (siteData.queueStatusOptions || []).map(st =>
+                `<option value="${escapeHtml(st.label)}">${escapeHtml(st.label)}</option>`
+            ).join('');
+            selectEl.innerHTML = optionsHtml;
+            selectEl.value = prevVal;
+        }
+
+        function renderQueueList() {
+            const container = document.getElementById('queueListContainer');
+            const totalCountEl = document.getElementById('totalQueueCount');
+            if (!container) return;
+
+            const searchVal = (document.getElementById('queueSearchInput')?.value || '').toLowerCase().trim();
+            const filterStatus = document.getElementById('queueFilterStatus')?.value || 'all';
+
+            if (totalCountEl) totalCountEl.textContent = siteData.queues.length;
+
+            const filtered = siteData.queues.filter(q => {
+                const matchText = q.client.toLowerCase().includes(searchVal) ||
+                                  q.agent.toLowerCase().includes(searchVal) ||
+                                  q.id.toLowerCase().includes(searchVal) ||
+                                  q.type.toLowerCase().includes(searchVal);
+                const matchStatus = filterStatus === 'all' || q.status === filterStatus;
+                return matchText && matchStatus;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="cute-inner-card p-6 text-center text-nora-muted text-xs">
+                        <i class="ph-bold ph-magnifying-glass text-2xl text-nora-pinkDark mb-1 block"></i>
+                        ไม่พบรายการคิวที่ค้นหาค่ะ
+                    </div>
+                `;
+                if (searchVal.length > 0) {
+                    setMascotSpeech('error', 4200, 'หาคิวที่ค้นหาไม่เจอ ลองเช็คตัวสะกดหรือลองใหม่อีกครั้งน้า 🔍');
+                }
+                return;
+            }
+
+            container.innerHTML = filtered.map(q => {
+                const matchedOpt = (siteData.queueStatusOptions || []).find(o => o.label === q.status);
+                const badgeColor = matchedOpt ? matchedOpt.color : '#F07197';
+                return `
+                    <div class="cute-inner-card p-2.5 flex items-center justify-between gap-2 transition">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            <span class="px-2.5 py-1 rounded-xl bg-white icon-glow-frame text-nora-pinkDark font-bold text-[11px] shrink-0 whitespace-nowrap">
+                                ${escapeHtml(q.id)}
+                            </span>
+                            <div class="min-w-0">
+                                <h4 class="font-bold text-xs text-nora-text truncate">${escapeHtml(q.client)}</h4>
+                                <p class="text-[10px] text-nora-muted truncate">${escapeHtml(q.type)} • <span class="text-nora-pinkDark font-medium">${escapeHtml(q.agent)}</span></p>
+                            </div>
+                        </div>
+                        <div class="text-right shrink-0 flex flex-col items-end">
+                            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold text-white shadow-sm whitespace-nowrap" style="background-color: ${escapeHtml(badgeColor)};">
+                                ${escapeHtml(q.status)}
+                            </span>
+                            <span class="text-[9.5px] text-nora-muted mt-0.5 whitespace-nowrap">${escapeHtml(q.date || '')}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderStatusWidget() {
+            setMascotSpeech(currentMascotContext || 'home');
+        }
+
+        function toggleMascotBubbleVisibility(forceShow) {
+            const bubbleEl = document.getElementById('mascotStatusBubble');
+            const reopenBtn = document.getElementById('mascotBubbleReopenBtn');
+            if (!bubbleEl || !reopenBtn) return;
+
+            if (typeof forceShow === 'boolean') {
+                mascotBubbleHidden = !forceShow;
+            } else {
+                mascotBubbleHidden = !mascotBubbleHidden;
+            }
+
+            if (mascotBubbleHidden) {
+                bubbleEl.classList.add('hidden');
+                reopenBtn.classList.remove('hidden');
+                reopenBtn.classList.add('inline-flex');
+            } else {
+                bubbleEl.classList.remove('hidden');
+                reopenBtn.classList.add('hidden');
+                reopenBtn.classList.remove('inline-flex');
+            }
+        }
+
+        function setMascotSpeech(contextType, autoRevertMs = 0, customSubText = '') {
+            const bubbleEl = document.getElementById('mascotStatusBubble');
+            if (!bubbleEl) return;
+
+            currentMascotContext = contextType;
+            if (mascotSpeechRevertTimer) {
+                clearTimeout(mascotSpeechRevertTimer);
+                mascotSpeechRevertTimer = null;
+            }
+
+            const st = siteData.status || defaultSiteData.status;
+            const customTitle = st.customTitle || "พร้อมเริ่มงาน";
+            const customColor = st.customColor || "#F07197";
+            const totalQ = (siteData.queues || []).length;
+            const doingQ = (siteData.queues || []).filter(q => q.status === 'กำลังทำ' || q.status === 'รอคิว').length;
+
+            const closeBtnHtml = `
+                <button type="button" onclick="event.stopPropagation(); toggleMascotBubbleVisibility(false)"
+                        title="ซ่อนคำแนะนำชั่วคราว"
+                        class="w-5 h-5 rounded-full bg-pink-50 hover:bg-pink-100 text-nora-muted hover:text-nora-pinkDark flex items-center justify-center text-[11px] shrink-0 transition">
+                    <i class="ph-bold ph-x"></i>
+                </button>
+            `;
+
+            if (contextType === 'font') {
+                bubbleEl.innerHTML = `
+                    <div class="flex items-start justify-between gap-2 mb-1">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full shrink-0 shadow-sm bg-nora-pinkDark"></span>
+                            <h3 class="text-xs font-bold text-nora-pinkDark leading-tight">🎨 โหมดทดลองฟอนต์</h3>
+                        </div>
+                        ${closeBtnHtml}
+                    </div>
+                    <div class="text-[11px] text-nora-text font-body leading-relaxed font-medium mb-1">
+                        หากลูกค้าเลือกได้แล้วอย่าลืมคัดลอกรหัสมาบอกเค้าน้า ✨
+                    </div>
+                    <div class="flex items-center justify-between gap-1 pt-0.5">
+                        <span class="inline-block text-[9.5px] font-body bg-white icon-glow-frame text-nora-pinkDark px-2 py-0.5 rounded-full font-semibold">
+                            กดปุ่ม "คัดลอก" ที่ฟอนต์ได้เลย
+                        </span>
+                        <button type="button" onclick="setMascotSpeech('home')" class="text-[9.5px] text-nora-muted hover:text-nora-pinkDark underline">
+                            ดูคิวร้าน
+                        </button>
+                    </div>
+                `;
+            } else if (contextType === 'copied') {
+                bubbleEl.innerHTML = `
+                    <div class="flex items-start justify-between gap-2 mb-1">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full shrink-0 shadow-sm bg-emerald-500"></span>
+                            <h3 class="text-xs font-bold text-emerald-700 leading-tight">📋 คัดลอกสำเร็จแล้ว!</h3>
+                        </div>
+                        ${closeBtnHtml}
+                    </div>
+                    <div class="text-[11px] text-nora-text font-body leading-relaxed font-medium mb-1">
+                        ${escapeHtml(customSubText || 'คัดลอกข้อมูลเรียบร้อย อย่าลืมส่งให้เค้าน้า 💌✨')}
+                    </div>
+                    <div>
+                        <span class="inline-block text-[9.5px] font-body bg-white icon-glow-frame text-nora-pinkDark px-2.5 py-0.5 rounded-full font-semibold">
+                            ✨ พร้อมรับบรีฟคิวถัดไปจ้า
+                        </span>
+                    </div>
+                `;
+                if (!autoRevertMs) autoRevertMs = 4800;
+            } else if (contextType === 'error') {
+                bubbleEl.innerHTML = `
+                    <div class="flex items-start justify-between gap-2 mb-1">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full shrink-0 shadow-sm bg-rose-500"></span>
+                            <h3 class="text-xs font-bold text-rose-600 leading-tight">🥺 แจ้งเตือนจากโนร่า</h3>
+                        </div>
+                        ${closeBtnHtml}
+                    </div>
+                    <div class="text-[11px] text-nora-text font-body leading-relaxed font-medium mb-1">
+                        ${escapeHtml(customSubText || 'เกิดข้อผิดพลาดนิดหน่อย ลองใหม่อีกครั้งน้า ✨')}
+                    </div>
+                `;
+                if (!autoRevertMs) autoRevertMs = 4500;
+            } else {
+                // Default 'home' state: Real Queue Status & Times
+                bubbleEl.innerHTML = `
+                    <div class="flex items-start justify-between gap-2 mb-1">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full shrink-0 shadow-sm animate-pulse" style="background-color: ${escapeHtml(customColor)};"></span>
+                            <h3 class="text-xs font-bold text-nora-text leading-tight">💬 ${escapeHtml(customTitle)}</h3>
+                        </div>
+                        ${closeBtnHtml}
+                    </div>
+                    <div class="text-[10.5px] text-nora-text font-body leading-snug font-medium mb-1">
+                        ⏱️ เริ่มทำ <span class="text-nora-pinkDark font-bold">${escapeHtml(st.timesText)}</span>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-1">
+                        <span class="inline-block text-[9.5px] font-body bg-white icon-glow-frame text-nora-pinkDark px-2 py-0.5 rounded-full font-semibold">
+                            ✨ ${escapeHtml(st.waitBadge)} (กำลังรัน ${doingQ}/${totalQ} คิว)
+                        </span>
+                    </div>
+                `;
+            }
+
+            if (autoRevertMs > 0) {
+                mascotSpeechRevertTimer = setTimeout(() => {
+                    setMascotSpeech(getActiveBaseMascotContext());
+                }, autoRevertMs);
+            }
+        }
+
+        // ================= ADMIN PANEL FUNCTIONS =================
+        function toggleAdminModal(defaultTab) {
+            const modal = document.getElementById('adminModal');
+            if (modal.classList.contains('hidden')) {
+                populateAdminInputs();
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                if (defaultTab) switchAdminTab(defaultTab);
+                syncMascotModalLayer();
+                setMascotSpeech(getActiveBaseMascotContext());
+            } else {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                syncMascotModalLayer();
+                setMascotSpeech(getActiveBaseMascotContext());
+            }
+        }
+
+        function switchAdminTab(tabName) {
+            const tabs = ['general', 'queue', 'fonts', 'content', 'gallery', 'plusmenu'];
+            const labels = {
+                general: '<i class="ph-bold ph-palette"></i> 1. ร้าน & สี & มาสคอต',
+                queue: '<i class="ph-bold ph-list-checks"></i> 2. คิวงาน & สถานะ',
+                fonts: '<i class="ph-bold ph-text-aa"></i> 3. อัปโหลดไฟล์ฟอนต์',
+                content: '<i class="ph-bold ph-notebook"></i> 4. กฎ & เรทส่ง & โปร',
+                gallery: '<i class="ph-bold ph-qr-code"></i> 5. รูปงาน & ใบเสร็จโอนเงิน',
+                plusmenu: '<i class="ph-bold ph-plus-circle"></i> 6. แถบเมนูเสริม [+]'
+            };
+            tabs.forEach(t => {
+                document.getElementById(`adminTab-${t}`).classList.add('hidden');
+                const btn = document.getElementById(`tabBtn-${t}`);
+                btn.innerHTML = labels[t];
+                btn.className = "admin-tab-btn px-3 py-1.5 rounded-full bg-white text-nora-text border border-pink-200 hover:bg-pink-50 flex items-center gap-1 transition";
+            });
+
+            document.getElementById(`adminTab-${tabName}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tabBtn-${tabName}`);
+            activeBtn.innerHTML = labels[tabName];
+            activeBtn.className = "admin-tab-btn px-3 py-1.5 rounded-full bg-nora-pinkDark text-white shadow-sm flex items-center gap-1 transition";
+
+            if (tabName === 'fonts') {
+                setMascotSpeech('font');
+            } else {
+                setMascotSpeech('home');
+            }
+        }
+
+        function populateAdminInputs() {
+            // Tab 1
+            document.getElementById('admSiteName').value = siteData.siteName;
+            document.getElementById('admSiteSub').value = siteData.siteSub;
+            document.getElementById('admLogoUrl').value = siteData.logoUrl;
+            document.getElementById('admMascotUrl').value = siteData.mascotUrl;
+            const validSolidIcons = ['heart', 'star', 'sparkle', 'flower', 'bow'];
+            document.getElementById('admMenuIconStyle').value = validSolidIcons.includes(siteData.menuIconStyle) ? siteData.menuIconStyle : 'heart';
+
+            const tc = siteData.themeColors || defaultSiteData.themeColors;
+            document.getElementById('admThemePrimary').value = tc.primary;
+            document.getElementById('admThemeSecondary').value = tc.secondary;
+            document.getElementById('admThemeBrown').value = tc.brown;
+            document.getElementById('admThemeBg').value = tc.bg;
+
+            document.getElementById('admContact1Name').value = siteData.contact1.label;
+            document.getElementById('admContact1Url').value = siteData.contact1.url;
+            document.getElementById('admContact2Name').value = siteData.contact2.label;
+            document.getElementById('admContact2Url').value = siteData.contact2.url;
+
+            document.getElementById('admStatusCustomTitle').value = siteData.status.customTitle || "พร้อมเริ่มงาน";
+            document.getElementById('admStatusCustomColor').value = siteData.status.customColor || "#F07197";
+            document.getElementById('admStatusWait').value = siteData.status.waitBadge;
+            document.getElementById('admStatusTimes').value = siteData.status.timesText;
+
+            // Tab 2: Queue List & Custom Status Options
+            renderAdminCustomStatuses();
+            renderAdminQueueList();
+
+            // Tab 3: Fonts List
+            renderAdminFontsList();
+
+            // Tab 4: Rules, Rates, Promo
+            document.getElementById('admPromoEnabled').checked = siteData.promoEnabled;
+            document.getElementById('admPromoText').value = siteData.promos.join('\n');
+            document.getElementById('admRulesText').value = siteData.rules.join('\n');
+            document.getElementById('admRatesText').value = siteData.rates.map(r => `${r.item} | ${r.agentPrice} | ${r.retailPrice}`).join('\n');
+
+            // Tab 5: Gallery & Receipt Payment Config
+            document.getElementById('admVersionsText').value = siteData.versions.map(v => `${v.title} | ${v.desc} | ${v.img}`).join('\n');
+            const pc = siteData.paymentConfig || defaultSiteData.paymentConfig;
+            document.getElementById('admPayAccName').value = pc.accName || '';
+            document.getElementById('admPromptPayId').value = pc.promptPayId || '';
+            document.getElementById('admKbankNo').value = pc.kbankNo || '';
+            document.getElementById('admWalletNo').value = pc.walletNo || '';
+            document.getElementById('admDefaultQrImg').value = pc.defaultQrImg || '';
+
+            // Tab 6: Plus Menus
+            renderAdminPlusMenus();
+        }
+
+        function applyThemePreset(primary, secondary, brown, bg) {
+            document.getElementById('admThemePrimary').value = primary;
+            document.getElementById('admThemeSecondary').value = secondary;
+            document.getElementById('admThemeBrown').value = brown;
+            document.getElementById('admThemeBg').value = bg;
+            previewThemeFromPickers();
+            showToast("เปลี่ยนโทนสีและขอบเรืองแสงแล้ว กดบันทึกด้านล่างเพื่อจำค่าไว้ค่ะ 🎨");
+        }
+
+        function previewThemeFromPickers() {
+            siteData.themeColors = {
+                primary: document.getElementById('admThemePrimary').value,
+                secondary: document.getElementById('admThemeSecondary').value,
+                brown: document.getElementById('admThemeBrown').value,
+                bg: document.getElementById('admThemeBg').value
+            };
+            applyThemeColorsCSS();
+        }
+
+        // Admin Custom Font Upload & Management
+        function renderAdminFontsList() {
+            const container = document.getElementById('adminFontsManageList');
+            if (!container) return;
+            container.innerHTML = siteData.fonts.map((f, idx) => `
+                <div class="flex flex-wrap items-center justify-between gap-2 bg-stone-50 p-2.5 rounded-xl border border-stone-200 text-xs">
+                    <div class="flex items-center gap-2 flex-1 min-w-[200px]">
+                        <span class="font-bold text-nora-pinkDark">${escapeHtml(f.id)}</span>
+                        <input type="text" value="${escapeHtml(f.name)}" onchange="updateFontItemAdmin(${idx}, 'name', this.value)" class="flex-1 px-2 py-1 rounded-lg border border-stone-300">
+                        <span class="text-[10px] text-nora-muted px-2 py-0.5 bg-stone-100 rounded">${escapeHtml(f.type === 'custom' ? 'ไฟล์ฟอนต์อัปโหลด' : 'ฟอนต์ระบบ')}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="deleteFontItemAdmin(${idx})" class="text-rose-600 hover:bg-rose-50 px-2 py-1 rounded-lg font-bold">
+                            ลบ
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addCustomFontFileAdmin() {
+            const id = document.getElementById('newFontId').value.trim() || `F0${siteData.fonts.length + 1}`;
+            const name = document.getElementById('newFontName').value.trim();
+            const tag = document.getElementById('newFontTag').value.trim() || "ฟอนต์ใหม่";
+            const fileInput = document.getElementById('newFontLocalFile');
+            const fileUrlInput = document.getElementById('newFontFileUrl').value.trim();
+
+            if (!name) {
+                setMascotSpeech('error', 4500, 'อย่าลืมกรอกชื่อเรียกฟอนต์ก่อนกดบันทึกน้า ลองใหม่อีกครั้งนะคะ 🥺');
+                showToast("กรุณากรอกชื่อเรียกฟอนต์ก่อนบันทึกค่ะ");
+                return;
+            }
+
+            // If Admin selected a local font file (.ttf/.otf/.woff2) from their device
+            if (fileInput && fileInput.files && fileInput.files[0]) {
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    const dataUrl = evt.target.result;
+                    siteData.fonts.push({
+                        id,
+                        name,
+                        cssClass: 'font-main',
+                        tag,
+                        type: 'custom',
+                        fileUrl: dataUrl
+                    });
+                    resetFontUploadFields();
+                    saveSiteData();
+                    renderAdminFontsList();
+                    renderAll();
+                    showToast(`อัปโหลดไฟล์ฟอนต์ "${file.name}" สำเร็จแล้วค่ะ ✨`);
+                };
+                reader.readAsDataURL(file);
+                return;
+            }
+
+            // Otherwise use URL
+            siteData.fonts.push({
+                id,
+                name,
+                cssClass: 'font-main',
+                tag,
+                type: 'custom',
+                fileUrl: fileUrlInput || 'https://fonts.gstatic.com/s/kanit/v15/nKKZ-Go6G5tXcraVGwIOHWJnqePN.ttf'
+            });
+
+            resetFontUploadFields();
+            saveSiteData();
+            renderAdminFontsList();
+            renderAll();
+            showToast("เพิ่มฟอนต์ใหม่เข้าสู่ระบบเรียบร้อยแล้วค่ะ ✨");
+        }
+
+        function resetFontUploadFields() {
+            document.getElementById('newFontId').value = '';
+            document.getElementById('newFontName').value = '';
+            document.getElementById('newFontTag').value = '';
+            document.getElementById('newFontFileUrl').value = '';
+            const fileInput = document.getElementById('newFontLocalFile');
+            if (fileInput) fileInput.value = '';
+        }
+
+        function updateFontItemAdmin(idx, field, val) {
+            if (siteData.fonts[idx]) {
+                siteData.fonts[idx][field] = val.trim();
+                saveSiteData();
+                renderAll();
+                showToast("อัปเดตข้อมูลฟอนต์เรียบร้อย");
+            }
+        }
+
+        function deleteFontItemAdmin(idx) {
+            siteData.fonts.splice(idx, 1);
+            saveSiteData();
+            renderAdminFontsList();
+            renderAll();
+            showToast("ลบฟอนต์ออกจากรายการแล้ว");
+        }
+
+        function saveGeneralAdmin() {
+            siteData.siteName = document.getElementById('admSiteName').value.trim() || "watermark by nora";
+            siteData.siteSub = document.getElementById('admSiteSub').value.trim();
+            siteData.logoUrl = document.getElementById('admLogoUrl').value.trim();
+            siteData.mascotUrl = document.getElementById('admMascotUrl').value.trim();
+            siteData.menuIconStyle = document.getElementById('admMenuIconStyle').value;
+
+            siteData.themeColors = {
+                primary: document.getElementById('admThemePrimary').value,
+                secondary: document.getElementById('admThemeSecondary').value,
+                brown: document.getElementById('admThemeBrown').value,
+                bg: document.getElementById('admThemeBg').value
+            };
+
+            siteData.contact1.label = document.getElementById('admContact1Name').value.trim();
+            siteData.contact1.url = document.getElementById('admContact1Url').value.trim();
+            siteData.contact2.label = document.getElementById('admContact2Name').value.trim();
+            siteData.contact2.url = document.getElementById('admContact2Url').value.trim();
+
+            siteData.status.customTitle = document.getElementById('admStatusCustomTitle').value.trim() || "พร้อมเริ่มงาน";
+            siteData.status.customColor = document.getElementById('admStatusCustomColor').value;
+            siteData.status.waitBadge = document.getElementById('admStatusWait').value.trim();
+            siteData.status.timesText = document.getElementById('admStatusTimes').value.trim();
+
+            saveSiteData();
+            renderAll();
+            showToast("บันทึกโทนสี ไอคอน และสถานะเรียบร้อยแล้วค่ะ 🦌🌿");
+        }
+
+        function renderAdminCustomStatuses() {
+            const listEl = document.getElementById('adminCustomStatusesList');
+            const newSelectEl = document.getElementById('newQStatus');
+            if (!listEl || !newSelectEl) return;
+
+            listEl.innerHTML = (siteData.queueStatusOptions || []).map((st, i) => `
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-white text-[11px] font-bold shadow-sm" style="background-color: ${escapeHtml(st.color)}">
+                    <span>${escapeHtml(st.label)}</span>
+                    <button onclick="removeCustomQueueStatus(${i})" class="hover:opacity-75 text-white ml-1" title="ลบสถานะนี้">×</button>
+                </div>
+            `).join('');
+
+            newSelectEl.innerHTML = (siteData.queueStatusOptions || []).map(st => `
+                <option value="${escapeHtml(st.label)}">${escapeHtml(st.label)}</option>
+            `).join('');
+        }
+
+        function addCustomQueueStatus() {
+            const label = document.getElementById('newCustomStatusLabel').value.trim();
+            const color = document.getElementById('newCustomStatusColor').value;
+            if (!label) {
+                setMascotSpeech('error', 4500, 'พิมพ์ชื่อสถานะก่อนกดเพิ่มน้า ลองใหม่อีกครั้งค่ะ 🥺');
+                showToast("กรุณาพิมพ์ชื่อสถานะก่อนกดเพิ่มค่ะ");
+                return;
+            }
+            siteData.queueStatusOptions.push({ label, color });
+            document.getElementById('newCustomStatusLabel').value = '';
+            saveSiteData();
+            renderAdminCustomStatuses();
+            renderAdminQueueList();
+            renderAll();
+            showToast(`เพิ่มสถานะ "${label}" เรียบร้อยแล้วค่ะ`);
+        }
+
+        function removeCustomQueueStatus(idx) {
+            if (siteData.queueStatusOptions.length <= 1) {
+                showToast("ต้องมีสถานะอย่างน้อย 1 รายการค่ะ");
+                return;
+            }
+            siteData.queueStatusOptions.splice(idx, 1);
+            saveSiteData();
+            renderAdminCustomStatuses();
+            renderAdminQueueList();
+            renderAll();
+        }
+
+        function renderAdminQueueList() {
+            const container = document.getElementById('adminQueueManageList');
+            container.innerHTML = siteData.queues.map((q, idx) => {
+                const optionsHtml = (siteData.queueStatusOptions || []).map(st => `
+                    <option value="${escapeHtml(st.label)}" ${q.status === st.label ? 'selected' : ''}>${escapeHtml(st.label)}</option>
+                `).join('');
+                return `
+                    <div class="flex flex-wrap items-center justify-between gap-2 bg-stone-50 p-3 rounded-xl border border-pink-200 text-xs">
+                        <div>
+                            <span class="font-bold text-nora-pinkDark">${escapeHtml(q.id)}</span> - 
+                            <strong>${escapeHtml(q.client)}</strong> (${escapeHtml(q.type)}) | ${escapeHtml(q.agent)}
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <select onchange="updateQueueStatusAdmin(${idx}, this.value)" class="px-2 py-1 rounded-lg border border-pink-200 bg-white">
+                                ${optionsHtml}
+                            </select>
+                            <button onclick="deleteQueueItemAdmin(${idx})" class="text-rose-600 hover:bg-rose-50 px-2 py-1 rounded-lg font-bold">
+                                ลบ
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function addQueueItem() {
+            const client = document.getElementById('newQClient').value.trim();
+            const agent = document.getElementById('newQAgent').value.trim() || "ตัวแทนทั่วไป";
+            const type = document.getElementById('newQType').value.trim() || "ลายน้ำ";
+            const status = document.getElementById('newQStatus').value;
+
+            if (!client) {
+                setMascotSpeech('error', 4500, 'กรอกชื่อลูกค้าก่อนเพิ่มคิวน้า ลองใหม่อีกครั้งค่ะ 🥺');
+                showToast("กรุณากรอกชื่อลูกค้าก่อนเพิ่มคิวนะคะ");
+                return;
+            }
+
+            const nextNum = 101 + siteData.queues.length;
+            siteData.queues.unshift({
+                id: `Q-${nextNum}`,
+                client,
+                agent,
+                type,
+                status,
+                date: "เพิ่งอัปเดต"
+            });
+
+            document.getElementById('newQClient').value = '';
+            document.getElementById('newQAgent').value = '';
+            document.getElementById('newQType').value = '';
+
+            saveSiteData();
+            renderAdminQueueList();
+            renderQueueList();
+            showToast("เพิ่มรายการคิวใหม่เรียบร้อยแล้วค่ะ");
+        }
+
+        function updateQueueStatusAdmin(idx, newStatus) {
+            if (siteData.queues[idx]) {
+                siteData.queues[idx].status = newStatus;
+                saveSiteData();
+                renderQueueList();
+                showToast("อัปเดตสถานะคิวเรียบร้อย");
+            }
+        }
+
+        function deleteQueueItemAdmin(idx) {
+            siteData.queues.splice(idx, 1);
+            saveSiteData();
+            renderAdminQueueList();
+            renderQueueList();
+            showToast("ลบรายการคิวแล้ว");
+        }
+
+        function togglePromoVisibilityAdmin() {
+            siteData.promoEnabled = document.getElementById('admPromoEnabled').checked;
+            saveSiteData();
+            renderAll();
+            showToast(siteData.promoEnabled ? "เปิดแสดงแถบโปรโมชั่นแล้ว" : "ซ่อนแถบโปรโมชั่นแล้ว");
+        }
+
+        function saveContentAdmin() {
+            siteData.promoEnabled = document.getElementById('admPromoEnabled').checked;
+            siteData.promos = document.getElementById('admPromoText').value.split('\n').map(s => s.trim()).filter(Boolean);
+            siteData.rules = document.getElementById('admRulesText').value.split('\n').map(s => s.trim()).filter(Boolean);
+
+            const rateLines = document.getElementById('admRatesText').value.split('\n').map(s => s.trim()).filter(Boolean);
+            siteData.rates = rateLines.map(line => {
+                const parts = line.split('|').map(p => p.trim());
+                return {
+                    item: parts[0] || "รายการงาน",
+                    agentPrice: parts[1] || "-",
+                    retailPrice: parts[2] || "-"
+                };
+            });
+
+            saveSiteData();
+            renderAll();
+            showToast("บันทึกกฎ เรทส่ง และโปรโมชั่นเรียบร้อยค่ะ");
+        }
+
+        function saveGalleryPaymentAdmin() {
+            const verLines = document.getElementById('admVersionsText').value.split('\n').map(s => s.trim()).filter(Boolean);
+            siteData.versions = verLines.map(line => {
+                const parts = line.split('|').map(p => p.trim());
+                return {
+                    title: parts[0] || "Version",
+                    desc: parts[1] || "",
+                    img: parts[2] || "https://placehold.co/500x340/FCE4EC/593A47?text=Demo"
+                };
+            });
+
+            siteData.paymentConfig = {
+                accName: document.getElementById('admPayAccName').value.trim() || "น.ส. โนร่า ดีไซน์",
+                promptPayId: document.getElementById('admPromptPayId').value.trim() || "0891234567",
+                kbankNo: document.getElementById('admKbankNo').value.trim() || "123-4-56789-0",
+                walletNo: document.getElementById('admWalletNo').value.trim() || "089-123-4567",
+                defaultQrImg: document.getElementById('admDefaultQrImg').value.trim()
+            };
+
+            saveSiteData();
+            renderAll();
+            showToast("บันทึกรูปตัวอย่างงาน & ใบเสร็จโอนเงินเรียบร้อยค่ะ 🧾✨");
+        }
+
+        function renderAdminPlusMenus() {
+            const container = document.getElementById('admPlusMenuList');
+            container.innerHTML = siteData.plusMenus.map((pm, idx) => `
+                <div class="p-3.5 rounded-xl bg-stone-50 border border-stone-200 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-xs text-nora-pinkDark">แถบเมนู [+] ลำดับที่ ${idx + 1}</span>
+                        <button onclick="removePlusMenuSlot(${idx})" class="text-xs text-rose-600 hover:underline">ลบแถบนี้</button>
+                    </div>
+                    <input type="text" id="plusTitle-${idx}" value="${escapeHtml(pm.title)}" placeholder="หัวข้อแถบเมนู" class="w-full px-3 py-1.5 rounded-lg border border-stone-300 text-xs">
+                    <textarea id="plusContent-${idx}" rows="2" placeholder="รายละเอียดด้านใน" class="w-full p-2 rounded-lg border border-stone-300 text-xs">${escapeHtml(pm.content)}</textarea>
+                </div>
+            `).join('');
+        }
+
+        function addNewPlusMenuSlot() {
+            siteData.plusMenus.push({
+                title: "หัวข้อเพิ่มเติมใหม่",
+                content: "ใส่รายละเอียดสำหรับตัวแทนตรงนี้"
+            });
+            renderAdminPlusMenus();
+        }
+
+        function removePlusMenuSlot(idx) {
+            siteData.plusMenus.splice(idx, 1);
+            renderAdminPlusMenus();
+        }
+
+        function savePlusMenusAdmin() {
+            siteData.plusMenus = siteData.plusMenus.map((pm, idx) => {
+                const tEl = document.getElementById(`plusTitle-${idx}`);
+                const cEl = document.getElementById(`plusContent-${idx}`);
+                return {
+                    title: tEl ? tEl.value.trim() : pm.title,
+                    content: cEl ? cEl.value.trim() : pm.content
+                };
+            });
+            saveSiteData();
+            renderAll();
+            showToast("อัปเดตแถบเมนู [+] เรียบร้อยแล้วค่ะ");
+        }
+
+        function resetDemoData() {
+            localStorage.removeItem('nora_watermark_demo_v6');
+            siteData = JSON.parse(JSON.stringify(defaultSiteData));
+            populateAdminInputs();
+            renderAll();
+            showToast("รีเซ็ตข้อมูลกลับเป็นค่าเริ่มต้นเรียบร้อย");
+        }
+
+        // ================= UTILITIES =================
+        function copyTextToClipboard(text) {
+            try {
+                const tempInput = document.createElement('textarea');
+                tempInput.value = text;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                const ok = document.execCommand('copy');
+                document.body.removeChild(tempInput);
+
+                if (!ok) {
+                    setMascotSpeech('error', 4500, 'คัดลอกไม่สำเร็จ ลองกดคัดลอกใหม่อีกครั้งน้า 🥺');
+                    showToast("เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้งค่ะ");
+                    return;
+                }
+
+                setMascotSpeech('copied', 5000, 'อย่าลืมส่งให้เค้าน้า 💌✨');
+                showToast(`คัดลอก "${text.substring(0, 28)}..." เรียบร้อย!`);
+            } catch (err) {
+                setMascotSpeech('error', 4500, 'เกิดข้อผิดพลาดตอนคัดลอก ลองใหม่อีกครั้งน้า 🥺');
+                showToast("เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้งค่ะ");
+            }
+        }
+
+        let toastTimer = null;
+        function showToast(msg) {
+            const box = document.getElementById('toastBox');
+            document.getElementById('toastMessage').textContent = msg;
+            box.classList.add('toast-visible');
+
+            if (toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                box.classList.remove('toast-visible');
+            }, 2600);
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        window.onload = function() {
+            loadSiteData();
+            renderAll();
+            const fontArrow = document.getElementById('arrow-fonts');
+            if (fontArrow) fontArrow.style.transform = 'rotate(90deg)';
+        };
+    </script>
+</body>
+</html>
