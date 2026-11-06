@@ -12,6 +12,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Chakra+Petch:wght@400;600&family=Charm:wght@400;700&family=Dancing+Script:wght@600;700&family=Itim&family=Kanit:wght@300;400;500;600&family=Kodchasan:wght@400;600&family=Mali:wght@400;600;700&family=Mitr:wght@400;500&family=Pacifico&family=Pattaya&family=Sriracha&display=swap" rel="stylesheet">
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Supabase JS Client v2 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <!-- Dynamic Custom Uploaded Fonts & Theme Container -->
     <style id="customDynamicFontsStyle"></style>
@@ -547,13 +549,16 @@
                     <i class="ph-fill ph-sparkle text-xs"></i>
                 </span>
                 <span>ระบบตัวแทน <strong class="text-nora-text">watermark by nora</strong> 🎀✨</span>
+                <span id="dbConnectionBadge" class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Online
+                </span>
             </div>
             <div class="flex items-center gap-1.5 font-body">
                 <button onclick="openFontStudioModal()" class="text-[11px] sm:text-xs bg-white hover:bg-pink-50 text-nora-text font-medium px-2.5 py-1 rounded-full flex items-center gap-1 transition border border-pink-200 shadow-cute-sm">
                     <i class="ph-bold ph-text-aa"></i> เทสฟอนต์เต็มจอ
                 </button>
                 <button onclick="toggleAdminModal()" class="text-[11px] sm:text-xs bg-nora-pinkDark hover:opacity-90 text-white font-medium px-2.5 py-1 rounded-full flex items-center gap-1 shadow-sm transition">
-                    <i class="ph-bold ph-gear-six"></i> จัดการหลังบ้าน (Admin)
+                    <i class="ph-bold ph-gear-six"></i> <span id="topAdminBtnLabel">จัดการหลังบ้าน (Admin)</span>
                 </button>
             </div>
         </div>
@@ -626,7 +631,6 @@
                 <div class="cute-box overflow-hidden">
                     <button id="btn-rule" onclick="toggleMenuSection('rule')" class="menu-detail-btn w-full px-3.5 py-2.5 flex items-center justify-between text-left bg-white relative z-10 font-body">
                         <div class="flex items-center gap-2.5">
-                            <!-- White background container with glowing border -->
                             <span class="w-7 h-7 rounded-xl icon-glow-frame flex items-center justify-center shrink-0">
                                 <span id="icon-rule" class="flex items-center justify-center"></span>
                             </span>
@@ -849,34 +853,24 @@
                                 <div id="defaultStandingMascotSvg" class="hidden w-full h-full flex flex-col items-center justify-center">
                                     <!-- Cute Sweet Mascot SVG Fallback -->
                                     <svg viewBox="0 0 120 140" class="w-20 h-24 sm:w-24 sm:h-28 drop-shadow-sm">
-                                        <!-- Ground shadow -->
                                         <ellipse cx="60" cy="131" rx="28" ry="5.5" fill="#FAD2E1" opacity="0.85"/>
-                                        <!-- Little antlers / twigs -->
                                         <path d="M 45 28 L 40 16 M 42 21 L 47 17" stroke="#A67B5B" stroke-width="3" stroke-linecap="round"/>
                                         <path d="M 75 28 L 80 16 M 78 21 L 73 17" stroke="#A67B5B" stroke-width="3" stroke-linecap="round"/>
-                                        <!-- Ears -->
                                         <ellipse cx="36" cy="36" rx="10" ry="6" transform="rotate(-25 36 36)" fill="#F7B2C4" stroke="#593A47" stroke-width="2.2"/>
                                         <ellipse cx="84" cy="36" rx="10" ry="6" transform="rotate(25 84 36)" fill="#F7B2C4" stroke="#593A47" stroke-width="2.2"/>
-                                        <!-- Head -->
                                         <circle cx="60" cy="54" r="23" fill="#FFFDFD" stroke="#593A47" stroke-width="2.2"/>
-                                        <!-- Forehead patch & spots -->
                                         <path d="M 45 36 Q 60 46 75 36 Q 68 31 60 31 Q 52 31 45 36 Z" fill="#F7B2C4"/>
                                         <circle cx="53" cy="36" r="1.5" fill="#FFFFFF"/>
                                         <circle cx="60" cy="34" r="1.5" fill="#FFFFFF"/>
                                         <circle cx="67" cy="36" r="1.5" fill="#FFFFFF"/>
-                                        <!-- Rosy Cheeks -->
                                         <ellipse cx="45" cy="58" rx="4.5" ry="2.5" fill="#FF9EBB"/>
                                         <ellipse cx="75" cy="58" rx="4.5" ry="2.5" fill="#FF9EBB"/>
-                                        <!-- Eyes & Nose -->
                                         <circle cx="50" cy="52" r="2.6" fill="#593A47"/>
                                         <circle cx="70" cy="52" r="2.6" fill="#593A47"/>
                                         <ellipse cx="60" cy="56" rx="2.5" ry="1.8" fill="#F07197"/>
                                         <path d="M 57 60 Q 60 63 63 60" fill="none" stroke="#593A47" stroke-width="1.8" stroke-linecap="round"/>
-                                        <!-- Sweet Pastel Dress -->
                                         <path d="M 45 76 L 37 112 Q 60 116 83 112 L 75 76 Z" fill="#F9C6D7" stroke="#593A47" stroke-width="2.2" stroke-linejoin="round"/>
-                                        <!-- Little Ribbon Collar -->
                                         <circle cx="60" cy="78" r="3.5" fill="#F07197"/>
-                                        <!-- Arms & Legs -->
                                         <path d="M 43 80 Q 28 73 32 63" fill="none" stroke="#FFFDFD" stroke-width="6.5" stroke-linecap="round"/>
                                         <path d="M 43 80 Q 28 73 32 63" fill="none" stroke="#593A47" stroke-width="2.2" stroke-linecap="round"/>
                                         <path d="M 77 80 Q 90 88 86 96" fill="none" stroke="#FFFDFD" stroke-width="6.5" stroke-linecap="round"/>
@@ -899,24 +893,93 @@
 
         </div>
     </main>
+
+    <!-- ================= SUPABASE ADMIN LOGIN MODAL ================= -->
+    <div id="adminLoginModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-3 sm:p-5">
+        <div class="cute-box !bg-white w-full max-w-md !rounded-[1.8rem] p-5 sm:p-6 shadow-2xl relative overflow-hidden">
+            <div class="flex items-center justify-between pb-3 border-b border-pink-100 mb-4">
+                <div class="flex items-center gap-2.5">
+                    <span class="w-9 h-9 rounded-2xl bg-nora-pinkDark text-white flex items-center justify-center shadow-sm">
+                        <i class="ph-bold ph-lock-key text-lg"></i>
+                    </span>
+                    <div>
+                        <h3 class="font-bold text-base text-nora-text">เข้าสู่ระบบแอดมิน (Admin Login)</h3>
+                        <p class="text-[11px] text-nora-muted">ยืนยันตัวตนผ่านระบบ Supabase Auth</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeAdminLoginModal()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-nora-text border border-pink-200 flex items-center justify-center">
+                    <i class="ph-bold ph-x"></i>
+                </button>
+            </div>
+
+            <form id="adminLoginForm" onsubmit="handleAdminLoginSubmit(event)" class="space-y-3.5 font-body">
+                <div>
+                    <label class="block text-xs font-bold text-nora-text mb-1">อีเมลแอดมิน (Email):</label>
+                    <input type="email" id="adminLoginEmail" required placeholder="admin@example.com"
+                           class="w-full px-3.5 py-2 rounded-xl border theme-border-soft focus:outline-none text-xs bg-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-nora-text mb-1">รหัสผ่าน (Password):</label>
+                    <input type="password" id="adminLoginPassword" required placeholder="••••••••"
+                           class="w-full px-3.5 py-2 rounded-xl border theme-border-soft focus:outline-none text-xs bg-white">
+                </div>
+
+                <!-- Not in admin_users helper box -->
+                <div id="adminRoleWarningBox" class="hidden p-3 rounded-2xl bg-amber-50 border border-amber-200 text-[11px] text-amber-900 space-y-2">
+                    <div class="font-bold flex items-center gap-1.5 text-amber-800">
+                        <i class="ph-fill ph-warning-circle text-sm"></i> ล็อกอินสำเร็จ แต่ยังไม่ได้เพิ่มสิทธิ์ในตาราง admin_users
+                    </div>
+                    <p>คัดลอกคำสั่ง SQL ด้านล่างไปรันในเมนู <strong>SQL Editor</strong> ของ Supabase เพื่อเปิดสิทธิ์แอดมินให้อีเมลนี้ค่ะ:</p>
+                    <pre id="adminSqlHelperCode" class="p-2 rounded-xl bg-white border border-amber-200 text-[10px] overflow-x-auto select-all font-mono"></pre>
+                    <div class="flex items-center justify-between gap-2 pt-1">
+                        <button type="button" onclick="copyAdminSqlHelper()" class="px-2.5 py-1 rounded-lg bg-white border border-amber-300 text-amber-800 font-semibold hover:bg-amber-100">
+                            คัดลอก SQL
+                        </button>
+                        <button type="button" onclick="recheckAdminRoleAfterSql()" class="px-3 py-1 rounded-lg bg-nora-pinkDark text-white font-semibold">
+                            รัน SQL แล้ว กดตรวจสอบอีกครั้ง →
+                        </button>
+                    </div>
+                </div>
+
+                <div id="adminLoginErrorMsg" class="hidden p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs"></div>
+
+                <div class="pt-1 flex items-center justify-end gap-2">
+                    <button type="button" onclick="closeAdminLoginModal()" class="px-4 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 font-medium text-xs">
+                        ยกเลิก
+                    </button>
+                    <button type="submit" id="adminLoginSubmitBtn" class="btn-bounce px-5 py-2 rounded-xl bg-nora-pinkDark text-white font-bold text-xs shadow-sm flex items-center gap-1.5">
+                        <i class="ph-bold ph-sign-in"></i> เข้าสู่ระบบหลังบ้าน
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- ================= ADMIN BACKEND MANAGEMENT MODAL (EASY TOP FILTER PILLS) ================= -->
     <div id="adminModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-2.5 sm:p-5">
         <div class="bg-white w-full max-w-4xl rounded-[1.8rem] border-2 border-pink-200 shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
             
             <!-- Modal Header -->
-            <div class="bg-gradient-to-r from-pink-50 via-purple-50 to-pink-50 px-5 py-3.5 border-b border-pink-200 flex items-center justify-between">
+            <div class="bg-gradient-to-r from-pink-50 via-purple-50 to-pink-50 px-5 py-3.5 border-b border-pink-200 flex flex-wrap items-center justify-between gap-2">
                 <div class="flex items-center gap-2.5">
                     <span class="w-9 h-9 rounded-2xl bg-nora-pinkDark text-white flex items-center justify-center shadow-sm">
                         <i class="ph-bold ph-sliders-horizontal text-lg"></i>
                     </span>
                     <div>
-                        <h3 class="font-bold text-base sm:text-lg text-nora-text">ตั้งค่าหลังบ้าน (กดเลือกหมวดด้านบนได้ง่ายๆ)</h3>
-                        <p class="text-[11px] text-nora-muted font-body">คลิกปุ่มฟิลเตอร์ด้านล่างเพื่อสลับหมวดที่ต้องการแก้ไขได้ทันที</p>
+                        <h3 class="font-bold text-base sm:text-lg text-nora-text">ตั้งค่าหลังบ้าน (เชื่อมต่อ Supabase จริง)</h3>
+                        <p class="text-[11px] text-nora-muted font-body">
+                            แอดมิน: <strong id="adminCurrentEmailLabel" class="text-nora-pinkDark">-</strong>
+                        </p>
                     </div>
                 </div>
-                <button onclick="toggleAdminModal()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-nora-text border border-pink-200 flex items-center justify-center shadow-sm">
-                    <i class="ph-bold ph-x text-base"></i>
-                </button>
+                <div class="flex items-center gap-2">
+                    <button type="button" onclick="handleAdminLogout()" class="px-3 py-1.5 rounded-full bg-white hover:bg-rose-50 text-rose-600 border border-rose-200 text-[11px] font-bold flex items-center gap-1 shadow-sm transition">
+                        <i class="ph-bold ph-sign-out"></i> ออกจากระบบ
+                    </button>
+                    <button onclick="toggleAdminModal()" class="w-8 h-8 rounded-full bg-white hover:bg-pink-50 text-nora-text border border-pink-200 flex items-center justify-center shadow-sm">
+                        <i class="ph-bold ph-x text-base"></i>
+                    </button>
+                </div>
             </div>
 
             <!-- Easy Top Filter Pills Bar -->
@@ -948,7 +1011,7 @@
                 <div id="adminTab-general" class="space-y-4">
                     <div class="bg-pink-50/70 border border-pink-200 rounded-2xl p-3 text-xs text-nora-text flex items-start gap-2">
                         <i class="ph-fill ph-sparkle text-lg text-nora-pinkDark shrink-0 mt-0.5"></i>
-                        <span><strong>ปรับแต่งร้าน & แชทบนหัวมาสคอต:</strong> เลือกโทนสีหวานน่ารัก เปลี่ยนไอคอน และตั้งข้อความที่เด้งบนหัวมาสคอตได้เองค่ะ</span>
+                        <span><strong>ปรับแต่งร้าน & แชทบนหัวมาสคอต:</strong> เลือกโทนสีหวานน่ารัก เปลี่ยนไอคอน และตั้งข้อความที่เด้งบนหัวมาสคอตได้เองค่ะ (บันทึกลง Supabase ทันที)</span>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
@@ -1047,7 +1110,7 @@
                         </div>
                     </div>
 
-                    <button onclick="saveGeneralAdmin()" class="bg-nora-pinkDark hover:opacity-90 text-white font-bold px-5 py-2 rounded-xl shadow-sm text-xs">
+                    <button id="btnSaveGeneral" onclick="saveGeneralAdmin()" class="bg-nora-pinkDark hover:opacity-90 text-white font-bold px-5 py-2 rounded-xl shadow-sm text-xs">
                         💾 บันทึกข้อมูลร้าน & โทนสี
                     </button>
                 </div>
@@ -1089,7 +1152,7 @@
                 <div id="adminTab-fonts" class="hidden space-y-4">
                     <div class="bg-pink-50/70 p-4 rounded-2xl border border-pink-200 space-y-3">
                         <h4 class="font-bold text-nora-pinkDark text-xs sm:text-sm flex items-center gap-1.5">
-                            <i class="ph-bold ph-upload-simple"></i> อัปโหลดไฟล์ฟอนต์จากในเครื่อง (.ttf, .otf, .woff, .woff2) หรือวางลิงก์
+                            <i class="ph-bold ph-upload-simple"></i> อัปโหลดไฟล์ฟอนต์ขึ้น Supabase Storage (.ttf, .otf, .woff, .woff2) หรือวางลิงก์
                         </h4>
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                             <div>
@@ -1113,7 +1176,7 @@
                                 <input type="text" id="newFontFileUrl" placeholder="https://..." class="w-full px-3 py-1.5 rounded-xl border border-pink-200 text-xs bg-white">
                             </div>
                         </div>
-                        <button onclick="addCustomFontFileAdmin()" class="bg-nora-pinkDark hover:opacity-90 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-sm">
+                        <button id="btnUploadFont" onclick="addCustomFontFileAdmin()" class="bg-nora-pinkDark hover:opacity-90 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-sm">
                             + อัปโหลดและบันทึกฟอนต์เข้าสู่ระบบ
                         </button>
                     </div>
@@ -1152,7 +1215,7 @@
                         <textarea id="admRatesText" rows="3" class="w-full p-2.5 rounded-xl border border-pink-200 text-xs"></textarea>
                     </div>
 
-                    <button onclick="saveContentAdmin()" class="bg-nora-pinkDark hover:opacity-90 text-white font-bold px-5 py-2 rounded-xl text-xs shadow-sm">
+                    <button id="btnSaveContent" onclick="saveContentAdmin()" class="bg-nora-pinkDark hover:opacity-90 text-white font-bold px-5 py-2 rounded-xl text-xs shadow-sm">
                         💾 บันทึก กฎ / เรทส่ง / โปรโมชั่น
                     </button>
                 </div>
@@ -1190,7 +1253,7 @@
                         <textarea id="admVersionsText" rows="4" class="w-full p-2.5 rounded-xl border border-pink-200 text-xs"></textarea>
                     </div>
 
-                    <button onclick="saveGalleryPaymentAdmin()" class="bg-nora-pinkDark hover:opacity-90 text-white font-bold px-5 py-2 rounded-xl text-xs shadow-sm">
+                    <button id="btnSaveGallery" onclick="saveGalleryPaymentAdmin()" class="bg-nora-pinkDark hover:opacity-90 text-white font-bold px-5 py-2 rounded-xl text-xs shadow-sm">
                         💾 บันทึกรูปตัวอย่างงาน & ข้อมูลใบเสร็จโอนเงิน
                     </button>
                 </div>
@@ -1203,7 +1266,7 @@
                         + เพิ่มแถบเมนูใหม่
                     </button>
                     <div class="pt-2">
-                        <button onclick="savePlusMenusAdmin()" class="bg-nora-pinkDark text-white font-bold px-5 py-2 rounded-xl text-xs">
+                        <button id="btnSavePlusMenus" onclick="savePlusMenusAdmin()" class="bg-nora-pinkDark text-white font-bold px-5 py-2 rounded-xl text-xs">
                             💾 บันทึกแถบเมนูเพิ่มเติม [+]
                         </button>
                     </div>
@@ -1212,8 +1275,8 @@
             </div>
 
             <div class="bg-pink-50/40 px-5 py-3 border-t border-pink-200 flex items-center justify-between text-xs">
-                <button onclick="resetDemoData()" class="text-rose-600 hover:underline font-semibold">
-                    รีเซ็ตข้อมูลกลับเป็นค่าเริ่มต้น (Reset Demo)
+                <button onclick="refreshFromSupabaseManual()" class="text-nora-pinkDark hover:underline font-semibold flex items-center gap-1">
+                    <i class="ph-bold ph-arrows-clockwise"></i> ซิงค์ข้อมูลล่าสุดจากฐานข้อมูล
                 </button>
                 <button onclick="toggleAdminModal()" class="bg-stone-200 hover:bg-stone-300 text-stone-700 font-bold px-4 py-1.5 rounded-xl">
                     ปิดหน้าต่าง
@@ -1258,20 +1321,25 @@
         </div>
     </div>
 
-    <!-- JavaScript Application Logic -->
+    <!-- JavaScript Application Logic (Connected to Supabase) -->
     <script>
-        // ================= DEFAULT DEMO STATE =================
+        // ================= SUPABASE CONFIGURATION =================
+        const SUPABASE_URL = 'https://khfgubjrbzlcgoxbntnx.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_75s3vEAIS7ibn4ROsStBCQ_8LHC_Rqq';
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // ================= DEFAULT FALLBACK STATE =================
         const defaultSiteData = {
             siteName: "watermark by nora",
             siteSub: "รับทำลายน้ำ โลโก้ ป้ายบัญชี และงานดีไซน์สุดคิวท์ เช็คเรทราคา ทดลองพิมพ์ฟอนต์ให้ลูกค้า และตรวจสอบคิวงานได้ครบในหน้าเดียว ✨",
             logoUrl: "https://i.postimg.cc/BvVGXRTy/IMG-2178.png",
             mascotUrl: "https://i.postimg.cc/DwQcPyhp/IMG-2179.png",
-            menuIconStyle: "heart", // 'heart', 'star', 'sparkle', 'flower', 'bow'
+            menuIconStyle: "heart",
             themeColors: {
-                primary: "#F07197",   // Sweet Pink
-                secondary: "#A984E8", // Soft Lavender
-                brown: "#D95380",     // Berry Pink
-                bg: "#FFF7FA"         // Cotton Candy Cream
+                primary: "#F07197",
+                secondary: "#A984E8",
+                brown: "#D95380",
+                bg: "#FFF7FA"
             },
             contact1: { label: "ติดต่อแอดมิน", url: "https://line.me" },
             contact2: { label: "กลุ่มตัวแทน", url: "https://facebook.com" },
@@ -1342,13 +1410,15 @@
 
         let siteData = {};
         let currentFontSize = 20;
-        let selectedPaymentChannel = 'promptpay'; // 'kbank', 'promptpay', 'wallet'
+        let selectedPaymentChannel = 'promptpay';
         let mascotBubbleHidden = false;
         let mascotSpeechRevertTimer = null;
-        let currentMascotContext = 'home'; // 'home', 'font', 'copied', 'error'
+        let currentMascotContext = 'home';
         let lastFontFocusNotified = false;
+        let currentAdminSessionUser = null;
+        let pendingAdminTabAfterLogin = null;
 
-        function loadSiteData() {
+        function loadSiteDataFromCache() {
             try {
                 const saved = localStorage.getItem('nora_watermark_demo_v6');
                 if (saved) {
@@ -1356,9 +1426,6 @@
                     if (!siteData.themeColors) siteData.themeColors = JSON.parse(JSON.stringify(defaultSiteData.themeColors));
                     if (!siteData.queueStatusOptions) siteData.queueStatusOptions = JSON.parse(JSON.stringify(defaultSiteData.queueStatusOptions));
                     if (!siteData.paymentConfig) siteData.paymentConfig = JSON.parse(JSON.stringify(defaultSiteData.paymentConfig));
-                    if (!siteData.mascotUrl || siteData.mascotUrl.trim() === '') {
-                        siteData.mascotUrl = defaultSiteData.mascotUrl;
-                    }
                 } else {
                     siteData = JSON.parse(JSON.stringify(defaultSiteData));
                 }
@@ -1367,11 +1434,142 @@
             }
         }
 
-        function saveSiteData() {
+        function saveSiteDataToCache() {
             try {
                 localStorage.setItem('nora_watermark_demo_v6', JSON.stringify(siteData));
             } catch (e) {
-                console.error("Storage error", e);
+                console.error("Local cache error", e);
+            }
+        }
+
+        // ================= FETCH LIVE DATA FROM SUPABASE =================
+        async function fetchSiteDataFromSupabase() {
+            const [
+                settingsRes,
+                rulesRes,
+                ratesRes,
+                promosRes,
+                fontsRes,
+                versionsRes,
+                statusOptsRes,
+                queuesRes,
+                plusMenusRes
+            ] = await Promise.all([
+                supabaseClient.from('site_settings').select('*').eq('id', 1).maybeSingle(),
+                supabaseClient.from('rules').select('*').order('sort_order', { ascending: true }).order('id', { ascending: true }),
+                supabaseClient.from('rates').select('*').order('sort_order', { ascending: true }).order('id', { ascending: true }),
+                supabaseClient.from('promotions').select('*').order('sort_order', { ascending: true }).order('id', { ascending: true }),
+                supabaseClient.from('fonts').select('*').order('sort_order', { ascending: true }).order('id', { ascending: true }),
+                supabaseClient.from('work_versions').select('*').order('sort_order', { ascending: true }).order('id', { ascending: true }),
+                supabaseClient.from('queue_status_options').select('*').order('sort_order', { ascending: true }).order('id', { ascending: true }),
+                supabaseClient.from('queues').select('*').order('sort_order', { ascending: true }).order('id', { ascending: false }),
+                supabaseClient.from('plus_menus').select('*').order('sort_order', { ascending: true }).order('id', { ascending: true })
+            ]);
+
+            if (settingsRes.error) throw settingsRes.error;
+
+            const s = settingsRes.data;
+            if (s) {
+                siteData.siteName = s.site_name || defaultSiteData.siteName;
+                siteData.siteSub = s.site_sub || defaultSiteData.siteSub;
+                siteData.logoUrl = s.logo_url || defaultSiteData.logoUrl;
+                siteData.mascotUrl = s.mascot_url || defaultSiteData.mascotUrl;
+                siteData.menuIconStyle = s.menu_icon_style || 'heart';
+                siteData.themeColors = {
+                    primary: s.theme_primary || '#F07197',
+                    secondary: s.theme_secondary || '#A984E8',
+                    brown: s.theme_brown || '#D95380',
+                    bg: s.theme_bg || '#FFF7FA'
+                };
+                siteData.contact1 = { label: s.contact1_label || 'ติดต่อแอดมิน', url: s.contact1_url || '#' };
+                siteData.contact2 = { label: s.contact2_label || 'กลุ่มตัวแทน', url: s.contact2_url || '#' };
+                siteData.status = {
+                    customTitle: s.status_custom_title || 'พร้อมเริ่มงาน',
+                    customColor: s.status_custom_color || '#F07197',
+                    timesText: s.status_times_text || '12:00-12:30 , 18:30 เป็นต้นไป',
+                    waitBadge: s.status_wait_badge || 'คิวว่างถัดไป: พรุ่งนี้'
+                };
+                siteData.promoEnabled = typeof s.promo_enabled === 'boolean' ? s.promo_enabled : true;
+                siteData.paymentConfig = {
+                    accName: s.pay_acc_name || defaultSiteData.paymentConfig.accName,
+                    kbankNo: s.pay_kbank_no || defaultSiteData.paymentConfig.kbankNo,
+                    promptPayId: s.pay_promptpay_id || defaultSiteData.paymentConfig.promptPayId,
+                    walletNo: s.pay_wallet_no || defaultSiteData.paymentConfig.walletNo,
+                    defaultQrImg: s.pay_default_qr_img || ''
+                };
+            }
+
+            if (rulesRes.data) {
+                siteData.rules = rulesRes.data.map(r => r.rule_text);
+            }
+            if (ratesRes.data) {
+                siteData.rates = ratesRes.data.map(r => ({
+                    dbId: r.id,
+                    item: r.item_name,
+                    agentPrice: r.agent_price,
+                    retailPrice: r.retail_price
+                }));
+            }
+            if (promosRes.data) {
+                siteData.promos = promosRes.data.map(p => p.promo_text);
+            }
+            if (fontsRes.data && fontsRes.data.length > 0) {
+                siteData.fonts = fontsRes.data.map(f => ({
+                    dbId: f.id,
+                    id: f.font_code,
+                    name: f.font_name,
+                    cssClass: f.css_class || 'font-main',
+                    tag: f.tag || '',
+                    type: f.font_type || 'preset',
+                    fileUrl: f.file_url || ''
+                }));
+            }
+            if (versionsRes.data) {
+                siteData.versions = versionsRes.data.map(v => ({
+                    dbId: v.id,
+                    title: v.title,
+                    desc: v.description || '',
+                    img: v.image_url
+                }));
+            }
+            if (statusOptsRes.data && statusOptsRes.data.length > 0) {
+                siteData.queueStatusOptions = statusOptsRes.data.map(st => ({
+                    dbId: st.id,
+                    label: st.label,
+                    color: st.color
+                }));
+            }
+            if (queuesRes.data) {
+                siteData.queues = queuesRes.data.map(q => ({
+                    dbId: q.id,
+                    id: q.queue_code,
+                    client: q.client_name,
+                    agent: q.agent_name,
+                    type: q.work_type,
+                    status: q.status_label,
+                    date: q.date_note
+                }));
+            }
+            if (plusMenusRes.data) {
+                siteData.plusMenus = plusMenusRes.data.map(pm => ({
+                    dbId: pm.id,
+                    title: pm.title,
+                    content: pm.content
+                }));
+            }
+
+            saveSiteDataToCache();
+        }
+
+        async function refreshFromSupabaseManual() {
+            try {
+                await fetchSiteDataFromSupabase();
+                populateAdminInputs();
+                renderAll();
+                showToast("ซิงค์ข้อมูลล่าสุดจาก Supabase เรียบร้อยค่ะ ✨");
+            } catch (err) {
+                console.error(err);
+                showToast("ไม่สามารถดึงข้อมูลใหม่ได้ กรุณาลองอีกครั้งค่ะ");
             }
         }
 
@@ -1392,7 +1590,6 @@
             return fallback;
         }
 
-        // Apply custom theme variables to root (including dynamic RGB for glowing borders)
         function applyThemeColorsCSS() {
             const tc = siteData.themeColors || defaultSiteData.themeColors;
             const primaryRgb = hexToRgbString(tc.primary, "240, 113, 151");
@@ -1409,7 +1606,6 @@
             `;
         }
 
-        // Solid (filled, non-hollow) SVG icons in a bright, lively pastel-matching tone (var(--theme-primary))
         function getMenuIconHtml(style) {
             const fillColor = "var(--theme-primary)";
             const filterGlow = "drop-shadow(0 1px 3px rgba(var(--theme-primary-rgb), 0.35))";
@@ -1438,10 +1634,9 @@
             }
         }
 
-        // Apply custom uploaded font files dynamically via @font-face
         function applyCustomFontsCSS() {
             let cssString = '';
-            siteData.fonts.forEach(f => {
+            (siteData.fonts || []).forEach(f => {
                 if (f.type === 'custom' && f.fileUrl) {
                     const fontClassName = `custom-font-${f.id.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
                     cssString += `
@@ -1483,7 +1678,7 @@
             document.getElementById('contactBtn1').href = siteData.contact1.url;
             document.getElementById('contactLabel2').textContent = siteData.contact2.label;
             document.getElementById('contactBtn2').href = siteData.contact2.url;
-            // Set solid filled SVG icon across menu bars
+
             const validSolidIcons = ['heart', 'star', 'sparkle', 'flower', 'bow'];
             const activeIconStyle = validSolidIcons.includes(siteData.menuIconStyle) ? siteData.menuIconStyle : 'heart';
             ['rule', 'rates', 'promo', 'fonts', 'versions', 'payment'].forEach(id => {
@@ -1493,7 +1688,7 @@
 
             // 2. Rules
             const ruleContainer = document.getElementById('ruleBodyList');
-            ruleContainer.innerHTML = siteData.rules.map(r => `
+            ruleContainer.innerHTML = (siteData.rules || []).map(r => `
                 <div class="flex items-start gap-2 cute-inner-card p-2.5 text-xs">
                     <i class="ph-fill ph-leaf text-nora-pinkDark text-sm shrink-0 mt-0.5"></i>
                     <span>${escapeHtml(r)}</span>
@@ -1502,7 +1697,7 @@
 
             // 3. Rates
             const ratesBody = document.getElementById('ratesTableBody');
-            ratesBody.innerHTML = siteData.rates.map(r => `
+            ratesBody.innerHTML = (siteData.rates || []).map(r => `
                 <tr class="hover:bg-stone-50/60">
                     <td class="py-1.5 px-2.5 font-medium text-nora-text">${escapeHtml(r.item)}</td>
                     <td class="py-1.5 px-2 text-center font-bold text-nora-pinkDark">${escapeHtml(r.agentPrice)}</td>
@@ -1512,7 +1707,7 @@
 
             // 4. Promotion
             const promoWrapper = document.getElementById('promoMenuWrapper');
-            if (siteData.promoEnabled && siteData.promos.length > 0) {
+            if (siteData.promoEnabled && siteData.promos && siteData.promos.length > 0) {
                 promoWrapper.classList.remove('hidden');
                 document.getElementById('promoBodyContent').innerHTML = siteData.promos.map(p => `
                     <div class="bg-white p-2.5 rounded-xl border border-dashed border-amber-300 text-xs text-nora-text shadow-sm">
@@ -1529,7 +1724,7 @@
 
             // 6. Versions Gallery
             const versionsGrid = document.getElementById('versionsGalleryGrid');
-            versionsGrid.innerHTML = siteData.versions.map(v => `
+            versionsGrid.innerHTML = (siteData.versions || []).map(v => `
                 <div class="bg-white rounded-xl border border-pink-100 overflow-hidden shadow-sm hover:shadow transition group">
                     <div class="aspect-[16/11] bg-pink-50 overflow-hidden relative">
                         <img src="${escapeHtml(v.img)}" alt="${escapeHtml(v.title)}" 
@@ -1548,7 +1743,7 @@
 
             // 8. Custom "+" Menus
             const plusContainer = document.getElementById('customPlusMenusContainer');
-            plusContainer.innerHTML = siteData.plusMenus.map((pm, idx) => `
+            plusContainer.innerHTML = (siteData.plusMenus || []).map((pm, idx) => `
                 <div class="cute-box overflow-hidden font-body">
                     <button id="btn-plus-${idx}" onclick="toggleMenuSection('plus-${idx}')" class="menu-detail-btn w-full px-3.5 py-2.5 flex items-center justify-between text-left bg-white relative z-10 font-body">
                         <div class="flex items-center gap-2.5">
@@ -1589,7 +1784,6 @@
 
             payContainer.innerHTML = `
                 <div class="receipt-card p-3.5 space-y-3">
-                    <!-- Receipt Top Header -->
                     <div class="text-center border-b border-dashed border-pink-200 pb-2.5">
                         <div class="inline-flex items-center gap-1 text-[10px] font-bold text-nora-pinkDark bg-pink-50 px-2.5 py-0.5 rounded-full border border-pink-200 mb-1">
                             <i class="ph-fill ph-receipt"></i> PAYMENT RECEIPT • ใบแจ้งยอดโอน
@@ -1598,7 +1792,6 @@
                         <p class="text-[10px] text-nora-muted">เลือกช่องทางโอน หรือกรอกยอดเงินเพื่อให้ QR ปรับตามยอดอัตโนมัติ</p>
                     </div>
 
-                    <!-- 3 Channel Selector Tabs: KBank, PromptPay, Wallet -->
                     <div class="grid grid-cols-3 gap-1.5 text-[11px] font-bold">
                         <button type="button" onclick="selectPaymentTab('kbank')" id="payTab-kbank"
                                 class="py-1.5 px-2 rounded-xl border transition flex flex-col items-center gap-0.5 ${selectedPaymentChannel === 'kbank' ? 'bg-emerald-500 text-white border-emerald-600 shadow-sm' : 'bg-emerald-50/60 text-emerald-800 border-emerald-200 hover:bg-emerald-100/70'}">
@@ -1617,12 +1810,8 @@
                         </button>
                     </div>
 
-                    <!-- Selected Channel Account Number Box -->
-                    <div id="selectedPayChannelDetail" class="cute-inner-card p-2.5 flex items-center justify-between gap-2">
-                        <!-- Populated by updateReceiptChannelView() -->
-                    </div>
+                    <div id="selectedPayChannelDetail" class="cute-inner-card p-2.5 flex items-center justify-between gap-2"></div>
 
-                    <!-- Perforated Receipt Divider -->
                     <div class="receipt-perforation pt-3 space-y-2.5">
                         <div>
                             <label class="block text-[11px] font-bold text-nora-text mb-1">
@@ -1639,7 +1828,6 @@
                             </div>
                         </div>
 
-                        <!-- Dynamic Morphing PromptPay QR Container -->
                         <div id="qrMorphWrapper" class="qr-morph-box bg-gradient-to-b from-white to-pink-50/50 p-3 rounded-2xl border border-pink-200 flex flex-col items-center text-center">
                             <div id="qrModeBadge" class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-800 border border-sky-200 mb-2">
                                 📲 คิวอาร์พร้อมเพย์ปกติ (สแกนแล้วกรอกยอดเอง)
@@ -1724,7 +1912,6 @@
 
             const numAmount = parseFloat(amountVal);
             if (!isNaN(numAmount) && numAmount > 0) {
-                // Morph/shrink animation into fixed-amount PromptPay QR
                 morphBox.classList.add('qr-morph-active');
                 badge.className = "text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-nora-pinkDark text-white shadow-sm mb-2";
                 badge.innerHTML = `✨ QR ล็อกยอดโอนอัตโนมัติ (${numAmount.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} บาท)`;
@@ -1734,7 +1921,6 @@
                     this.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PromptPay:${cleanId}-Amount:${numAmount.toFixed(2)}`;
                 };
             } else {
-                // Standard PromptPay QR (no amount locked)
                 morphBox.classList.remove('qr-morph-active');
                 badge.className = "text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-800 border border-sky-200 mb-2";
                 badge.innerHTML = `📲 คิวอาร์พร้อมเพย์ปกติ (สแกนแล้วกรอกยอดเอง)`;
@@ -1749,12 +1935,13 @@
                 };
             }
         }
+
         function renderFontCards(sampleText) {
             const textToDisplay = sampleText.trim() !== '' ? sampleText : 'watermark by nora';
             const container = document.getElementById('fontCardsContainer');
             const modalGrid = document.getElementById('modalFontGridArea');
 
-            const htmlCards = siteData.fonts.map(f => {
+            const htmlCards = (siteData.fonts || []).map(f => {
                 let fontClassToUse = f.cssClass === 'font-main' ? 'font-mali' : f.cssClass;
                 if (f.type === 'custom') {
                     fontClassToUse = `custom-font-${f.id.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
@@ -1798,7 +1985,6 @@
             renderFontCards(currentSampleText);
         }
 
-        // Determine the active base context according to open popups/sections
         function getActiveBaseMascotContext() {
             const fontModal = document.getElementById('fontStudioModal');
             const adminModal = document.getElementById('adminModal');
@@ -1815,13 +2001,13 @@
             return 'home';
         }
 
-        // Sync mascot floating layer so it stays sharp above modal backdrop-blur without blocking inputs
         function syncMascotModalLayer() {
             const stage = document.getElementById('mascotFloatingStage');
             if (!stage) return;
             const fontModalOpen = !document.getElementById('fontStudioModal')?.classList.contains('hidden');
             const adminModalOpen = !document.getElementById('adminModal')?.classList.contains('hidden');
-            if (fontModalOpen || adminModalOpen) {
+            const loginModalOpen = !document.getElementById('adminLoginModal')?.classList.contains('hidden');
+            if (fontModalOpen || adminModalOpen || loginModalOpen) {
                 stage.classList.add('mascot-over-modal');
             } else {
                 stage.classList.remove('mascot-over-modal');
@@ -1898,13 +2084,13 @@
             const searchVal = (document.getElementById('queueSearchInput')?.value || '').toLowerCase().trim();
             const filterStatus = document.getElementById('queueFilterStatus')?.value || 'all';
 
-            if (totalCountEl) totalCountEl.textContent = siteData.queues.length;
+            if (totalCountEl) totalCountEl.textContent = (siteData.queues || []).length;
 
-            const filtered = siteData.queues.filter(q => {
-                const matchText = q.client.toLowerCase().includes(searchVal) ||
-                                  q.agent.toLowerCase().includes(searchVal) ||
-                                  q.id.toLowerCase().includes(searchVal) ||
-                                  q.type.toLowerCase().includes(searchVal);
+            const filtered = (siteData.queues || []).filter(q => {
+                const matchText = (q.client || '').toLowerCase().includes(searchVal) ||
+                                  (q.agent || '').toLowerCase().includes(searchVal) ||
+                                  (q.id || '').toLowerCase().includes(searchVal) ||
+                                  (q.type || '').toLowerCase().includes(searchVal);
                 const matchStatus = filterStatus === 'all' || q.status === filterStatus;
                 return matchText && matchStatus;
             });
@@ -2052,7 +2238,6 @@
                 `;
                 if (!autoRevertMs) autoRevertMs = 4500;
             } else {
-                // Default 'home' state: Real Queue Status & Times
                 bubbleEl.innerHTML = `
                     <div class="flex items-start justify-between gap-2 mb-1">
                         <div class="flex items-center gap-1.5">
@@ -2079,22 +2264,154 @@
             }
         }
 
-        // ================= ADMIN PANEL FUNCTIONS =================
-        function toggleAdminModal(defaultTab) {
-            const modal = document.getElementById('adminModal');
-            if (modal.classList.contains('hidden')) {
-                populateAdminInputs();
-                modal.classList.remove('hidden');
-                modal.classList.add('flex');
-                if (defaultTab) switchAdminTab(defaultTab);
-                syncMascotModalLayer();
-                setMascotSpeech(getActiveBaseMascotContext());
+        // ================= SUPABASE AUTHENTICATION & ADMIN GUARD =================
+        async function verifyIsAdminUser() {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (!session || !session.user) {
+                currentAdminSessionUser = null;
+                return { loggedIn: false, isAdmin: false, user: null };
+            }
+            currentAdminSessionUser = session.user;
+            const { data: isAdminRes, error } = await supabaseClient.rpc('is_admin');
+            if (error) {
+                // Fallback direct check on admin_users
+                const { data: row } = await supabaseClient
+                    .from('admin_users')
+                    .select('user_id')
+                    .eq('user_id', session.user.id)
+                    .maybeSingle();
+                return { loggedIn: true, isAdmin: !!row, user: session.user };
+            }
+            return { loggedIn: true, isAdmin: !!isAdminRes, user: session.user };
+        }
+
+        function openAdminLoginModal(targetTab) {
+            pendingAdminTabAfterLogin = targetTab || null;
+            const modal = document.getElementById('adminLoginModal');
+            document.getElementById('adminLoginErrorMsg').classList.add('hidden');
+            document.getElementById('adminRoleWarningBox').classList.add('hidden');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            syncMascotModalLayer();
+        }
+
+        function closeAdminLoginModal() {
+            const modal = document.getElementById('adminLoginModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            syncMascotModalLayer();
+        }
+
+        function showAdminRoleSqlWarning(email) {
+            const warnBox = document.getElementById('adminRoleWarningBox');
+            const sqlPre = document.getElementById('adminSqlHelperCode');
+            const safeEmail = (email || '').replace(/'/g, "''");
+            sqlPre.textContent = `INSERT INTO public.admin_users (user_id, email)\nSELECT id, email FROM auth.users\nWHERE email = '${safeEmail}'\nON CONFLICT (user_id) DO NOTHING;`;
+            warnBox.classList.remove('hidden');
+        }
+
+        function copyAdminSqlHelper() {
+            const code = document.getElementById('adminSqlHelperCode').textContent;
+            copyTextToClipboard(code);
+        }
+
+        async function recheckAdminRoleAfterSql() {
+            const check = await verifyIsAdminUser();
+            if (check.loggedIn && check.isAdmin) {
+                closeAdminLoginModal();
+                openVerifiedAdminModal(pendingAdminTabAfterLogin);
+                showToast("ยืนยันสิทธิ์แอดมินสำเร็จแล้วค่ะ 🎀");
             } else {
+                showToast("ยังไม่พบสิทธิ์แอดมิน กรุณารันคำสั่ง SQL ใน Supabase ก่อนนะคะ");
+            }
+        }
+
+        async function handleAdminLoginSubmit(e) {
+            e.preventDefault();
+            const email = document.getElementById('adminLoginEmail').value.trim();
+            const password = document.getElementById('adminLoginPassword').value;
+            const errEl = document.getElementById('adminLoginErrorMsg');
+            const submitBtn = document.getElementById('adminLoginSubmitBtn');
+
+            errEl.classList.add('hidden');
+            document.getElementById('adminRoleWarningBox').classList.add('hidden');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i class="ph-bold ph-spinner animate-spin"></i> กำลังตรวจสอบ...`;
+
+            try {
+                const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+                if (error) {
+                    errEl.textContent = `เข้าสู่ระบบไม่สำเร็จ: ${error.message}`;
+                    errEl.classList.remove('hidden');
+                    setMascotSpeech('error', 4500, 'อีเมลหรือรหัสผ่านไม่ถูกต้อง ลองใหม่อีกครั้งน้า 🥺');
+                    return;
+                }
+
+                const check = await verifyIsAdminUser();
+                if (!check.isAdmin) {
+                    showAdminRoleSqlWarning(email);
+                    return;
+                }
+
+                closeAdminLoginModal();
+                openVerifiedAdminModal(pendingAdminTabAfterLogin);
+                showToast("เข้าสู่ระบบแอดมินเรียบร้อยค่ะ ✨");
+            } catch (err) {
+                errEl.textContent = "เกิดข้อผิดพลาดในการเชื่อมต่อ กรุณาลองใหม่อีกครั้งค่ะ";
+                errEl.classList.remove('hidden');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `<i class="ph-bold ph-sign-in"></i> เข้าสู่ระบบหลังบ้าน`;
+            }
+        }
+
+        async function handleAdminLogout() {
+            await supabaseClient.auth.signOut();
+            currentAdminSessionUser = null;
+            const modal = document.getElementById('adminModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            syncMascotModalLayer();
+            showToast("ออกจากระบบแอดมินเรียบร้อยแล้วค่ะ");
+        }
+
+        // ================= ADMIN PANEL FUNCTIONS =================
+        async function toggleAdminModal(defaultTab) {
+            const modal = document.getElementById('adminModal');
+            if (!modal.classList.contains('hidden')) {
                 modal.classList.add('hidden');
                 modal.classList.remove('flex');
                 syncMascotModalLayer();
                 setMascotSpeech(getActiveBaseMascotContext());
+                return;
             }
+
+            const check = await verifyIsAdminUser();
+            if (!check.loggedIn) {
+                openAdminLoginModal(defaultTab);
+                return;
+            }
+            if (!check.isAdmin) {
+                openAdminLoginModal(defaultTab);
+                showAdminRoleSqlWarning(check.user?.email || '');
+                return;
+            }
+
+            openVerifiedAdminModal(defaultTab);
+        }
+
+        function openVerifiedAdminModal(defaultTab) {
+            const modal = document.getElementById('adminModal');
+            const emailLabel = document.getElementById('adminCurrentEmailLabel');
+            if (emailLabel && currentAdminSessionUser) {
+                emailLabel.textContent = currentAdminSessionUser.email;
+            }
+            populateAdminInputs();
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            if (defaultTab) switchAdminTab(defaultTab);
+            syncMascotModalLayer();
+            setMascotSpeech(getActiveBaseMascotContext());
         }
 
         function switchAdminTab(tabName) {
@@ -2160,12 +2477,12 @@
 
             // Tab 4: Rules, Rates, Promo
             document.getElementById('admPromoEnabled').checked = siteData.promoEnabled;
-            document.getElementById('admPromoText').value = siteData.promos.join('\n');
-            document.getElementById('admRulesText').value = siteData.rules.join('\n');
-            document.getElementById('admRatesText').value = siteData.rates.map(r => `${r.item} | ${r.agentPrice} | ${r.retailPrice}`).join('\n');
+            document.getElementById('admPromoText').value = (siteData.promos || []).join('\n');
+            document.getElementById('admRulesText').value = (siteData.rules || []).join('\n');
+            document.getElementById('admRatesText').value = (siteData.rates || []).map(r => `${r.item} | ${r.agentPrice} | ${r.retailPrice}`).join('\n');
 
             // Tab 5: Gallery & Receipt Payment Config
-            document.getElementById('admVersionsText').value = siteData.versions.map(v => `${v.title} | ${v.desc} | ${v.img}`).join('\n');
+            document.getElementById('admVersionsText').value = (siteData.versions || []).map(v => `${v.title} | ${v.desc} | ${v.img}`).join('\n');
             const pc = siteData.paymentConfig || defaultSiteData.paymentConfig;
             document.getElementById('admPayAccName').value = pc.accName || '';
             document.getElementById('admPromptPayId').value = pc.promptPayId || '';
@@ -2196,11 +2513,11 @@
             applyThemeColorsCSS();
         }
 
-        // Admin Custom Font Upload & Management
+        // ================= TAB 3: SUPABASE STORAGE FONT UPLOAD & MANAGEMENT =================
         function renderAdminFontsList() {
             const container = document.getElementById('adminFontsManageList');
             if (!container) return;
-            container.innerHTML = siteData.fonts.map((f, idx) => `
+            container.innerHTML = (siteData.fonts || []).map((f, idx) => `
                 <div class="flex flex-wrap items-center justify-between gap-2 bg-stone-50 p-2.5 rounded-xl border border-stone-200 text-xs">
                     <div class="flex items-center gap-2 flex-1 min-w-[200px]">
                         <span class="font-bold text-nora-pinkDark">${escapeHtml(f.id)}</span>
@@ -2216,12 +2533,13 @@
             `).join('');
         }
 
-        function addCustomFontFileAdmin() {
-            const id = document.getElementById('newFontId').value.trim() || `F0${siteData.fonts.length + 1}`;
+        async function addCustomFontFileAdmin() {
+            const id = document.getElementById('newFontId').value.trim() || `F0${(siteData.fonts || []).length + 1}`;
             const name = document.getElementById('newFontName').value.trim();
             const tag = document.getElementById('newFontTag').value.trim() || "ฟอนต์ใหม่";
             const fileInput = document.getElementById('newFontLocalFile');
             const fileUrlInput = document.getElementById('newFontFileUrl').value.trim();
+            const btn = document.getElementById('btnUploadFont');
 
             if (!name) {
                 setMascotSpeech('error', 4500, 'อย่าลืมกรอกชื่อเรียกฟอนต์ก่อนกดบันทึกน้า ลองใหม่อีกครั้งนะคะ 🥺');
@@ -2229,45 +2547,60 @@
                 return;
             }
 
-            // If Admin selected a local font file (.ttf/.otf/.woff2) from their device
-            if (fileInput && fileInput.files && fileInput.files[0]) {
-                const file = fileInput.files[0];
-                const reader = new FileReader();
-                reader.onload = function(evt) {
-                    const dataUrl = evt.target.result;
-                    siteData.fonts.push({
-                        id,
-                        name,
-                        cssClass: 'font-main',
-                        tag,
-                        type: 'custom',
-                        fileUrl: dataUrl
+            btn.disabled = true;
+            const origText = btn.textContent;
+            btn.textContent = "กำลังอัปโหลดฟอนต์ขึ้น Supabase...";
+
+            try {
+                let finalFontUrl = fileUrlInput || 'https://fonts.gstatic.com/s/kanit/v15/nKKZ-Go6G5tXcraVGwIOHWJnqePN.ttf';
+
+                if (fileInput && fileInput.files && fileInput.files[0]) {
+                    const file = fileInput.files[0];
+                    const cleanExt = file.name.split('.').pop().toLowerCase();
+                    const safeFileName = `fonts/${Date.now()}_${id.replace(/[^a-zA-Z0-9_-]/g, '')}.${cleanExt}`;
+
+                    const { error: uploadErr } = await supabaseClient
+                        .storage
+                        .from('nora-assets')
+                        .upload(safeFileName, file, { cacheControl: '3600', upsert: true });
+
+                    if (uploadErr) throw uploadErr;
+
+                    const { data: pubData } = supabaseClient
+                        .storage
+                        .from('nora-assets')
+                        .getPublicUrl(safeFileName);
+
+                    finalFontUrl = pubData.publicUrl;
+                }
+
+                const { error: insertErr } = await supabaseClient
+                    .from('fonts')
+                    .insert({
+                        font_code: id,
+                        font_name: name,
+                        css_class: 'font-main',
+                        tag: tag,
+                        font_type: 'custom',
+                        file_url: finalFontUrl,
+                        sort_order: (siteData.fonts || []).length + 1
                     });
-                    resetFontUploadFields();
-                    saveSiteData();
-                    renderAdminFontsList();
-                    renderAll();
-                    showToast(`อัปโหลดไฟล์ฟอนต์ "${file.name}" สำเร็จแล้วค่ะ ✨`);
-                };
-                reader.readAsDataURL(file);
-                return;
+
+                if (insertErr) throw insertErr;
+
+                resetFontUploadFields();
+                await fetchSiteDataFromSupabase();
+                renderAdminFontsList();
+                renderAll();
+                showToast(`อัปโหลดและบันทึกฟอนต์ "${name}" เรียบร้อยแล้วค่ะ ✨`);
+            } catch (err) {
+                console.error(err);
+                setMascotSpeech('error', 4500, 'อัปโหลดฟอนต์ไม่สำเร็จ เช็คสิทธิ์แอดมินหรือลองใหม่อีกครั้งน้า 🥺');
+                showToast(`เกิดข้อผิดพลาด: ${err.message || 'ไม่สามารถบันทึกฟอนต์ได้'}`);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = origText;
             }
-
-            // Otherwise use URL
-            siteData.fonts.push({
-                id,
-                name,
-                cssClass: 'font-main',
-                tag,
-                type: 'custom',
-                fileUrl: fileUrlInput || 'https://fonts.gstatic.com/s/kanit/v15/nKKZ-Go6G5tXcraVGwIOHWJnqePN.ttf'
-            });
-
-            resetFontUploadFields();
-            saveSiteData();
-            renderAdminFontsList();
-            renderAll();
-            showToast("เพิ่มฟอนต์ใหม่เข้าสู่ระบบเรียบร้อยแล้วค่ะ ✨");
         }
 
         function resetFontUploadFields() {
@@ -2279,52 +2612,85 @@
             if (fileInput) fileInput.value = '';
         }
 
-        function updateFontItemAdmin(idx, field, val) {
-            if (siteData.fonts[idx]) {
-                siteData.fonts[idx][field] = val.trim();
-                saveSiteData();
+        async function updateFontItemAdmin(idx, field, val) {
+            const target = siteData.fonts[idx];
+            if (!target) return;
+            try {
+                if (target.dbId) {
+                    const { error } = await supabaseClient
+                        .from('fonts')
+                        .update({ font_name: val.trim() })
+                        .eq('id', target.dbId);
+                    if (error) throw error;
+                }
+                await fetchSiteDataFromSupabase();
+                renderAdminFontsList();
                 renderAll();
-                showToast("อัปเดตข้อมูลฟอนต์เรียบร้อย");
+                showToast("อัปเดตชื่อฟอนต์ในฐานข้อมูลเรียบร้อย");
+            } catch (err) {
+                showToast(`เกิดข้อผิดพลาด: ${err.message}`);
             }
         }
 
-        function deleteFontItemAdmin(idx) {
-            siteData.fonts.splice(idx, 1);
-            saveSiteData();
-            renderAdminFontsList();
-            renderAll();
-            showToast("ลบฟอนต์ออกจากรายการแล้ว");
+        async function deleteFontItemAdmin(idx) {
+            const target = siteData.fonts[idx];
+            if (!target) return;
+            try {
+                if (target.dbId) {
+                    const { error } = await supabaseClient.from('fonts').delete().eq('id', target.dbId);
+                    if (error) throw error;
+                }
+                await fetchSiteDataFromSupabase();
+                renderAdminFontsList();
+                renderAll();
+                showToast("ลบฟอนต์ออกจากฐานข้อมูลแล้ว");
+            } catch (err) {
+                showToast(`ลบไม่สำเร็จ: ${err.message}`);
+            }
         }
 
-        function saveGeneralAdmin() {
-            siteData.siteName = document.getElementById('admSiteName').value.trim() || "watermark by nora";
-            siteData.siteSub = document.getElementById('admSiteSub').value.trim();
-            siteData.logoUrl = document.getElementById('admLogoUrl').value.trim();
-            siteData.mascotUrl = document.getElementById('admMascotUrl').value.trim();
-            siteData.menuIconStyle = document.getElementById('admMenuIconStyle').value;
+        // ================= TAB 1: SAVE GENERAL SETTINGS TO SUPABASE =================
+        async function saveGeneralAdmin() {
+            const btn = document.getElementById('btnSaveGeneral');
+            btn.disabled = true;
+            try {
+                const payload = {
+                    id: 1,
+                    site_name: document.getElementById('admSiteName').value.trim() || "watermark by nora",
+                    site_sub: document.getElementById('admSiteSub').value.trim(),
+                    logo_url: document.getElementById('admLogoUrl').value.trim(),
+                    mascot_url: document.getElementById('admMascotUrl').value.trim(),
+                    menu_icon_style: document.getElementById('admMenuIconStyle').value,
+                    theme_primary: document.getElementById('admThemePrimary').value,
+                    theme_secondary: document.getElementById('admThemeSecondary').value,
+                    theme_brown: document.getElementById('admThemeBrown').value,
+                    theme_bg: document.getElementById('admThemeBg').value,
+                    contact1_label: document.getElementById('admContact1Name').value.trim(),
+                    contact1_url: document.getElementById('admContact1Url').value.trim(),
+                    contact2_label: document.getElementById('admContact2Name').value.trim(),
+                    contact2_url: document.getElementById('admContact2Url').value.trim(),
+                    status_custom_title: document.getElementById('admStatusCustomTitle').value.trim() || "พร้อมเริ่มงาน",
+                    status_custom_color: document.getElementById('admStatusCustomColor').value,
+                    status_wait_badge: document.getElementById('admStatusWait').value.trim(),
+                    status_times_text: document.getElementById('admStatusTimes').value.trim(),
+                    updated_at: new Date().toISOString()
+                };
 
-            siteData.themeColors = {
-                primary: document.getElementById('admThemePrimary').value,
-                secondary: document.getElementById('admThemeSecondary').value,
-                brown: document.getElementById('admThemeBrown').value,
-                bg: document.getElementById('admThemeBg').value
-            };
+                const { error } = await supabaseClient.from('site_settings').upsert(payload, { onConflict: 'id' });
+                if (error) throw error;
 
-            siteData.contact1.label = document.getElementById('admContact1Name').value.trim();
-            siteData.contact1.url = document.getElementById('admContact1Url').value.trim();
-            siteData.contact2.label = document.getElementById('admContact2Name').value.trim();
-            siteData.contact2.url = document.getElementById('admContact2Url').value.trim();
-
-            siteData.status.customTitle = document.getElementById('admStatusCustomTitle').value.trim() || "พร้อมเริ่มงาน";
-            siteData.status.customColor = document.getElementById('admStatusCustomColor').value;
-            siteData.status.waitBadge = document.getElementById('admStatusWait').value.trim();
-            siteData.status.timesText = document.getElementById('admStatusTimes').value.trim();
-
-            saveSiteData();
-            renderAll();
-            showToast("บันทึกโทนสี ไอคอน และสถานะเรียบร้อยแล้วค่ะ 🦌🌿");
+                await fetchSiteDataFromSupabase();
+                renderAll();
+                showToast("บันทึกโทนสี ไอคอน และสถานะลง Supabase เรียบร้อยแล้วค่ะ 🎀✨");
+            } catch (err) {
+                console.error(err);
+                showToast(`เกิดข้อผิดพลาด: ${err.message}`);
+            } finally {
+                btn.disabled = false;
+            }
         }
 
+        // ================= TAB 2: QUEUE & STATUS OPTIONS CRUD =================
         function renderAdminCustomStatuses() {
             const listEl = document.getElementById('adminCustomStatusesList');
             const newSelectEl = document.getElementById('newQStatus');
@@ -2342,7 +2708,7 @@
             `).join('');
         }
 
-        function addCustomQueueStatus() {
+        async function addCustomQueueStatus() {
             const label = document.getElementById('newCustomStatusLabel').value.trim();
             const color = document.getElementById('newCustomStatusColor').value;
             if (!label) {
@@ -2350,30 +2716,50 @@
                 showToast("กรุณาพิมพ์ชื่อสถานะก่อนกดเพิ่มค่ะ");
                 return;
             }
-            siteData.queueStatusOptions.push({ label, color });
-            document.getElementById('newCustomStatusLabel').value = '';
-            saveSiteData();
-            renderAdminCustomStatuses();
-            renderAdminQueueList();
-            renderAll();
-            showToast(`เพิ่มสถานะ "${label}" เรียบร้อยแล้วค่ะ`);
+            try {
+                const { error } = await supabaseClient.from('queue_status_options').insert({
+                    label,
+                    color,
+                    sort_order: (siteData.queueStatusOptions || []).length + 1
+                });
+                if (error) throw error;
+
+                document.getElementById('newCustomStatusLabel').value = '';
+                await fetchSiteDataFromSupabase();
+                renderAdminCustomStatuses();
+                renderAdminQueueList();
+                renderAll();
+                showToast(`เพิ่มสถานะ "${label}" เรียบร้อยแล้วค่ะ`);
+            } catch (err) {
+                showToast(`ไม่สามารถเพิ่มสถานะได้: ${err.message}`);
+            }
         }
 
-        function removeCustomQueueStatus(idx) {
-            if (siteData.queueStatusOptions.length <= 1) {
+        async function removeCustomQueueStatus(idx) {
+            if ((siteData.queueStatusOptions || []).length <= 1) {
                 showToast("ต้องมีสถานะอย่างน้อย 1 รายการค่ะ");
                 return;
             }
-            siteData.queueStatusOptions.splice(idx, 1);
-            saveSiteData();
-            renderAdminCustomStatuses();
-            renderAdminQueueList();
-            renderAll();
+            const target = siteData.queueStatusOptions[idx];
+            if (!target) return;
+            try {
+                if (target.dbId) {
+                    const { error } = await supabaseClient.from('queue_status_options').delete().eq('id', target.dbId);
+                    if (error) throw error;
+                }
+                await fetchSiteDataFromSupabase();
+                renderAdminCustomStatuses();
+                renderAdminQueueList();
+                renderAll();
+                showToast("ลบสถานะเรียบร้อยแล้วค่ะ");
+            } catch (err) {
+                showToast(`ลบไม่สำเร็จ: ${err.message}`);
+            }
         }
 
         function renderAdminQueueList() {
             const container = document.getElementById('adminQueueManageList');
-            container.innerHTML = siteData.queues.map((q, idx) => {
+            container.innerHTML = (siteData.queues || []).map((q, idx) => {
                 const optionsHtml = (siteData.queueStatusOptions || []).map(st => `
                     <option value="${escapeHtml(st.label)}" ${q.status === st.label ? 'selected' : ''}>${escapeHtml(st.label)}</option>
                 `).join('');
@@ -2396,7 +2782,7 @@
             }).join('');
         }
 
-        function addQueueItem() {
+        async function addQueueItem() {
             const client = document.getElementById('newQClient').value.trim();
             const agent = document.getElementById('newQAgent').value.trim() || "ตัวแทนทั่วไป";
             const type = document.getElementById('newQType').value.trim() || "ลายน้ำ";
@@ -2408,97 +2794,209 @@
                 return;
             }
 
-            const nextNum = 101 + siteData.queues.length;
-            siteData.queues.unshift({
-                id: `Q-${nextNum}`,
-                client,
-                agent,
-                type,
-                status,
-                date: "เพิ่งอัปเดต"
-            });
+            const nextNum = 101 + (siteData.queues || []).length;
+            try {
+                const { error } = await supabaseClient.from('queues').insert({
+                    queue_code: `Q-${nextNum}`,
+                    client_name: client,
+                    agent_name: agent,
+                    work_type: type,
+                    status_label: status,
+                    date_note: "เพิ่งอัปเดต",
+                    sort_order: 1
+                });
+                if (error) throw error;
 
-            document.getElementById('newQClient').value = '';
-            document.getElementById('newQAgent').value = '';
-            document.getElementById('newQType').value = '';
+                document.getElementById('newQClient').value = '';
+                document.getElementById('newQAgent').value = '';
+                document.getElementById('newQType').value = '';
 
-            saveSiteData();
-            renderAdminQueueList();
-            renderQueueList();
-            showToast("เพิ่มรายการคิวใหม่เรียบร้อยแล้วค่ะ");
-        }
-
-        function updateQueueStatusAdmin(idx, newStatus) {
-            if (siteData.queues[idx]) {
-                siteData.queues[idx].status = newStatus;
-                saveSiteData();
+                await fetchSiteDataFromSupabase();
+                renderAdminQueueList();
                 renderQueueList();
-                showToast("อัปเดตสถานะคิวเรียบร้อย");
+                renderStatusWidget();
+                showToast("เพิ่มรายการคิวใหม่ลง Supabase เรียบร้อยแล้วค่ะ");
+            } catch (err) {
+                showToast(`เพิ่มคิวไม่สำเร็จ: ${err.message}`);
             }
         }
 
-        function deleteQueueItemAdmin(idx) {
-            siteData.queues.splice(idx, 1);
-            saveSiteData();
-            renderAdminQueueList();
-            renderQueueList();
-            showToast("ลบรายการคิวแล้ว");
+        async function updateQueueStatusAdmin(idx, newStatus) {
+            const target = siteData.queues[idx];
+            if (!target) return;
+            try {
+                if (target.dbId) {
+                    const { error } = await supabaseClient
+                        .from('queues')
+                        .update({ status_label: newStatus })
+                        .eq('id', target.dbId);
+                    if (error) throw error;
+                }
+                await fetchSiteDataFromSupabase();
+                renderQueueList();
+                renderStatusWidget();
+                showToast("อัปเดตสถานะคิวเรียบร้อย");
+            } catch (err) {
+                showToast(`อัปเดตไม่สำเร็จ: ${err.message}`);
+            }
         }
 
-        function togglePromoVisibilityAdmin() {
-            siteData.promoEnabled = document.getElementById('admPromoEnabled').checked;
-            saveSiteData();
-            renderAll();
-            showToast(siteData.promoEnabled ? "เปิดแสดงแถบโปรโมชั่นแล้ว" : "ซ่อนแถบโปรโมชั่นแล้ว");
+        async function deleteQueueItemAdmin(idx) {
+            const target = siteData.queues[idx];
+            if (!target) return;
+            try {
+                if (target.dbId) {
+                    const { error } = await supabaseClient.from('queues').delete().eq('id', target.dbId);
+                    if (error) throw error;
+                }
+                await fetchSiteDataFromSupabase();
+                renderAdminQueueList();
+                renderQueueList();
+                renderStatusWidget();
+                showToast("ลบรายการคิวแล้ว");
+            } catch (err) {
+                showToast(`ลบคิวไม่สำเร็จ: ${err.message}`);
+            }
         }
 
-        function saveContentAdmin() {
-            siteData.promoEnabled = document.getElementById('admPromoEnabled').checked;
-            siteData.promos = document.getElementById('admPromoText').value.split('\n').map(s => s.trim()).filter(Boolean);
-            siteData.rules = document.getElementById('admRulesText').value.split('\n').map(s => s.trim()).filter(Boolean);
-
-            const rateLines = document.getElementById('admRatesText').value.split('\n').map(s => s.trim()).filter(Boolean);
-            siteData.rates = rateLines.map(line => {
-                const parts = line.split('|').map(p => p.trim());
-                return {
-                    item: parts[0] || "รายการงาน",
-                    agentPrice: parts[1] || "-",
-                    retailPrice: parts[2] || "-"
-                };
-            });
-
-            saveSiteData();
-            renderAll();
-            showToast("บันทึกกฎ เรทส่ง และโปรโมชั่นเรียบร้อยค่ะ");
+        // ================= TAB 4: SAVE RULES, RATES & PROMOS =================
+        async function togglePromoVisibilityAdmin() {
+            const enabled = document.getElementById('admPromoEnabled').checked;
+            try {
+                const { error } = await supabaseClient
+                    .from('site_settings')
+                    .update({ promo_enabled: enabled, updated_at: new Date().toISOString() })
+                    .eq('id', 1);
+                if (error) throw error;
+                siteData.promoEnabled = enabled;
+                saveSiteDataToCache();
+                renderAll();
+                showToast(enabled ? "เปิดแสดงแถบโปรโมชั่นแล้ว" : "ซ่อนแถบโปรโมชั่นแล้ว");
+            } catch (err) {
+                showToast(`อัปเดตไม่สำเร็จ: ${err.message}`);
+            }
         }
 
-        function saveGalleryPaymentAdmin() {
-            const verLines = document.getElementById('admVersionsText').value.split('\n').map(s => s.trim()).filter(Boolean);
-            siteData.versions = verLines.map(line => {
-                const parts = line.split('|').map(p => p.trim());
-                return {
-                    title: parts[0] || "Version",
-                    desc: parts[1] || "",
-                    img: parts[2] || "https://placehold.co/500x340/FCE4EC/593A47?text=Demo"
-                };
-            });
-
-            siteData.paymentConfig = {
-                accName: document.getElementById('admPayAccName').value.trim() || "น.ส. โนร่า ดีไซน์",
-                promptPayId: document.getElementById('admPromptPayId').value.trim() || "0891234567",
-                kbankNo: document.getElementById('admKbankNo').value.trim() || "123-4-56789-0",
-                walletNo: document.getElementById('admWalletNo').value.trim() || "089-123-4567",
-                defaultQrImg: document.getElementById('admDefaultQrImg').value.trim()
-            };
-
-            saveSiteData();
-            renderAll();
-            showToast("บันทึกรูปตัวอย่างงาน & ใบเสร็จโอนเงินเรียบร้อยค่ะ 🧾✨");
+        async function syncTableRows(tableName, existingItems, newPayloads) {
+            const existingIds = (existingItems || []).map(x => x.dbId).filter(Boolean);
+            for (let i = 0; i < newPayloads.length; i++) {
+                const payload = Object.assign({}, newPayloads[i], { sort_order: i + 1 });
+                if (i < existingIds.length) {
+                    const { error } = await supabaseClient.from(tableName).update(payload).eq('id', existingIds[i]);
+                    if (error) throw error;
+                } else {
+                    const { error } = await supabaseClient.from(tableName).insert(payload);
+                    if (error) throw error;
+                }
+            }
+            if (existingIds.length > newPayloads.length) {
+                const idsToRemove = existingIds.slice(newPayloads.length);
+                const { error } = await supabaseClient.from(tableName).delete().in('id', idsToRemove);
+                if (error) throw error;
+            }
         }
 
+        async function saveContentAdmin() {
+            const btn = document.getElementById('btnSaveContent');
+            btn.disabled = true;
+            try {
+                const promoEnabled = document.getElementById('admPromoEnabled').checked;
+                const promosList = document.getElementById('admPromoText').value.split('\n').map(s => s.trim()).filter(Boolean);
+                const rulesList = document.getElementById('admRulesText').value.split('\n').map(s => s.trim()).filter(Boolean);
+                const rateLines = document.getElementById('admRatesText').value.split('\n').map(s => s.trim()).filter(Boolean);
+
+                await supabaseClient.from('site_settings').update({ promo_enabled: promoEnabled }).eq('id', 1);
+
+                // Fetch current row IDs for clean sync
+                const [curPromos, curRules, curRates] = await Promise.all([
+                    supabaseClient.from('promotions').select('id').order('sort_order', { ascending: true }).order('id', { ascending: true }),
+                    supabaseClient.from('rules').select('id').order('sort_order', { ascending: true }).order('id', { ascending: true }),
+                    supabaseClient.from('rates').select('id').order('sort_order', { ascending: true }).order('id', { ascending: true })
+                ]);
+
+                await syncTableRows(
+                    'promotions',
+                    (curPromos.data || []).map(r => ({ dbId: r.id })),
+                    promosList.map(p => ({ promo_text: p }))
+                );
+
+                await syncTableRows(
+                    'rules',
+                    (curRules.data || []).map(r => ({ dbId: r.id })),
+                    rulesList.map(r => ({ rule_text: r }))
+                );
+
+                await syncTableRows(
+                    'rates',
+                    (curRates.data || []).map(r => ({ dbId: r.id })),
+                    rateLines.map(line => {
+                        const parts = line.split('|').map(p => p.trim());
+                        return {
+                            item_name: parts[0] || "รายการงาน",
+                            agent_price: parts[1] || "-",
+                            retail_price: parts[2] || "-"
+                        };
+                    })
+                );
+
+                await fetchSiteDataFromSupabase();
+                renderAll();
+                showToast("บันทึกกฎ เรทส่ง และโปรโมชั่นลง Supabase เรียบร้อยค่ะ ✨");
+            } catch (err) {
+                console.error(err);
+                showToast(`บันทึกไม่สำเร็จ: ${err.message}`);
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        // ================= TAB 5: SAVE GALLERY & PAYMENT RECEIPT =================
+        async function saveGalleryPaymentAdmin() {
+            const btn = document.getElementById('btnSaveGallery');
+            btn.disabled = true;
+            try {
+                const verLines = document.getElementById('admVersionsText').value.split('\n').map(s => s.trim()).filter(Boolean);
+
+                const { error: setErr } = await supabaseClient.from('site_settings').update({
+                    pay_acc_name: document.getElementById('admPayAccName').value.trim() || "น.ส. โนร่า ดีไซน์",
+                    pay_promptpay_id: document.getElementById('admPromptPayId').value.trim() || "0891234567",
+                    pay_kbank_no: document.getElementById('admKbankNo').value.trim() || "123-4-56789-0",
+                    pay_wallet_no: document.getElementById('admWalletNo').value.trim() || "089-123-4567",
+                    pay_default_qr_img: document.getElementById('admDefaultQrImg').value.trim(),
+                    updated_at: new Date().toISOString()
+                }).eq('id', 1);
+
+                if (setErr) throw setErr;
+
+                const curVers = await supabaseClient.from('work_versions').select('id').order('sort_order', { ascending: true }).order('id', { ascending: true });
+                await syncTableRows(
+                    'work_versions',
+                    (curVers.data || []).map(v => ({ dbId: v.id })),
+                    verLines.map(line => {
+                        const parts = line.split('|').map(p => p.trim());
+                        return {
+                            title: parts[0] || "Version",
+                            description: parts[1] || "",
+                            image_url: parts[2] || "https://placehold.co/500x340/FCE4EC/593A47?text=Demo"
+                        };
+                    })
+                );
+
+                await fetchSiteDataFromSupabase();
+                renderAll();
+                showToast("บันทึกรูปตัวอย่างงาน & ใบเสร็จโอนเงินลง Supabase เรียบร้อยค่ะ 🧾✨");
+            } catch (err) {
+                console.error(err);
+                showToast(`บันทึกไม่สำเร็จ: ${err.message}`);
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        // ================= TAB 6: PLUS MENUS CRUD =================
         function renderAdminPlusMenus() {
             const container = document.getElementById('admPlusMenuList');
-            container.innerHTML = siteData.plusMenus.map((pm, idx) => `
+            container.innerHTML = (siteData.plusMenus || []).map((pm, idx) => `
                 <div class="p-3.5 rounded-xl bg-stone-50 border border-stone-200 space-y-2">
                     <div class="flex items-center justify-between">
                         <span class="font-bold text-xs text-nora-pinkDark">แถบเมนู [+] ลำดับที่ ${idx + 1}</span>
@@ -2523,26 +3021,35 @@
             renderAdminPlusMenus();
         }
 
-        function savePlusMenusAdmin() {
-            siteData.plusMenus = siteData.plusMenus.map((pm, idx) => {
-                const tEl = document.getElementById(`plusTitle-${idx}`);
-                const cEl = document.getElementById(`plusContent-${idx}`);
-                return {
-                    title: tEl ? tEl.value.trim() : pm.title,
-                    content: cEl ? cEl.value.trim() : pm.content
-                };
-            });
-            saveSiteData();
-            renderAll();
-            showToast("อัปเดตแถบเมนู [+] เรียบร้อยแล้วค่ะ");
-        }
+        async function savePlusMenusAdmin() {
+            const btn = document.getElementById('btnSavePlusMenus');
+            btn.disabled = true;
+            try {
+                const updatedMenus = (siteData.plusMenus || []).map((pm, idx) => {
+                    const tEl = document.getElementById(`plusTitle-${idx}`);
+                    const cEl = document.getElementById(`plusContent-${idx}`);
+                    return {
+                        title: tEl ? tEl.value.trim() : pm.title,
+                        content: cEl ? cEl.value.trim() : pm.content
+                    };
+                }).filter(m => m.title);
 
-        function resetDemoData() {
-            localStorage.removeItem('nora_watermark_demo_v6');
-            siteData = JSON.parse(JSON.stringify(defaultSiteData));
-            populateAdminInputs();
-            renderAll();
-            showToast("รีเซ็ตข้อมูลกลับเป็นค่าเริ่มต้นเรียบร้อย");
+                const curPlus = await supabaseClient.from('plus_menus').select('id').order('sort_order', { ascending: true }).order('id', { ascending: true });
+                await syncTableRows(
+                    'plus_menus',
+                    (curPlus.data || []).map(p => ({ dbId: p.id })),
+                    updatedMenus
+                );
+
+                await fetchSiteDataFromSupabase();
+                renderAdminPlusMenus();
+                renderAll();
+                showToast("บันทึกแถบเมนู [+] ลง Supabase เรียบร้อยแล้วค่ะ ✨");
+            } catch (err) {
+                showToast(`บันทึกไม่สำเร็จ: ${err.message}`);
+            } finally {
+                btn.disabled = false;
+            }
         }
 
         // ================= UTILITIES =================
@@ -2591,7 +3098,7 @@
                 .replace(/'/g, "&#039;");
         }
 
-        // ================= SPLASH SCREEN CONTROLLER (REAL READINESS & ERROR SAFE) =================
+        // ================= SPLASH SCREEN CONTROLLER (REAL SUPABASE READINESS & ERROR SAFE) =================
         let splashHasCompletedOnce = false;
         let splashSlowNetworkTimer = null;
         let splashFailSafeTimer = null;
@@ -2686,7 +3193,7 @@
 
         function recoverWithDefaultAndDismiss() {
             try {
-                siteData = JSON.parse(JSON.stringify(defaultSiteData));
+                loadSiteDataFromCache();
                 renderAll();
             } catch (e) {
                 console.error(e);
@@ -2702,13 +3209,11 @@
         }
 
         async function runInitialBootWithSplash() {
-            // Prevent re-showing splash when switching tabs or opening modals
             if (splashHasCompletedOnce) return;
 
             const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            const minReadableStepDelay = prefersReducedMotion ? 40 : 210;
+            const minReadableStepDelay = prefersReducedMotion ? 40 : 180;
 
-            // Slow network indicator if asset preparation takes > 2.6s
             splashSlowNetworkTimer = setTimeout(() => {
                 const slowEl = document.getElementById('splashSlowNotice');
                 const textEl = document.getElementById('splashStatusText');
@@ -2716,11 +3221,10 @@
                     slowEl.classList.remove('hidden');
                 }
                 if (textEl && !splashHasCompletedOnce) {
-                    textEl.textContent = 'สัญญาณเน็ตอาจช้านิดนึง กำลังดึงรูปให้อยู่นะคะ...';
+                    textEl.textContent = 'สัญญาณเน็ตอาจช้านิดนึง กำลังดึงข้อมูลร้านให้อยู่นะคะ...';
                 }
             }, 2600);
 
-            // Hard safety guard so splash can never hang forever
             splashFailSafeTimer = setTimeout(() => {
                 if (!splashHasCompletedOnce) {
                     dismissSplashScreen(false);
@@ -2728,11 +3232,18 @@
             }, 6500);
 
             try {
-                // STEP 1: Load saved store data & sync splash branding with current theme
+                // STEP 1: Load cached fallback first & fetch live data from Supabase
                 setSplashStep(1, 'ยินดีต้อนรับน้า ♡');
-                loadSiteData();
+                loadSiteDataFromCache();
                 applyThemeColorsCSS();
 
+                try {
+                    await fetchSiteDataFromSupabase();
+                } catch (dbErr) {
+                    console.warn('Supabase fetch warning (using cached fallback):', dbErr);
+                }
+
+                applyThemeColorsCSS();
                 const splashLogo = document.getElementById('splashLogoImg');
                 const splashMascot = document.getElementById('splashMascotImg');
                 const splashTitle = document.getElementById('splashBrandTitle');
@@ -2745,11 +3256,7 @@
                 // STEP 2: Render essential DOM (Queue, Fonts, Menus, Status)
                 setSplashStep(2, 'กำลังเตรียมร้านให้นะคะ');
                 renderAll();
-                const fontArrow = document.getElementById('arrow-fonts');
-                if (fontArrow) fontArrow.style.transform = 'rotate(90deg)';
 
-                // Wait for critical visual assets (Logo & Mascot PNG) or document fonts in parallel
-                // Non-critical gallery demo images load lazily in the background after entering
                 const criticalAssetsPromise = Promise.all([
                     preloadImageWithTimeout(siteData.logoUrl, 1600),
                     preloadImageWithTimeout(siteData.mascotUrl, 1600),
@@ -2765,7 +3272,7 @@
 
                 // STEP 3: Ready to enter
                 setSplashStep(3, 'ใกล้พร้อมแล้วค่ะ ✨');
-                await new Promise(r => setTimeout(r, prefersReducedMotion ? 30 : 220));
+                await new Promise(r => setTimeout(r, prefersReducedMotion ? 30 : 200));
 
                 dismissSplashScreen(false);
             } catch (err) {
