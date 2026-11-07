@@ -21,6 +21,7 @@
         :root {
             --theme-primary: #F07197;     /* Sweet Pastel Pink */
             --theme-primary-rgb: 240, 113, 151;
+            --theme-primary-dark-border: #95465E; /* 38% Darker than Primary */
             --theme-secondary: #A984E8;   /* Soft Lavender */
             --theme-secondary-rgb: 169, 132, 232;
             --theme-brown: #D95380;       /* Sweet Berry Pink */
@@ -157,6 +158,11 @@
             border-color: rgba(var(--theme-primary-rgb), 0.30) !important;
         }
 
+        /* Primary Contact Button Border: 38% darker than the configured theme primary color */
+        .btn-primary-themed-border {
+            border-color: var(--theme-primary-dark-border) !important;
+        }
+
         .btn-bounce {
             transition: all 0.2s ease;
         }
@@ -273,6 +279,12 @@
             font-weight: 700;
             line-height: 1.2;
             letter-spacing: 0.015em;
+            text-shadow: 0 2px 10px rgba(var(--theme-primary-rgb), 0.22);
+        }
+
+        .brand-title-glow {
+            line-height: 1.22;
+            letter-spacing: 0.01em;
             text-shadow: 0 2px 10px rgba(var(--theme-primary-rgb), 0.22);
         }
 
@@ -648,7 +660,7 @@
                         <span>ศูนย์รวมข้อมูลและเช็คคิวสำหรับตัวแทน</span>
                     </div>
                     
-                    <!-- Handwritten Signature Style Title (No overlapping) -->
+                    <!-- Handwritten Signature or Custom Uploaded Font Title -->
                     <h1 id="siteNameDisplay" class="signature-title text-3xl sm:text-4xl font-bold text-nora-brown tracking-normal mb-1.5 block">
                         watermark by nora
                     </h1>
@@ -659,7 +671,7 @@
                     <!-- Two Compact Contact Buttons side-by-side -->
                     <div class="flex flex-wrap items-center gap-2 font-body">
                         <a id="contactBtn1" href="#contact1" onclick="handleContactClick(event, 1)" 
-                           class="btn-bounce bg-nora-pinkDark hover:opacity-95 text-white font-medium px-3.5 py-1.5 rounded-xl border border-pink-300 shadow-cute-sm flex items-center justify-center gap-1.5 text-xs">
+                           class="btn-bounce bg-nora-pinkDark hover:opacity-95 text-white font-medium px-3.5 py-1.5 rounded-xl border-[1.5px] btn-primary-themed-border shadow-cute-sm flex items-center justify-center gap-1.5 text-xs">
                             <i class="ph-fill ph-chat-circle-dots text-sm"></i>
                             <span id="contactLabel1">ติดต่อแอดมิน</span>
                         </a>
@@ -695,7 +707,7 @@
                         </span>
                     </button>
                     <div id="content-rule" class="accordion-content border-t border-pink-100 bg-white relative z-10">
-                        <div class="p-3 text-xs font-body space-y-1.5 text-nora-text" id="ruleBodyList"></div>
+                        <div class="p-3 text-xs font-body space-y-2 text-nora-text" id="ruleBodyList"></div>
                     </div>
                 </div>
 
@@ -1152,24 +1164,30 @@
                 <div id="adminTab-general" class="space-y-4">
                     <div class="bg-pink-50/70 border border-pink-200 rounded-2xl p-3 text-xs text-nora-text flex items-start gap-2">
                         <i class="ph-fill ph-sparkle text-lg text-nora-pinkDark shrink-0 mt-0.5"></i>
-                        <span><strong>ปรับแต่งร้าน & แชทบนหัวมาสคอต:</strong> เลือกโทนสีหวานน่ารัก เปลี่ยนไอคอน และตั้งข้อความที่เด้งบนหัวมาสคอตได้เองค่ะ (บันทึกลง Supabase ทันที)</span>
+                        <span><strong>ปรับแต่งร้าน & แชทบนหัวมาสคอต:</strong> เลือกโทนสีหวานน่ารัก เลือกฟอนต์ชื่อร้าน เปลี่ยนไอคอน และตั้งข้อความที่เด้งบนหัวมาสคอตได้เองค่ะ (บันทึกลง Supabase ทันที)</span>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                         <div>
-                            <label class="block text-xs font-bold mb-1">ชื่อเว็บไซต์ (แสดงเป็นฟอนต์ตัวเขียนลายเซ็น):</label>
+                            <label class="block text-xs font-bold mb-1">ชื่อเว็บไซต์:</label>
                             <input type="text" id="admSiteName" class="w-full px-3 py-1.5 rounded-xl border border-pink-200">
                         </div>
                         <div>
                             <label class="block text-xs font-bold mb-1">คำอธิบายสั้นใต้ชื่อ:</label>
                             <input type="text" id="admSiteSub" class="w-full px-3 py-1.5 rounded-xl border border-pink-200">
                         </div>
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-bold mb-1 text-nora-pinkDark">✨ เลือกฟอนต์หัวข้อชื่อร้าน (สามารถใช้ฟอนต์ฟรีเชิงพาณิชย์ 100% ที่อัปโหลดไว้ในหมวดที่ 3 ได้เลย):</label>
+                            <select id="admTitleFontCode" onchange="previewTitleFontFromSelect(this.value)" class="w-full px-3 py-1.5 rounded-xl border border-pink-200 bg-white">
+                                <option value="signature">🖋️ ฟอนต์ตัวเขียนลายเซ็น (Dancing Script - ค่าเริ่มต้น)</option>
+                            </select>
+                        </div>
                         <div>
                             <label class="block text-xs font-bold mb-1">ลิงก์รูป Logo ด้านบน (URL):</label>
                             <input type="text" id="admLogoUrl" class="w-full px-3 py-1.5 rounded-xl border border-pink-200">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold mb-1">เลือกไอคอนหน้าแถบเมนูหลัก (แบบทึบ ไม่โปร่ง):</label>
+                            <label class="block text-xs font-bold mb-1">เลือกไอคอนหน้าแถบเมนูหลัก & หัวข้อกฎ (แบบทึบ ไม่โปร่ง):</label>
                             <select id="admMenuIconStyle" class="w-full px-3 py-1.5 rounded-xl border border-pink-200 bg-white">
                                 <option value="heart">💗 1. หัวใจ (Solid Heart)</option>
                                 <option value="star">⭐ 2. ดาว (Solid Star)</option>
@@ -1479,6 +1497,7 @@
             logoUrl: "https://i.postimg.cc/BvVGXRTy/IMG-2178.png",
             mascotUrl: "https://i.postimg.cc/DwQcPyhp/IMG-2179.png",
             menuIconStyle: "heart",
+            titleFontCode: "signature", // 'signature' or any font id (e.g., 'F01', 'F09')
             themeColors: {
                 primary: "#F07197",
                 secondary: "#A984E8",
@@ -1598,7 +1617,6 @@
             }
             const str = String(rawImgField).trim();
             if (!str) return [];
-            // Support comma-separated URLs while keeping data:image base64 intact if ever used
             if (str.startsWith('data:image/')) return [str];
             return str
                 .split(/[\n,]+/)
@@ -1612,6 +1630,22 @@
             return parseProductImages(v.images || v.img);
         }
 
+        // Helper to unpack menu_icon_style & titleFontCode without requiring DB schema changes
+        function parseIconAndTitleFont(rawIconField) {
+            const raw = String(rawIconField || 'heart').trim();
+            if (raw.includes('|')) {
+                const [iconPart, fontPart] = raw.split('|');
+                return {
+                    iconStyle: iconPart.trim() || 'heart',
+                    titleFontCode: fontPart.trim() || 'signature'
+                };
+            }
+            return {
+                iconStyle: raw || 'heart',
+                titleFontCode: siteData.titleFontCode || 'signature'
+            };
+        }
+
         function loadSiteDataFromCache() {
             try {
                 const saved = localStorage.getItem('nora_watermark_demo_v6');
@@ -1620,6 +1654,7 @@
                     if (!siteData.themeColors) siteData.themeColors = JSON.parse(JSON.stringify(defaultSiteData.themeColors));
                     if (!siteData.queueStatusOptions) siteData.queueStatusOptions = JSON.parse(JSON.stringify(defaultSiteData.queueStatusOptions));
                     if (!siteData.paymentConfig) siteData.paymentConfig = JSON.parse(JSON.stringify(defaultSiteData.paymentConfig));
+                    if (!siteData.titleFontCode) siteData.titleFontCode = 'signature';
                 } else {
                     siteData = JSON.parse(JSON.stringify(defaultSiteData));
                 }
@@ -1668,7 +1703,11 @@
                 siteData.siteSub = s.site_sub || defaultSiteData.siteSub;
                 siteData.logoUrl = s.logo_url || defaultSiteData.logoUrl;
                 siteData.mascotUrl = s.mascot_url || defaultSiteData.mascotUrl;
-                siteData.menuIconStyle = s.menu_icon_style || 'heart';
+
+                const parsedStyle = parseIconAndTitleFont(s.menu_icon_style);
+                siteData.menuIconStyle = parsedStyle.iconStyle;
+                siteData.titleFontCode = parsedStyle.titleFontCode;
+
                 siteData.themeColors = {
                     primary: s.theme_primary || '#F07197',
                     secondary: s.theme_secondary || '#A984E8',
@@ -1784,14 +1823,40 @@
             return fallback;
         }
 
+        // Darken any Hex color by a given ratio (0.38 = 38% darker than configured color)
+        function darkenHexColor(hex, ratio = 0.38, fallback = "#95465E") {
+            if (!hex || typeof hex !== 'string') return fallback;
+            const clean = hex.replace('#', '').trim();
+            let r, g, b;
+            if (clean.length === 3) {
+                r = parseInt(clean[0] + clean[0], 16);
+                g = parseInt(clean[1] + clean[1], 16);
+                b = parseInt(clean[2] + clean[2], 16);
+            } else if (clean.length === 6) {
+                r = parseInt(clean.substring(0, 2), 16);
+                g = parseInt(clean.substring(2, 4), 16);
+                b = parseInt(clean.substring(4, 6), 16);
+            } else {
+                return fallback;
+            }
+            if (isNaN(r) || isNaN(g) || isNaN(b)) return fallback;
+            const factor = Math.max(0, Math.min(1, 1 - ratio));
+            const dr = Math.round(r * factor).toString(16).padStart(2, '0');
+            const dg = Math.round(g * factor).toString(16).padStart(2, '0');
+            const db = Math.round(b * factor).toString(16).padStart(2, '0');
+            return `#${dr}${dg}${db}`;
+        }
+
         function applyThemeColorsCSS() {
             const tc = siteData.themeColors || defaultSiteData.themeColors;
             const primaryRgb = hexToRgbString(tc.primary, "240, 113, 151");
+            const primaryDarkBorder = darkenHexColor(tc.primary, 0.38, "#95465E");
             const secondaryRgb = hexToRgbString(tc.secondary, "169, 132, 232");
             document.getElementById('customThemeVars').innerHTML = `
                 :root {
                     --theme-primary: ${tc.primary};
                     --theme-primary-rgb: ${primaryRgb};
+                    --theme-primary-dark-border: ${primaryDarkBorder};
                     --theme-secondary: ${tc.secondary};
                     --theme-secondary-rgb: ${secondaryRgb};
                     --theme-brown: ${tc.brown};
@@ -1800,29 +1865,29 @@
             `;
         }
 
-        function getMenuIconHtml(style) {
+        function getMenuIconHtml(style, sizeClass = "w-4 h-4") {
             const fillColor = "var(--theme-primary)";
             const filterGlow = "drop-shadow(0 1px 3px rgba(var(--theme-primary-rgb), 0.35))";
             switch(style) {
                 case 'star':
-                    return `<svg viewBox="0 0 24 24" class="w-4 h-4" fill="${fillColor}" style="filter: ${filterGlow};">
+                    return `<svg viewBox="0 0 24 24" class="${sizeClass}" fill="${fillColor}" style="filter: ${filterGlow};">
                         <path d="M12 2.25c.41 0 .79.23.97.6l2.36 4.78 5.28.77c.41.06.75.35.88.74.13.39.02.82-.28 1.11l-3.82 3.72.9 5.26c.07.41-.1.82-.43 1.06-.33.24-.77.27-1.14.08L12 17.88l-4.72 2.49c-.37.19-.81.16-1.14-.08-.33-.24-.5-.65-.43-1.06l.9-5.26-3.82-3.72c-.3-.29-.41-.72-.28-1.11.13-.39.47-.68.88-.74l5.28-.77 2.36-4.78c.18-.37.56-.6.97-.6Z"/>
                     </svg>`;
                 case 'sparkle':
-                    return `<svg viewBox="0 0 24 24" class="w-4 h-4" fill="${fillColor}" style="filter: ${filterGlow};">
+                    return `<svg viewBox="0 0 24 24" class="${sizeClass}" fill="${fillColor}" style="filter: ${filterGlow};">
                         <path d="M11.5 2C11.9 2 12.2 2.3 12.3 2.7L14.2 8.8L20.3 10.7C20.7 10.8 21 11.1 21 11.5C21 11.9 20.7 12.2 20.3 12.3L14.2 14.2L12.3 20.3C12.2 20.7 11.9 21 11.5 21C11.1 21 10.8 20.7 10.7 20.3L8.8 14.2L2.7 12.3C2.3 12.2 2 11.9 2 11.5C2 11.1 2.3 10.8 2.7 10.7L8.8 8.8L10.7 2.7C10.8 2.3 11.1 2 11.5 2ZM19 2.5C19.2 2.5 19.4 2.7 19.5 2.9L20.1 4.9L22.1 5.5C22.3 5.6 22.5 5.8 22.5 6C22.5 6.2 22.3 6.4 22.1 6.5L20.1 7.1L19.5 9.1C19.4 9.3 19.2 9.5 19 9.5C18.8 9.5 18.6 9.3 18.5 9.1L17.9 7.1L15.9 6.5C15.7 6.4 15.5 6.2 15.5 6C15.5 5.8 15.7 5.6 15.9 5.5L17.9 4.9L18.5 2.9C18.6 2.7 18.8 2.5 19 2.5Z"/>
                     </svg>`;
                 case 'flower':
-                    return `<svg viewBox="0 0 24 24" class="w-4 h-4" fill="${fillColor}" style="filter: ${filterGlow};">
+                    return `<svg viewBox="0 0 24 24" class="${sizeClass}" fill="${fillColor}" style="filter: ${filterGlow};">
                         <path d="M12 2.5a3.5 3.5 0 0 1 3.32 4.6 3.5 3.5 0 0 1 4.18 5.4 3.5 3.5 0 0 1-2.5 5.95 3.5 3.5 0 0 1-5 1.8 3.5 3.5 0 0 1-5-1.8A3.5 3.5 0 0 1 4.5 12.5a3.5 3.5 0 0 1 4.18-5.4A3.5 3.5 0 0 1 12 2.5Zm0 7a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z"/>
                     </svg>`;
                 case 'bow':
-                    return `<svg viewBox="0 0 24 24" class="w-4 h-4" fill="${fillColor}" style="filter: ${filterGlow};">
+                    return `<svg viewBox="0 0 24 24" class="${sizeClass}" fill="${fillColor}" style="filter: ${filterGlow};">
                         <path d="M4.2 5.3C2.7 6.3 2 8.2 2 10.5c0 2.3.7 4.2 2.2 5.2 1.6 1 3.9.4 6.2-1.5l.6 4.8 1.5-1 .9 1 1.5-1 .6-4.8c2.3 1.9 4.6 2.5 6.2 1.5 1.5-1 2.2-2.9 2.2-5.2 0-2.3-.7-4.2-2.2-5.2-1.7-1.1-4.2-.3-6.6 1.8a2.6 2.6 0 0 0-4.2 0C8.4 5 5.9 4.2 4.2 5.3Z"/>
                     </svg>`;
                 case 'heart':
                 default:
-                    return `<svg viewBox="0 0 24 24" class="w-4 h-4" fill="${fillColor}" style="filter: ${filterGlow};">
+                    return `<svg viewBox="0 0 24 24" class="${sizeClass}" fill="${fillColor}" style="filter: ${filterGlow};">
                         <path d="M12 20.5c-.3 0-.6-.1-.8-.3C6.1 15.9 2.5 12.4 2.5 8.4 2.5 5.2 5 2.8 8.1 2.8c1.7 0 3.1.8 3.9 2 .8-1.2 2.2-2 3.9-2 3.1 0 5.6 2.4 5.6 5.6 0 4-3.6 7.5-8.7 11.8-.2.2-.5.3-.8.3Z"/>
                     </svg>`;
             }
@@ -1847,9 +1912,42 @@
             document.getElementById('customDynamicFontsStyle').innerHTML = cssString;
         }
 
+        // Apply selected brand title font (Default Signature vs Uploaded/Preset Font in Web)
+        function applyBrandTitleFont() {
+            const titleEl = document.getElementById('siteNameDisplay');
+            const splashTitleEl = document.getElementById('splashBrandTitle');
+            const code = siteData.titleFontCode || 'signature';
+
+            let fontClassToApply = 'signature-title';
+            if (code !== 'signature') {
+                const matchedFont = (siteData.fonts || []).find(f => f.id === code);
+                if (matchedFont) {
+                    if (matchedFont.type === 'custom') {
+                        fontClassToApply = `custom-font-${matchedFont.id.toLowerCase().replace(/[^a-z0-9]/g, '')} brand-title-glow`;
+                    } else {
+                        const presetClass = matchedFont.cssClass === 'font-main' ? 'font-mali' : matchedFont.cssClass;
+                        fontClassToApply = `${presetClass} brand-title-glow`;
+                    }
+                }
+            }
+
+            if (titleEl) {
+                titleEl.className = `${fontClassToApply} text-3xl sm:text-4xl font-bold text-nora-brown tracking-normal mb-1.5 block`;
+            }
+            if (splashTitleEl) {
+                splashTitleEl.className = `${fontClassToApply} text-3xl sm:text-4xl font-bold text-nora-brown mb-1`;
+            }
+        }
+
+        function previewTitleFontFromSelect(selectedCode) {
+            siteData.titleFontCode = selectedCode || 'signature';
+            applyBrandTitleFont();
+        }
+
         function renderAll() {
             applyThemeColorsCSS();
             applyCustomFontsCSS();
+            applyBrandTitleFont();
 
             // 1. Header & Contacts
             document.getElementById('siteNameDisplay').textContent = siteData.siteName;
@@ -1880,12 +1978,15 @@
                 if (el) el.innerHTML = getMenuIconHtml(activeIconStyle);
             });
 
-            // 2. Rules
+            // 2. Rules (Balanced with matching glowing mini icon frame & clean vertical alignment)
             const ruleContainer = document.getElementById('ruleBodyList');
+            const ruleBulletIcon = getMenuIconHtml(activeIconStyle, "w-3.5 h-3.5");
             ruleContainer.innerHTML = (siteData.rules || []).map(r => `
-                <div class="flex items-start gap-2 cute-inner-card p-2.5 text-xs">
-                    <i class="ph-fill ph-leaf text-nora-pinkDark text-sm shrink-0 mt-0.5"></i>
-                    <span>${escapeHtml(r)}</span>
+                <div class="flex items-center gap-2.5 cute-inner-card px-3 py-2.5 text-xs">
+                    <span class="w-6 h-6 rounded-lg icon-glow-frame flex items-center justify-center shrink-0">
+                        ${ruleBulletIcon}
+                    </span>
+                    <span class="font-medium text-nora-text leading-relaxed">${escapeHtml(r)}</span>
                 </div>
             `).join('');
 
@@ -2237,7 +2338,6 @@
                 };
             }
 
-            // Render clickable dots/pills for multiple images
             if (hasMultiple) {
                 dotsContainer.innerHTML = imgs.map((_, idx) => `
                     <button type="button"
@@ -2251,7 +2351,6 @@
             }
         }
 
-        // Attach Touch Swipe & Keyboard navigation for Lightbox
         function setupLightboxInteractions() {
             const touchArea = document.getElementById('lightboxTouchArea');
             if (touchArea) {
@@ -2956,6 +3055,25 @@
             }
         }
 
+        function populateTitleFontSelectOptions() {
+            const selectEl = document.getElementById('admTitleFontCode');
+            if (!selectEl) return;
+            const currentCode = siteData.titleFontCode || 'signature';
+            const fontOpts = (siteData.fonts || []).map(f => {
+                const badge = f.type === 'custom' ? '📂 ฟอนต์อัปโหลดในเว็บ' : '✨ ฟอนต์ในระบบ';
+                return `<option value="${escapeHtml(f.id)}">${escapeHtml(f.id)} : ${escapeHtml(f.name)} (${badge})</option>`;
+            }).join('');
+
+            selectEl.innerHTML = `
+                <option value="signature">🖋️ ฟอนต์ตัวเขียนลายเซ็น (Dancing Script - ค่าเริ่มต้น)</option>
+                ${fontOpts}
+            `;
+            selectEl.value = currentCode;
+            if (selectEl.value !== currentCode) {
+                selectEl.value = 'signature';
+            }
+        }
+
         function populateAdminInputs() {
             // Tab 1
             document.getElementById('admSiteName').value = siteData.siteName;
@@ -2964,6 +3082,8 @@
             document.getElementById('admMascotUrl').value = siteData.mascotUrl;
             const validSolidIcons = ['heart', 'star', 'sparkle', 'flower', 'bow'];
             document.getElementById('admMenuIconStyle').value = validSolidIcons.includes(siteData.menuIconStyle) ? siteData.menuIconStyle : 'heart';
+
+            populateTitleFontSelectOptions();
 
             const tc = siteData.themeColors || defaultSiteData.themeColors;
             document.getElementById('admThemePrimary').value = tc.primary;
@@ -3103,6 +3223,7 @@
 
                 resetFontUploadFields();
                 await fetchSiteDataFromSupabase();
+                populateTitleFontSelectOptions();
                 renderAdminFontsList();
                 renderAll();
                 showToast(`อัปโหลดและบันทึกฟอนต์ "${name}" เรียบร้อยแล้วค่ะ ✨`);
@@ -3137,6 +3258,7 @@
                     if (error) throw error;
                 }
                 await fetchSiteDataFromSupabase();
+                populateTitleFontSelectOptions();
                 renderAdminFontsList();
                 renderAll();
                 showToast("อัปเดตชื่อฟอนต์ในฐานข้อมูลเรียบร้อย");
@@ -3154,6 +3276,7 @@
                     if (error) throw error;
                 }
                 await fetchSiteDataFromSupabase();
+                populateTitleFontSelectOptions();
                 renderAdminFontsList();
                 renderAll();
                 showToast("ลบฟอนต์ออกจากฐานข้อมูลแล้ว");
@@ -3167,13 +3290,19 @@
             const btn = document.getElementById('btnSaveGeneral');
             btn.disabled = true;
             try {
+                const chosenIconStyle = document.getElementById('admMenuIconStyle').value || 'heart';
+                const chosenTitleFont = document.getElementById('admTitleFontCode')?.value || 'signature';
+                const combinedIconAndTitleFont = chosenTitleFont === 'signature'
+                    ? chosenIconStyle
+                    : `${chosenIconStyle}|${chosenTitleFont}`;
+
                 const payload = {
                     id: 1,
                     site_name: document.getElementById('admSiteName').value.trim() || "watermark by nora",
                     site_sub: document.getElementById('admSiteSub').value.trim(),
                     logo_url: document.getElementById('admLogoUrl').value.trim(),
                     mascot_url: document.getElementById('admMascotUrl').value.trim(),
-                    menu_icon_style: document.getElementById('admMenuIconStyle').value,
+                    menu_icon_style: combinedIconAndTitleFont,
                     theme_primary: document.getElementById('admThemePrimary').value,
                     theme_secondary: document.getElementById('admThemeSecondary').value,
                     theme_brown: document.getElementById('admThemeBrown').value,
@@ -3194,7 +3323,7 @@
 
                 await fetchSiteDataFromSupabase();
                 renderAll();
-                showToast("บันทึกโทนสี ไอคอน และสถานะลง Supabase เรียบร้อยแล้วค่ะ 🎀✨");
+                showToast("บันทึกข้อมูลร้าน ฟอนต์หัวข้อ และโทนสีลง Supabase เรียบร้อยค่ะ 🎀✨");
             } catch (err) {
                 console.error(err);
                 showToast(`เกิดข้อผิดพลาด: ${err.message}`);
@@ -3489,7 +3618,6 @@
                         return {
                             title: parts[0] || "Version",
                             description: parts[1] || "",
-                            // Supports multiple image URLs separated by commas, or empty string if no image
                             image_url: typeof parts[2] === 'string' ? parts[2] : ""
                         };
                     })
