@@ -205,7 +205,6 @@
         }
 
         /* ================= MASCOT TOP-LAYER OVER MODAL SYSTEM ================= */
-        /* Keeps mascot & speech bubble sharp above z-50 backdrop-blur overlays without blocking modal inputs */
         #mascotOuterSlot {
             position: relative;
             z-index: 60;
@@ -218,7 +217,6 @@
         #mascotFloatingStage .mascot-interactive {
             pointer-events: auto;
         }
-        /* When any popup/modal is open, pin mascot cleanly to bottom-right above the modal backdrop */
         #mascotFloatingStage.mascot-over-modal {
             position: fixed;
             right: 0.65rem;
@@ -294,8 +292,67 @@
             transition: all 0.2s ease;
         }
 
+        /* ================= PRODUCT CARD MULTI-IMAGE VIEWER & LIGHTBOX ================= */
+        .product-card-media {
+            position: relative;
+            aspect-ratio: 16 / 11;
+            background: linear-gradient(135deg, rgba(var(--theme-primary-rgb), 0.07), rgba(var(--theme-secondary-rgb), 0.09));
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: pan-y;
+        }
+        .product-card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+            transition: transform 0.28s ease;
+        }
+        .group:hover .product-card-img {
+            transform: scale(1.02);
+        }
+        .card-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1.65rem;
+            height: 1.65rem;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.92);
+            border: 1.2px solid rgba(var(--theme-primary-rgb), 0.48);
+            color: #593A47;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(var(--theme-primary-rgb), 0.25);
+            transition: all 0.18s ease;
+            z-index: 15;
+            cursor: pointer;
+        }
+        .card-nav-btn:hover {
+            background: var(--theme-primary);
+            color: #FFFFFF;
+            border-color: var(--theme-primary);
+        }
+        .card-nav-btn:active {
+            transform: translateY(-50%) scale(0.92);
+        }
+        .card-dot-pill {
+            width: 5px;
+            height: 5px;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid rgba(var(--theme-primary-rgb), 0.45);
+            transition: all 0.2s ease;
+        }
+        .card-dot-pill.active {
+            width: 14px;
+            background: var(--theme-primary);
+            border-color: var(--theme-primary);
+        }
+
         /* ================= 3 NATURAL MICRO-ANIMATIONS (GPU Accelerated) ================= */
-        /* 1. ไอคอนน่ารักมุมโลโก้: ลอยช้าๆ และเอียงตัวเบาๆ อย่างเป็นธรรมชาติ */
         @keyframes logoCornerFloat {
             0%, 100% {
                 transform: translate3d(0, 0px, 0) rotate(0deg);
@@ -313,7 +370,6 @@
             animation: logoCornerFloat 3.2s ease-in-out infinite reverse;
         }
 
-        /* 2. ปุ่มกดเข้าอ่านรายละเอียดต่างๆ: ตอบสนองนุ่มนวลเมื่อชี้/กด พร้อมลูกศรหมุนตามสถานะ */
         .menu-detail-btn {
             transition: background-color 0.25s ease, transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
             will-change: transform;
@@ -345,7 +401,6 @@
             transform: rotate(45deg);
         }
 
-        /* 3. ป๊อปอัพสำเร็จ (Toast): Fade + Slide ขึ้นเบาๆ อย่างนุ่มนวล ไม่บังการกด */
         .toast-popup {
             opacity: 0;
             transform: translate3d(0, 12px, 0) scale(0.97);
@@ -365,7 +420,6 @@
             transform: scale(1);
         }
 
-        /* รองรับผู้ที่ตั้งค่าลดการเคลื่อนไหวในเครื่อง (prefers-reduced-motion) */
         @media (prefers-reduced-motion: reduce) {
             .logo-corner-float,
             .logo-sparkle-icon,
@@ -740,7 +794,7 @@
                     </div>
                 </div>
 
-                <!-- Item 5: ตัวอย่างงานแต่ละเวอร์ชั่น -->
+                <!-- Item 5: ตัวอย่างงานแต่ละเวอร์ชั่น (Multi-Image Product Cards) -->
                 <div class="cute-box overflow-hidden">
                     <button id="btn-versions" onclick="toggleMenuSection('versions')" class="menu-detail-btn w-full px-3.5 py-2.5 flex items-center justify-between text-left bg-white relative z-10 font-body">
                         <div class="flex items-center gap-2.5">
@@ -750,11 +804,14 @@
                             <span class="font-medium text-xs sm:text-sm text-nora-text">ตัวอย่างงานแต่ละเวอร์ชั่น</span>
                         </div>
                         <span class="text-[10px] bg-white icon-glow-frame text-purple-600 px-2.5 py-0.5 rounded-full font-medium flex items-center gap-1">
-                            Demo <i class="ph-bold ph-caret-down text-[10px] menu-caret-icon"></i>
+                            ดูภาพตัวอย่าง <i class="ph-bold ph-caret-down text-[10px] menu-caret-icon"></i>
                         </span>
                     </button>
                     <div id="content-versions" class="accordion-content border-t border-pink-100 bg-white relative z-10">
-                        <div class="p-3">
+                        <div class="p-3 space-y-2">
+                            <div class="flex items-center justify-between text-[10px] text-nora-muted px-0.5">
+                                <span><i class="ph-fill ph-hand-tap text-nora-pinkDark"></i> แตะที่รูปเพื่อดูเต็มจอ / ปัดนิ้วเลื่อนดูรูปได้</span>
+                            </div>
                             <div id="versionsGalleryGrid" class="grid grid-cols-2 gap-2.5"></div>
                         </div>
                     </div>
@@ -893,6 +950,90 @@
 
         </div>
     </main>
+
+    <!-- ================= FULLSCREEN PRODUCT IMAGE LIGHTBOX MODAL ================= -->
+    <div id="productLightboxModal"
+         role="dialog"
+         aria-modal="true"
+         aria-label="ป๊อปอัพดูรูปภาพตัวอย่างงานเต็มจอ"
+         onclick="handleLightboxBackdropClick(event)"
+         class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 hidden items-center justify-center p-2.5 sm:p-5 select-none">
+        <div class="cute-box !bg-white w-full max-w-3xl !rounded-[1.8rem] overflow-hidden shadow-2xl flex flex-col max-h-[92vh] relative"
+             onclick="event.stopPropagation()">
+
+            <!-- Top Header Bar with Clear Close Button -->
+            <div class="bg-gradient-to-r from-pink-50 via-purple-50 to-pink-50 px-4 py-3 border-b border-pink-200 flex items-center justify-between gap-2">
+                <div class="min-w-0 flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-nora-pinkDark text-white flex items-center justify-center shrink-0 shadow-sm">
+                        <i class="ph-bold ph-images text-base"></i>
+                    </span>
+                    <div class="min-w-0">
+                        <h3 id="lightboxTitle" class="font-bold text-xs sm:text-sm text-nora-text truncate">ตัวอย่างงาน</h3>
+                        <p id="lightboxDesc" class="text-[10px] sm:text-[11px] text-nora-muted truncate"></p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                    <span id="lightboxCounterBadge" class="hidden text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-white icon-glow-frame text-nora-pinkDark">
+                        1 / 1
+                    </span>
+                    <button type="button"
+                            id="lightboxCloseBtn"
+                            onclick="closeProductLightbox()"
+                            aria-label="ปิดป๊อปอัพดูรูป"
+                            class="px-3 py-1.5 rounded-full bg-nora-pinkDark hover:opacity-90 text-white font-bold text-xs flex items-center gap-1 shadow-sm transition">
+                        <i class="ph-bold ph-x text-sm"></i> ปิด
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Image Viewport (Preserves Aspect Ratio, Never Stretches or Overflows) -->
+            <div id="lightboxTouchArea"
+                 class="relative bg-stone-900/95 flex-1 min-h-[260px] sm:min-h-[380px] max-h-[70vh] flex items-center justify-center overflow-hidden p-2 sm:p-4"
+                 style="touch-action: pan-y;">
+
+                <!-- Previous Button (Hidden automatically when only 1 image) -->
+                <button type="button"
+                        id="lightboxPrevBtn"
+                        onclick="stepLightboxImage(-1)"
+                        aria-label="รูปก่อนหน้า"
+                        class="hidden absolute left-2.5 sm:left-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/95 hover:bg-nora-pinkDark text-nora-text hover:text-white border border-pink-200 shadow-lg items-center justify-center transition z-20">
+                    <i class="ph-bold ph-caret-left text-lg"></i>
+                </button>
+
+                <!-- Image Element (object-contain prevents distortion & overflow) -->
+                <img id="lightboxMainImg"
+                     src=""
+                     alt="ภาพขยายเต็มจอ"
+                     class="max-w-full max-h-[64vh] w-auto h-auto object-contain rounded-xl shadow-md transition-opacity duration-200">
+
+                <!-- Broken / Missing Image Fallback inside Lightbox -->
+                <div id="lightboxFallbackBox" class="hidden flex-col items-center justify-center text-center p-6 rounded-2xl bg-white/95 border border-pink-200 max-w-xs mx-auto">
+                    <div class="w-12 h-12 rounded-2xl icon-glow-frame flex items-center justify-center text-nora-pinkDark mb-2">
+                        <i class="ph-duotone ph-image-broken text-2xl"></i>
+                    </div>
+                    <p id="lightboxFallbackTitle" class="font-bold text-xs text-nora-text">ไม่สามารถโหลดรูปภาพนี้ได้</p>
+                    <p id="lightboxFallbackSub" class="text-[11px] text-nora-muted mt-0.5">ลิงก์รูปภาพอาจเสียหรือยังไม่ได้ระบุรูปภาพค่ะ</p>
+                </div>
+
+                <!-- Next Button (Hidden automatically when only 1 image) -->
+                <button type="button"
+                        id="lightboxNextBtn"
+                        onclick="stepLightboxImage(1)"
+                        aria-label="รูปถัดไป"
+                        class="hidden absolute right-2.5 sm:right-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/95 hover:bg-nora-pinkDark text-nora-text hover:text-white border border-pink-200 shadow-lg items-center justify-center transition z-20">
+                    <i class="ph-bold ph-caret-right text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Bottom Thumbnails / Dots & Keyboard Hint -->
+            <div class="bg-white px-4 py-2.5 border-t border-pink-100 flex flex-wrap items-center justify-between gap-2">
+                <div id="lightboxDotsContainer" class="flex items-center gap-1.5 flex-wrap"></div>
+                <div class="text-[10px] text-nora-muted ml-auto">
+                    <span>💡 ปัดซ้าย-ขวา / กดปุ่มลูกศร ◀ ▶ หรือกด Esc เพื่อปิด</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- ================= SUPABASE ADMIN LOGIN MODAL ================= -->
     <div id="adminLoginModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-3 sm:p-5">
@@ -1249,8 +1390,11 @@
                     </div>
 
                     <div class="space-y-1.5">
-                        <label class="block font-bold text-nora-text text-xs">จัดการตัวอย่างงานแต่ละเวอร์ชั่น (รูปแบบ: ชื่อเวอร์ชั่น | คำอธิบาย | ลิงก์รูปภาพ):</label>
-                        <textarea id="admVersionsText" rows="4" class="w-full p-2.5 rounded-xl border border-pink-200 text-xs"></textarea>
+                        <label class="block font-bold text-nora-text text-xs">
+                            จัดการตัวอย่างงานแต่ละเวอร์ชั่น (รองรับหลายรูปต่อการ์ด โดยคั่นแต่ละลิงก์ด้วยเครื่องหมายลูกน้ำ <code class="text-nora-pinkDark bg-pink-50 px-1 rounded">,</code>):
+                        </label>
+                        <p class="text-[11px] text-nora-muted">รูปแบบบรรทัดละ 1 การ์ด: <strong>ชื่อเวอร์ชั่น | คำอธิบาย | ลิงก์รูปที่1, ลิงก์รูปที่2, ลิงก์รูปที่3</strong></p>
+                        <textarea id="admVersionsText" rows="5" placeholder="Version 1 | คำอธิบาย | https://.../img1.png, https://.../img2.png" class="w-full p-2.5 rounded-xl border border-pink-200 text-xs"></textarea>
                     </div>
 
                     <button id="btnSaveGallery" onclick="saveGalleryPaymentAdmin()" class="bg-nora-pinkDark hover:opacity-90 text-white font-bold px-5 py-2 rounded-xl text-xs shadow-sm">
@@ -1383,10 +1527,26 @@
                 { id: "F08", name: "Nora Chakra (จักรเพชร)", cssClass: "font-chakra", tag: "เท่ ทันสมัย", type: "preset" }
             ],
             versions: [
-                { title: "Version 1 : Soft Minimal", desc: "เน้นตัวอักษรน่ารักคุมโทนหวาน ใส่ของตกแต่งเล็กน้อย", img: "https://placehold.co/500x340/FCE4EC/593A47?text=Demo+Version+1" },
-                { title: "Version 2 : Sweet Mascot", desc: "ลายน้ำพร้อมวาดของตกแต่ง/มาสคอตประจำร้านสุดคิวท์", img: "https://placehold.co/500x340/F3E8FF/593A47?text=Demo+Version+2" },
-                { title: "Version 3 : Luxury Glossy", desc: "ลายน้ำมิติเงาวิ้งค์ โดดเด่น ติดลงรูปสินค้าแล้วดูแพงมาก", img: "https://placehold.co/500x340/FFE4E6/593A47?text=Demo+Version+3" },
-                { title: "Version 4 : Banner & Template", desc: "เซ็ตป้ายบัญชี กรอบรีวิว และป้ายแจ้งเลขพัสดุเข้าเซ็ต", img: "https://placehold.co/500x340/E0F2FE/593A47?text=Demo+Version+4" }
+                {
+                    title: "Version 1 : Soft Minimal",
+                    desc: "เน้นตัวอักษรน่ารักคุมโทนหวาน ใส่ของตกแต่งเล็กน้อย",
+                    img: "https://placehold.co/600x420/FCE4EC/593A47?text=Version+1+-+Sample+1, https://placehold.co/600x420/FFF0F5/D95380?text=Version+1+-+Sample+2, https://placehold.co/600x420/F3E8FF/593A47?text=Version+1+-+Sample+3"
+                },
+                {
+                    title: "Version 2 : Sweet Mascot",
+                    desc: "ลายน้ำพร้อมวาดของตกแต่ง/มาสคอตประจำร้านสุดคิวท์",
+                    img: "https://placehold.co/600x420/F3E8FF/593A47?text=Version+2+-+Sample+1, https://placehold.co/600x420/FCE4EC/593A47?text=Version+2+-+Sample+2"
+                },
+                {
+                    title: "Version 3 : Luxury Glossy",
+                    desc: "ลายน้ำมิติเงาวิ้งค์ โดดเด่น ติดลงรูปสินค้าแล้วดูแพงมาก",
+                    img: "https://placehold.co/600x420/FFE4E6/593A47?text=Demo+Version+3"
+                },
+                {
+                    title: "Version 4 : Banner & Template",
+                    desc: "เซ็ตป้ายบัญชี กรอบรีวิว และป้ายแจ้งเลขพัสดุเข้าเซ็ต",
+                    img: "https://placehold.co/600x420/E0F2FE/593A47?text=Demo+Version+4"
+                }
             ],
             paymentConfig: {
                 accName: "น.ส. โนร่า ดีไซน์ (watermark by nora)",
@@ -1417,6 +1577,40 @@
         let lastFontFocusNotified = false;
         let currentAdminSessionUser = null;
         let pendingAdminTabAfterLogin = null;
+
+        // ================= MULTI-IMAGE PRODUCT GALLERY STATE =================
+        let cardSlideIndices = {};      // { [cardIdx]: currentImageIndex }
+        let cardBrokenImages = {};      // { ["cardIdx_imgIdx"]: true }
+        let lightboxState = {
+            open: false,
+            cardIdx: 0,
+            imgIdx: 0
+        };
+        let touchSwipeStartX = 0;
+        let touchSwipeStartY = 0;
+        let touchSwipeMoved = false;
+
+        // Parse image field into clean array of URLs (Supports array, comma-separated, or newline-separated URLs)
+        function parseProductImages(rawImgField) {
+            if (!rawImgField) return [];
+            if (Array.isArray(rawImgField)) {
+                return rawImgField.map(s => String(s || '').trim()).filter(Boolean);
+            }
+            const str = String(rawImgField).trim();
+            if (!str) return [];
+            // Support comma-separated URLs while keeping data:image base64 intact if ever used
+            if (str.startsWith('data:image/')) return [str];
+            return str
+                .split(/[\n,]+/)
+                .map(u => u.trim())
+                .filter(Boolean);
+        }
+
+        function getCardImagesList(cardIdx) {
+            const v = (siteData.versions || [])[cardIdx];
+            if (!v) return [];
+            return parseProductImages(v.images || v.img);
+        }
 
         function loadSiteDataFromCache() {
             try {
@@ -1529,7 +1723,7 @@
                     dbId: v.id,
                     title: v.title,
                     desc: v.description || '',
-                    img: v.image_url
+                    img: v.image_url || ''
                 }));
             }
             if (statusOptsRes.data && statusOptsRes.data.length > 0) {
@@ -1722,21 +1916,8 @@
             const currentSampleText = document.getElementById('fontPreviewInput')?.value || 'watermark by nora';
             renderFontCards(currentSampleText);
 
-            // 6. Versions Gallery
-            const versionsGrid = document.getElementById('versionsGalleryGrid');
-            versionsGrid.innerHTML = (siteData.versions || []).map(v => `
-                <div class="bg-white rounded-xl border border-pink-100 overflow-hidden shadow-sm hover:shadow transition group">
-                    <div class="aspect-[16/11] bg-pink-50 overflow-hidden relative">
-                        <img src="${escapeHtml(v.img)}" alt="${escapeHtml(v.title)}" 
-                             onerror="this.src='https://placehold.co/500x340/FCE4EC/593A47?text=Demo+Image'"
-                             class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                    </div>
-                    <div class="p-2 font-body">
-                        <h4 class="font-bold text-xs text-nora-text truncate">${escapeHtml(v.title)}</h4>
-                        <p class="text-[10px] text-nora-muted mt-0.5 line-clamp-2">${escapeHtml(v.desc)}</p>
-                    </div>
-                </div>
-            `).join('');
+            // 6. Versions Gallery (Multi-Image Product Cards)
+            renderVersionsGallery();
 
             // 7. Interactive Receipt & Dynamic PromptPay QR Payment Section
             renderReceiptPaymentSection();
@@ -1773,6 +1954,338 @@
             populateQueueFilterOptions();
             renderQueueList();
             renderStatusWidget();
+        }
+
+        // ================= MULTI-IMAGE PRODUCT CARD GALLERY & LIGHTBOX CONTROLLER =================
+        function renderVersionsGallery() {
+            const versionsGrid = document.getElementById('versionsGalleryGrid');
+            if (!versionsGrid) return;
+
+            const versionsList = siteData.versions || [];
+            if (versionsList.length === 0) {
+                versionsGrid.innerHTML = `
+                    <div class="col-span-2 cute-inner-card p-5 text-center text-nora-muted text-xs">
+                        ยังไม่มีรายการตัวอย่างงานในขณะนี้ค่ะ
+                    </div>
+                `;
+                return;
+            }
+
+            versionsGrid.innerHTML = versionsList.map((v, cardIdx) => {
+                const imgs = getCardImagesList(cardIdx);
+                const total = imgs.length;
+                if (typeof cardSlideIndices[cardIdx] !== 'number' || cardSlideIndices[cardIdx] >= total || cardSlideIndices[cardIdx] < 0) {
+                    cardSlideIndices[cardIdx] = 0;
+                }
+                const curIdx = cardSlideIndices[cardIdx];
+                const hasMultiple = total > 1;
+                const currentUrl = total > 0 ? imgs[curIdx] : '';
+                const isBroken = cardBrokenImages[`${cardIdx}_${curIdx}`] === true;
+
+                // Dots indicator (only if > 1 image)
+                const dotsHtml = hasMultiple
+                    ? `<div class="absolute bottom-1.5 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1 bg-black/25 backdrop-blur-sm px-2 py-0.5 rounded-full pointer-events-none">
+                        ${imgs.map((_, dIdx) => `<span class="card-dot-pill ${dIdx === curIdx ? 'active' : ''}"></span>`).join('')}
+                       </div>`
+                    : '';
+
+                // Counter badge (only if > 1 image)
+                const counterHtml = hasMultiple
+                    ? `<span class="absolute top-1.5 right-1.5 z-10 bg-black/45 backdrop-blur-sm text-white text-[9.5px] font-semibold px-1.5 py-0.5 rounded-full pointer-events-none">
+                        ${curIdx + 1}/${total}
+                       </span>`
+                    : '';
+
+                // Prev/Next buttons (only if > 1 image)
+                const navButtonsHtml = hasMultiple
+                    ? `<button type="button"
+                               onclick="stepCardImage(event, ${cardIdx}, -1)"
+                               aria-label="รูปก่อนหน้า"
+                               class="card-nav-btn left-1.5">
+                           <i class="ph-bold ph-caret-left text-xs"></i>
+                       </button>
+                       <button type="button"
+                               onclick="stepCardImage(event, ${cardIdx}, 1)"
+                               aria-label="รูปถัดไป"
+                               class="card-nav-btn right-1.5">
+                           <i class="ph-bold ph-caret-right text-xs"></i>
+                       </button>`
+                    : '';
+
+                // Media Inner Content: No Image vs Broken Image vs Valid Image
+                let mediaBodyHtml = '';
+                if (total === 0) {
+                    mediaBodyHtml = `
+                        <div class="w-full h-full flex flex-col items-center justify-center p-3 text-center text-nora-muted">
+                            <i class="ph-duotone ph-image text-2xl text-nora-pinkDark mb-1"></i>
+                            <span class="text-[10px] font-medium">ยังไม่มีรูปภาพ</span>
+                        </div>
+                    `;
+                } else if (isBroken) {
+                    mediaBodyHtml = `
+                        <div onclick="openProductLightbox(${cardIdx}, ${curIdx})"
+                             class="w-full h-full flex flex-col items-center justify-center p-3 text-center text-nora-muted cursor-pointer">
+                            <i class="ph-duotone ph-image-broken text-2xl text-nora-pinkDark mb-1"></i>
+                            <span class="text-[10px] font-medium text-nora-text">ลิงก์รูปภาพเสีย</span>
+                            <span class="text-[9px] text-nora-muted">รูปที่ ${curIdx + 1} โหลดไม่สำเร็จ</span>
+                        </div>
+                    `;
+                } else {
+                    mediaBodyHtml = `
+                        <img src="${escapeHtml(currentUrl)}"
+                             alt="${escapeHtml(v.title)} - รูปที่ ${curIdx + 1}"
+                             onerror="handleCardImageError(${cardIdx}, ${curIdx})"
+                             onclick="handleCardImageTap(event, ${cardIdx}, ${curIdx})"
+                             class="product-card-img cursor-zoom-in">
+                        <span onclick="handleCardImageTap(event, ${cardIdx}, ${curIdx})"
+                              title="แตะเพื่อดูเต็มภาพ"
+                              class="absolute bottom-1.5 right-1.5 z-10 w-6 h-6 rounded-full bg-white/85 hover:bg-white text-nora-pinkDark border border-pink-200 flex items-center justify-center shadow-sm cursor-pointer transition opacity-90 group-hover:opacity-100">
+                            <i class="ph-bold ph-corners-out text-[11px]"></i>
+                        </span>
+                    `;
+                }
+
+                return `
+                    <div class="bg-white rounded-xl border border-pink-100 overflow-hidden shadow-sm hover:shadow transition group flex flex-col">
+                        <div class="product-card-media"
+                             ontouchstart="handleCardTouchStart(event)"
+                             ontouchmove="handleCardTouchMove(event)"
+                             ontouchend="handleCardTouchEnd(event, ${cardIdx})">
+                            ${counterHtml}
+                            ${navButtonsHtml}
+                            ${mediaBodyHtml}
+                            ${dotsHtml}
+                        </div>
+                        <div class="p-2 font-body flex-1 flex flex-col justify-between">
+                            <div>
+                                <h4 class="font-bold text-xs text-nora-text truncate">${escapeHtml(v.title)}</h4>
+                                <p class="text-[10px] text-nora-muted mt-0.5 line-clamp-2">${escapeHtml(v.desc)}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function handleCardImageError(cardIdx, imgIdx) {
+            cardBrokenImages[`${cardIdx}_${imgIdx}`] = true;
+            renderVersionsGallery();
+        }
+
+        function stepCardImage(e, cardIdx, delta) {
+            if (e) e.stopPropagation();
+            const imgs = getCardImagesList(cardIdx);
+            if (imgs.length <= 1) return;
+            const cur = cardSlideIndices[cardIdx] || 0;
+            cardSlideIndices[cardIdx] = (cur + delta + imgs.length) % imgs.length;
+            renderVersionsGallery();
+        }
+
+        function handleCardTouchStart(e) {
+            if (!e.touches || e.touches.length !== 1) return;
+            touchSwipeStartX = e.touches[0].clientX;
+            touchSwipeStartY = e.touches[0].clientY;
+            touchSwipeMoved = false;
+        }
+
+        function handleCardTouchMove(e) {
+            if (!e.touches || e.touches.length !== 1) return;
+            const dx = Math.abs(e.touches[0].clientX - touchSwipeStartX);
+            const dy = Math.abs(e.touches[0].clientY - touchSwipeStartY);
+            if (dx > 12 && dx > dy) {
+                touchSwipeMoved = true;
+            }
+        }
+
+        function handleCardTouchEnd(e, cardIdx) {
+            if (!e.changedTouches || e.changedTouches.length === 0) return;
+            const endX = e.changedTouches[0].clientX;
+            const endY = e.changedTouches[0].clientY;
+            const diffX = endX - touchSwipeStartX;
+            const diffY = Math.abs(endY - touchSwipeStartY);
+
+            if (Math.abs(diffX) > 36 && Math.abs(diffX) > diffY) {
+                stepCardImage(null, cardIdx, diffX < 0 ? 1 : -1);
+            }
+        }
+
+        function handleCardImageTap(e, cardIdx, imgIdx) {
+            if (e) e.stopPropagation();
+            if (touchSwipeMoved) {
+                touchSwipeMoved = false;
+                return;
+            }
+            openProductLightbox(cardIdx, imgIdx);
+        }
+
+        // ================= FULLSCREEN LIGHTBOX FUNCTIONS =================
+        function openProductLightbox(cardIdx, imgIdx = 0) {
+            const v = (siteData.versions || [])[cardIdx];
+            if (!v) return;
+            const imgs = getCardImagesList(cardIdx);
+            const safeIdx = imgs.length > 0 ? Math.max(0, Math.min(imgIdx, imgs.length - 1)) : 0;
+
+            lightboxState = {
+                open: true,
+                cardIdx,
+                imgIdx: safeIdx
+            };
+
+            const modal = document.getElementById('productLightboxModal');
+            if (!modal) return;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            updateLightboxContent();
+            syncMascotModalLayer();
+
+            setTimeout(() => {
+                document.getElementById('lightboxCloseBtn')?.focus();
+            }, 30);
+        }
+
+        function closeProductLightbox() {
+            lightboxState.open = false;
+            const modal = document.getElementById('productLightboxModal');
+            if (!modal) return;
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            syncMascotModalLayer();
+        }
+
+        function handleLightboxBackdropClick(e) {
+            if (e.target && e.target.id === 'productLightboxModal') {
+                closeProductLightbox();
+            }
+        }
+
+        function stepLightboxImage(delta) {
+            if (!lightboxState.open) return;
+            const imgs = getCardImagesList(lightboxState.cardIdx);
+            if (imgs.length <= 1) return;
+            lightboxState.imgIdx = (lightboxState.imgIdx + delta + imgs.length) % imgs.length;
+            cardSlideIndices[lightboxState.cardIdx] = lightboxState.imgIdx;
+            updateLightboxContent();
+            renderVersionsGallery();
+        }
+
+        function jumpToLightboxImage(targetIdx) {
+            if (!lightboxState.open) return;
+            const imgs = getCardImagesList(lightboxState.cardIdx);
+            if (targetIdx < 0 || targetIdx >= imgs.length) return;
+            lightboxState.imgIdx = targetIdx;
+            cardSlideIndices[lightboxState.cardIdx] = targetIdx;
+            updateLightboxContent();
+            renderVersionsGallery();
+        }
+
+        function updateLightboxContent() {
+            const v = (siteData.versions || [])[lightboxState.cardIdx];
+            if (!v) return;
+
+            const imgs = getCardImagesList(lightboxState.cardIdx);
+            const total = imgs.length;
+            const curIdx = lightboxState.imgIdx;
+            const hasMultiple = total > 1;
+
+            document.getElementById('lightboxTitle').textContent = v.title || 'ตัวอย่างงาน';
+            document.getElementById('lightboxDesc').textContent = v.desc || '';
+
+            const counterBadge = document.getElementById('lightboxCounterBadge');
+            const prevBtn = document.getElementById('lightboxPrevBtn');
+            const nextBtn = document.getElementById('lightboxNextBtn');
+            const mainImg = document.getElementById('lightboxMainImg');
+            const fallbackBox = document.getElementById('lightboxFallbackBox');
+            const dotsContainer = document.getElementById('lightboxDotsContainer');
+
+            if (hasMultiple) {
+                counterBadge.textContent = `${curIdx + 1} / ${total}`;
+                counterBadge.classList.remove('hidden');
+                prevBtn.classList.remove('hidden');
+                prevBtn.classList.add('flex');
+                nextBtn.classList.remove('hidden');
+                nextBtn.classList.add('flex');
+            } else {
+                counterBadge.classList.add('hidden');
+                prevBtn.classList.add('hidden');
+                prevBtn.classList.remove('flex');
+                nextBtn.classList.add('hidden');
+                nextBtn.classList.remove('flex');
+            }
+
+            if (total === 0) {
+                mainImg.classList.add('hidden');
+                fallbackBox.classList.remove('hidden');
+                fallbackBox.classList.add('flex');
+                document.getElementById('lightboxFallbackTitle').textContent = 'รายการนี้ยังไม่มีรูปภาพ';
+                document.getElementById('lightboxFallbackSub').textContent = 'แอดมินสามารถเพิ่มลิงก์รูปภาพได้ที่เมนูตั้งค่าหลังบ้านค่ะ';
+            } else {
+                const url = imgs[curIdx];
+                mainImg.classList.remove('hidden');
+                fallbackBox.classList.add('hidden');
+                fallbackBox.classList.remove('flex');
+                mainImg.src = url;
+                mainImg.alt = `${v.title || 'ตัวอย่างงาน'} - รูปที่ ${curIdx + 1}`;
+                mainImg.onerror = function() {
+                    cardBrokenImages[`${lightboxState.cardIdx}_${curIdx}`] = true;
+                    mainImg.classList.add('hidden');
+                    fallbackBox.classList.remove('hidden');
+                    fallbackBox.classList.add('flex');
+                    document.getElementById('lightboxFallbackTitle').textContent = `ไม่สามารถโหลดรูปที่ ${curIdx + 1} ได้`;
+                    document.getElementById('lightboxFallbackSub').textContent = 'ลิงก์รูปภาพอาจเสียหรือไม่ถูกต้อง แต่สามารถเลื่อนดูรูปอื่นต่อได้ค่ะ';
+                    renderVersionsGallery();
+                };
+            }
+
+            // Render clickable dots/pills for multiple images
+            if (hasMultiple) {
+                dotsContainer.innerHTML = imgs.map((_, idx) => `
+                    <button type="button"
+                            onclick="jumpToLightboxImage(${idx})"
+                            class="px-2.5 py-1 rounded-full text-[10px] font-bold border transition ${idx === curIdx ? 'bg-nora-pinkDark text-white border-nora-pinkDark shadow-sm' : 'bg-pink-50 text-nora-text border-pink-200 hover:bg-pink-100'}">
+                        รูปที่ ${idx + 1}
+                    </button>
+                `).join('');
+            } else {
+                dotsContainer.innerHTML = `<span class="text-[11px] text-nora-muted font-medium">แสดงขนาดภาพตามสัดส่วนจริง</span>`;
+            }
+        }
+
+        // Attach Touch Swipe & Keyboard navigation for Lightbox
+        function setupLightboxInteractions() {
+            const touchArea = document.getElementById('lightboxTouchArea');
+            if (touchArea) {
+                let lbStartX = 0;
+                let lbStartY = 0;
+                touchArea.addEventListener('touchstart', (e) => {
+                    if (!e.touches || e.touches.length !== 1) return;
+                    lbStartX = e.touches[0].clientX;
+                    lbStartY = e.touches[0].clientY;
+                }, { passive: true });
+
+                touchArea.addEventListener('touchend', (e) => {
+                    if (!e.changedTouches || e.changedTouches.length === 0) return;
+                    const diffX = e.changedTouches[0].clientX - lbStartX;
+                    const diffY = Math.abs(e.changedTouches[0].clientY - lbStartY);
+                    if (Math.abs(diffX) > 40 && Math.abs(diffX) > diffY) {
+                        stepLightboxImage(diffX < 0 ? 1 : -1);
+                    }
+                }, { passive: true });
+            }
+
+            window.addEventListener('keydown', (e) => {
+                if (!lightboxState.open) return;
+                if (e.key === 'Escape') {
+                    e.preventDefault();
+                    closeProductLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    stepLightboxImage(-1);
+                } else if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    stepLightboxImage(1);
+                }
+            });
         }
 
         // ================= INTERACTIVE RECEIPT & DYNAMIC QR PAYMENT =================
@@ -2007,7 +2520,8 @@
             const fontModalOpen = !document.getElementById('fontStudioModal')?.classList.contains('hidden');
             const adminModalOpen = !document.getElementById('adminModal')?.classList.contains('hidden');
             const loginModalOpen = !document.getElementById('adminLoginModal')?.classList.contains('hidden');
-            if (fontModalOpen || adminModalOpen || loginModalOpen) {
+            const lightboxOpen = !document.getElementById('productLightboxModal')?.classList.contains('hidden');
+            if (fontModalOpen || adminModalOpen || loginModalOpen || lightboxOpen) {
                 stage.classList.add('mascot-over-modal');
             } else {
                 stage.classList.remove('mascot-over-modal');
@@ -2274,7 +2788,6 @@
             currentAdminSessionUser = session.user;
             const { data: isAdminRes, error } = await supabaseClient.rpc('is_admin');
             if (error) {
-                // Fallback direct check on admin_users
                 const { data: row } = await supabaseClient
                     .from('admin_users')
                     .select('user_id')
@@ -2482,7 +2995,7 @@
             document.getElementById('admRatesText').value = (siteData.rates || []).map(r => `${r.item} | ${r.agentPrice} | ${r.retailPrice}`).join('\n');
 
             // Tab 5: Gallery & Receipt Payment Config
-            document.getElementById('admVersionsText').value = (siteData.versions || []).map(v => `${v.title} | ${v.desc} | ${v.img}`).join('\n');
+            document.getElementById('admVersionsText').value = (siteData.versions || []).map(v => `${v.title} | ${v.desc} | ${v.img || ''}`).join('\n');
             const pc = siteData.paymentConfig || defaultSiteData.paymentConfig;
             document.getElementById('admPayAccName').value = pc.accName || '';
             document.getElementById('admPromptPayId').value = pc.promptPayId || '';
@@ -2907,7 +3420,6 @@
 
                 await supabaseClient.from('site_settings').update({ promo_enabled: promoEnabled }).eq('id', 1);
 
-                // Fetch current row IDs for clean sync
                 const [curPromos, curRules, curRates] = await Promise.all([
                     supabaseClient.from('promotions').select('id').order('sort_order', { ascending: true }).order('id', { ascending: true }),
                     supabaseClient.from('rules').select('id').order('sort_order', { ascending: true }).order('id', { ascending: true }),
@@ -2977,11 +3489,14 @@
                         return {
                             title: parts[0] || "Version",
                             description: parts[1] || "",
-                            image_url: parts[2] || "https://placehold.co/500x340/FCE4EC/593A47?text=Demo"
+                            // Supports multiple image URLs separated by commas, or empty string if no image
+                            image_url: typeof parts[2] === 'string' ? parts[2] : ""
                         };
                     })
                 );
 
+                cardSlideIndices = {};
+                cardBrokenImages = {};
                 await fetchSiteDataFromSupabase();
                 renderAll();
                 showToast("บันทึกรูปตัวอย่างงาน & ใบเสร็จโอนเงินลง Supabase เรียบร้อยค่ะ 🧾✨");
@@ -3282,6 +3797,7 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+            setupLightboxInteractions();
             runInitialBootWithSplash();
         });
     </script>
